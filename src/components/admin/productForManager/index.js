@@ -13,11 +13,19 @@ export const ProductForManager = () => {
     const { dataProductFor } = useSelector(state => state.productForReducer);
     const dispatch = useDispatch();
 
+    const [loadFormProductFor, setLoadFormProductFor] = useState({ action: '', value: '' });
+
     const [showForm, setShowForm] = useState(false);
     const handleCloseForm = () => setShowForm(false);
 
     const handleFormAddNew = () => {
         setShowForm(true);
+        setLoadFormProductFor({ action: 'add', value: '' })
+    }
+
+    const handleEditProductFor = (productFor) => {
+        setShowForm(true);
+        setLoadFormProductFor({ action: 'edit', value: productFor })
     }
 
     const handleDeleteProductFor = (IdProductFor) => {
@@ -43,7 +51,9 @@ export const ProductForManager = () => {
                 />
             </div>
 
-            <FormProductFor showForm={showForm} handleCloseForm={handleCloseForm} />
+            <FormProductFor showForm={showForm} handleCloseForm={handleCloseForm}
+                loadFormProductFor={loadFormProductFor}
+            />
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
@@ -60,13 +70,13 @@ export const ProductForManager = () => {
                             return (
                                 <tr key={productFor._id}>
                                     <td>
-                                        <img src={productFor.img} alt="ảnh" width="120px" height='120px' />
+                                        <img src={productFor.image} alt="ảnh" width="120px" height='120px' />
                                     </td>
                                     <td> {productFor.name} </td>
                                     <td> {productFor.description} </td>
                                     <td>
                                         <ButtonGroup aria-label="outlined primary button group">
-                                            <Button variant='outlined' color="warning" ><ModeEditIcon /></Button>
+                                            <Button variant='outlined' color="warning" onClick={() => handleEditProductFor(productFor)}><ModeEditIcon /></Button>
                                             <Button variant='outlined' color="error" onClick={() => handleDeleteProductFor(productFor._id)}><DeleteIcon /></Button>
                                         </ButtonGroup>
                                     </td>

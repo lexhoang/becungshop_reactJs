@@ -12,12 +12,21 @@ export const act_productFor_success = (productFor) => {
         payload: productFor
     }
 }
+
 export const act_productFor_port = (productFor) => {
     return {
         type: constants_productFor.POST_PRODUCT_FOR,
         payload: productFor
     }
 }
+
+export const act_productFor_put = (productFor) => {
+    return {
+        type: constants_productFor.PUT_PRODUCT_FOR,
+        payload: productFor
+    }
+}
+
 export const act_productFor_delete = (IdProductFor) => {
     return {
         type: constants_productFor.DELETE_PRODUCT_FOR,

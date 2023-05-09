@@ -13,14 +13,15 @@ import Form from 'react-bootstrap/Form';
 import { Grid } from '@mui/material';
 
 export const FormProductFor = (props) => {
-    const { showForm, handleCloseForm } = props;
+    const { showForm, handleCloseForm, loadFormProductFor } = props;
     const dispatch = useDispatch();
+
     ////////// START  UPLOAD IMAGE FIREBASE   ///////////
     const [imageUrls, setImageUrls] = useState("");
     const uploadImage = (e) => {
         let imageUpload = e.target.files[0];
         if (imageUpload == null) return;
-        const imageRef = ref(storage, `uploadImage/${imageUpload.name}${v4()}`);
+        const imageRef = ref(storage, `uploadImageProductFor/${imageUpload.name}${v4()}`);
         uploadBytes(imageRef, imageUpload).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
                 setImageUrls(url);
@@ -29,14 +30,27 @@ export const FormProductFor = (props) => {
     }
     ////////// END  UPLOAD IMAGE FIREBASE   ///////////
 
-    const [productFor, setProductFor] = useState({ img: '', name: '', description: '' })
+    const [productFor, setProductFor] = useState({ name: '', description: '' })
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        dispatch(api_productFor.postDataProductFor({ ...productFor, img: imageUrls }));
+        if (loadFormProductFor.action === 'add') {
+            dispatch(api_productFor.postDataProductFor({ ...productFor, image: imageUrls }));
+        } else {
+            dispatch(api_productFor.putDataProductFor({ ...productFor, image: imageUrls }));
+        }
         props.handleCloseForm()
     }
 
+    useEffect(() => {
+        if (loadFormProductFor.value === '') {
+            setImageUrls('');
+            setProductFor({ name: '', description: '' });
+        } else {
+            setImageUrls(loadFormProductFor.value.image);
+            setProductFor(loadFormProductFor.value);
+        }
+    }, [loadFormProductFor])
 
     return (
         <>
