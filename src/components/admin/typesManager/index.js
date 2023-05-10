@@ -1,45 +1,49 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-
 import { Button, ButtonGroup, Grid, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import * as api_productFor from '../../../api/api_productFor';
-import { FormProductFor } from './FormProductFor';
+import { FormType } from './FormType';
+import { useDispatch, useSelector } from 'react-redux';
+import * as api_types from '../../../api/api_types'
+import * as api_productFor from '../../../api/api_productFor'
 
-
-export const ProductForManager = () => {
-    const { dataProductFor } = useSelector(state => state.productForReducer);
+export const TypeManager = () => {
+    const { dataTypes } = useSelector(state => state.typesReducer)
+    const { dataProductFor } = useSelector(state => state.productForReducer)
     const dispatch = useDispatch();
 
-    const [loadFormProductFor, setLoadFormProductFor] = useState({ action: '', value: '' });
-
     const [showForm, setShowForm] = useState(false);
-    const handleCloseForm = () => setShowForm(false);
+    const handleCloseForm = () => {
+        setShowForm(false);
+    }
 
+    const [loadFormType, setLoadFormType] = useState({ action: '', value: '' })
+
+
+    ////////////      CRUD     ////////////
     const handleFormAddNew = () => {
         setShowForm(true);
-        setLoadFormProductFor({ action: 'add', value: '' })
+        setLoadFormType({ action: 'add', value: '' });
     }
 
-    const handleEditProductFor = (productFor) => {
+    const handleEditProductFor = (type) => {
         setShowForm(true);
-        setLoadFormProductFor({ action: 'edit', value: productFor })
+        setLoadFormType({ action: 'edit', value: type });
     }
 
-    const handleDeleteProductFor = (IdProductFor) => {
-        dispatch(api_productFor.deleteDataProductFor(IdProductFor));
+    const handleDeleteProductFor = (IdType) => {
+        dispatch(api_types.deleteDataType(IdType))
     }
 
     useEffect(() => {
+        dispatch(api_types.getDataType())
         dispatch(api_productFor.getDataProductFor())
-    }, []);
-
+    }, [])
 
 
     return (
         <>
-            <h3 className="text-center mb-5">PRODUCT FOR MANAGER</h3>
+            <h3 className="text-center mb-5">TYPE MANAGER</h3>
             <div className='d-flex justify-content-around' style={{ marginTop: '80px' }}>
                 <Button variant="contained" color="success"
                     onClick={() => handleFormAddNew()}
@@ -50,33 +54,35 @@ export const ProductForManager = () => {
                 />
             </div>
 
-            <FormProductFor showForm={showForm} handleCloseForm={handleCloseForm}
-                loadFormProductFor={loadFormProductFor}
+            <FormType showForm={showForm} handleCloseForm={handleCloseForm}
+                loadFormType={loadFormType}
             />
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
                     <tr>
                         <th>Ảnh</th>
-                        <th>Sản Phẩm Dành Cho</th>
+                        <th>Loại sản phẩm</th>
+                        <th>Sản phẩm dành cho</th>
                         <th>Mô Tả</th>
                         <th rowSpan="3">Thao Tác</th>
                     </tr>
                 </thead>
                 <tbody className='text-center'>
                     {
-                        dataProductFor.map((productFor) => {
+                        dataTypes.map((type) => {
                             return (
-                                <tr key={productFor._id}>
+                                <tr key={type._id}>
                                     <td>
-                                        <img src={productFor.image} alt="ảnh" width="120px" height='120px' />
+                                        <img src={type.image} alt="ảnh" width="120px" height='120px' />
                                     </td>
-                                    <td> {productFor.name} </td>
-                                    <td> {productFor.description} </td>
+                                    <td> {type.name} </td>
+                                    <td> {type.productFor.name} </td>
+                                    <td> {type.description} </td>
                                     <td>
                                         <ButtonGroup aria-label="outlined primary button group">
-                                            <Button variant='outlined' color="warning" onClick={() => handleEditProductFor(productFor)}><ModeEditIcon /></Button>
-                                            <Button variant='outlined' color="error" onClick={() => handleDeleteProductFor(productFor._id)}><DeleteIcon /></Button>
+                                            <Button variant='outlined' color="warning" onClick={() => handleEditProductFor(type)}><ModeEditIcon /></Button>
+                                            <Button variant='outlined' color="error" onClick={() => handleDeleteProductFor(type._id)}><DeleteIcon /></Button>
                                         </ButtonGroup>
                                     </td>
                                 </tr>
