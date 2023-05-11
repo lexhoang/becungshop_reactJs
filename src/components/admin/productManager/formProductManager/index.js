@@ -44,26 +44,28 @@ export const FormProduct = (props) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log({ ...product, photoUrl: imageUrls, color: colors, size: sizes });
-        // if (loadFormProduct.action === 'add') {
-        dispatch(api_product.postDataProduct({ ...product, photoUrl: imageUrls, color: colors, size: sizes }));
-        // } else {
-        // dispatch(api_product.putDataProduct({ ...product, image: imageUrls }));
-        // }
+        if (loadFormProduct.action === 'add') {
+            dispatch(api_product.postDataProduct({ ...product, photoUrl: imageUrls, color: colors, size: sizes }));
+        } else {
+            dispatch(api_product.putDataProduct({ ...product, photoUrl: imageUrls, color: colors, size: sizes }));
+        }
         props.handleCloseForm()
     }
 
     useEffect(() => {
         dispatch(api_types.getDataType());
 
-        // if (loadFormProduct.value === '') {
-        // setImageUrls('');
-        // setProduct({ name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoAge: '', infoWeight: '', infoMaterial: '', infoMadeIn: '', description: '' });
-        // setColors([]);
-        // setSizes([]);
-        // } else {
-        //     setImageUrls(loadFormProduct.value.image);
-        //     setProduct(loadFormProduct.value);
-        // }
+        if (loadFormProduct.value === '') {
+            setImageUrls('');
+            setProduct({ name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoAge: '', infoWeight: '', infoMaterial: '', infoMadeIn: '', description: '' });
+            setColors([]);
+            setSizes([]);
+        } else {
+            setImageUrls(loadFormProduct.value.image);
+            setProduct({ ...loadFormProduct.value, type: loadFormProduct.value.type._id });
+            setColors(loadFormProduct.value.color);
+            setSizes(loadFormProduct.value.size);
+        }
     }, [loadFormProduct])
 
     return (

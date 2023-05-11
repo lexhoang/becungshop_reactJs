@@ -44,6 +44,7 @@ export const putDataProduct = (product) => {
             })
     }
 }
+
 export const deleteDataProduct = (IdProduct) => {
     return async (dispatch) => {
         dispatch(act_product.act_product_get());

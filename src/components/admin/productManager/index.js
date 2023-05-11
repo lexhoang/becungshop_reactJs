@@ -24,7 +24,7 @@ export const ProductManager = () => {
 
     const handleEditProduct = (product) => {
         setShowForm(true);
-        setLoadFormProduct({ action: 'edit', value: product })
+        setLoadFormProduct({ action: 'edit', value: product });
     }
 
     const handleDeleteProduct = (IdProduct) => {
@@ -77,8 +77,8 @@ export const ProductManager = () => {
                                         <img src={product.image} alt="ảnh" width="120px" height='120px' />
                                     </td>
                                     <td> {product.name} </td>
-                                    <td> {product.productFor} </td>
-                                    <td> {product.type.name} </td>
+                                    <td> {(product.productFor === "begai") ? "Bé gái" : "Bé trai"} </td>
+                                    <td> {product.type.name} - {(product.productFor === "begai") ? "Bé gái" : "Bé trai"} </td>
                                     <td> {product.amount} </td>
                                     <td> {product.prices} </td>
                                     <td> {product.color} </td>
