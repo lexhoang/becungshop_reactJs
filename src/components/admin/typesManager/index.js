@@ -59,8 +59,8 @@ export const TypeManager = () => {
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
                     <tr>
                         <th>Ảnh</th>
-                        <th>Loại sản phẩm</th>
                         <th>Sản phẩm dành cho</th>
+                        <th>Loại sản phẩm</th>
                         <th>Mô Tả</th>
                         <th rowSpan="3">Thao Tác</th>
                     </tr>
@@ -73,8 +73,8 @@ export const TypeManager = () => {
                                     <td>
                                         <img src={type.photoUrl} alt="ảnh" width="120px" height='120px' />
                                     </td>
-                                    <td> {type.name} </td>
                                     <td> {type.productFor === "begai" ? "Bé Gái" : "Bé Trai"} </td>
+                                    <td> {type.name} - {(type.productFor === "begai") ? "Bé Gái" : "Bé Trai"} </td>
                                     <td> {type.description} </td>
                                     <td>
                                         <ButtonGroup aria-label="outlined primary button group">

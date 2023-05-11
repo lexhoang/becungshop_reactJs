@@ -18,8 +18,6 @@ import SelectColor from './select-color';
 import SelectSize from './select-size';
 
 export const FormProduct = (props) => {
-    const { dataTypes } = useSelector(state => state.typesReducer)
-
     const { showForm, handleCloseForm, loadFormProduct } = props;
     const dispatch = useDispatch();
 
@@ -37,13 +35,14 @@ export const FormProduct = (props) => {
     }
     ////////// END  UPLOAD IMAGE FIREBASE   ///////////
 
-    const [product, setProduct] = useState({ name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoAge: '', infoWeight: '', infoMaterial: '', infoMadeIn: '', description: '' })
+    const [product, setProduct] = useState({
+        name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoMinAge: '', infoMaxAge: '', infoMinWeight: '', infoMaxWeight: '', infoMaterial: '', infoMadeIn: '', description: ''
+    })
     const [colors, setColors] = useState([]);
     const [sizes, setSizes] = useState([]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({ ...product, photoUrl: imageUrls, color: colors, size: sizes });
         if (loadFormProduct.action === 'add') {
             dispatch(api_product.postDataProduct({ ...product, photoUrl: imageUrls, color: colors, size: sizes }));
         } else {
@@ -53,15 +52,13 @@ export const FormProduct = (props) => {
     }
 
     useEffect(() => {
-        dispatch(api_types.getDataType());
-
         if (loadFormProduct.value === '') {
             setImageUrls('');
-            setProduct({ name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoAge: '', infoWeight: '', infoMaterial: '', infoMadeIn: '', description: '' });
+            setProduct({ name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoMinAge: '', infoMaxAge: '', infoMinWeight: '', infoMaxWeight: '', infoMaterial: '', infoMadeIn: '', description: '' });
             setColors([]);
             setSizes([]);
         } else {
-            setImageUrls(loadFormProduct.value.image);
+            setImageUrls(loadFormProduct.value.photoUrl);
             setProduct({ ...loadFormProduct.value, type: loadFormProduct.value.type._id });
             setColors(loadFormProduct.value.color);
             setSizes(loadFormProduct.value.size);
@@ -74,7 +71,7 @@ export const FormProduct = (props) => {
                 show={showForm} onHide={handleCloseForm}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {/* {formDataProduct.value !== "" ? "Modal Edit" : "Modal Add New"} */}
+                        {loadFormProduct.value !== "" ? "Sửa Loại Sản Phẩm" : "Tạo Mới Loại Sản Phẩm"}
                     </Modal.Title>
                 </Modal.Header>
 
@@ -116,7 +113,17 @@ export const FormProduct = (props) => {
                                 {/*START KEY INFO PRODUCT */}
                                 <KeyInfoProduct product={product} setProduct={setProduct} />
                                 {/*END KEY INFO PRODUCT */}
+                            </Grid>
 
+                            <Grid item md={6} xs={12} pl={8}>
+                                {/*START MORE INFO PRODUCT */}
+                                <MoreInfoProduct product={product} setProduct={setProduct} />
+                                {/*END MORE INFO PRODUCT */}
+                            </Grid>
+                        </Grid>
+
+                        <Grid container>
+                            <Grid item md={6} xs={12} pr={8}>
                                 {/*START COLOR PRODUCT */}
                                 <Form.Group className="mb-3">
                                     <Form.Label>Màu sắc</Form.Label>
@@ -126,10 +133,6 @@ export const FormProduct = (props) => {
                             </Grid>
 
                             <Grid item md={6} xs={12} pl={8}>
-                                {/*START MORE INFO PRODUCT */}
-                                <MoreInfoProduct product={product} setProduct={setProduct} />
-                                {/*END MORE INFO PRODUCT */}
-
                                 {/*START SIZE PRODUCT */}
                                 <Form.Group className="mb-3">
                                     <Form.Label>Kích cỡ</Form.Label>
@@ -140,7 +143,7 @@ export const FormProduct = (props) => {
                         </Grid>
                         <div className="text-center mt-5">
                             <Button className="w-100" variant="success" type='submit'>
-                                SUBMIT
+                                {loadFormProduct.value == "" ? "Thêm mới" : "Cập nhật"}
                             </Button>
                         </div>
                     </Form>

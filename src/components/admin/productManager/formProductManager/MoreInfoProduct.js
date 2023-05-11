@@ -1,3 +1,4 @@
+import { Grid } from '@mui/material';
 import React from 'react'
 import Form from 'react-bootstrap/Form';
 
@@ -14,17 +15,42 @@ export const MoreInfoProduct = (props) => {
       </Form.Group>
 
       <Form.Group className="mb-4">
-        <Form.Label>Dành cho tuổi từ...</Form.Label>
-        <Form.Control type="text" placeholder="Info Age Product" name="infoAge"
-          value={product.infoAge} onChange={(e) => setProduct({ ...product, infoAge: e.target.value })}
-        />
+        <Form.Label>Dành cho độ tuổi</Form.Label>
+        <div className="d-flex justify-content-evenly">
+          <div className="d-flex align-items-center" >
+            <label className="mx-2">Từ:</label>
+            <Form.Control type="number" placeholder="Min age" name="infoMinAge" style={{ width: "120px" }}
+              value={product.infoMinAge} onChange={(e) => setProduct({ ...product, infoMinAge: parseInt(e.target.value) })}
+            />
+          </div>
+
+          <div className="d-flex align-items-center" >
+            <label className="mx-2">Đến:</label>
+            <Form.Control type="number" placeholder="Max age" name="infoMaxAge" style={{ width: "120px" }}
+              value={product.infoMaxAge} onChange={(e) => setProduct({ ...product, infoMaxAge: parseInt(e.target.value) })}
+            />
+          </div>
+        </div>
       </Form.Group>
 
       <Form.Group className="mb-4">
         <Form.Label>Dành cho cân nặng từ...</Form.Label>
-        <Form.Control type="text" placeholder="Info Weight Product" name="infoWeight"
-          value={product.infoWeight} onChange={(e) => setProduct({ ...product, infoWeight: e.target.value })}
-        />
+        <div className="d-flex justify-content-evenly">
+          <div className="d-flex align-items-center" >
+            <label className="mx-2">Từ:</label>
+            <Form.Control type="number" placeholder="Min Weight" name="infoMinWeight" style={{ width: "120px" }}
+              value={product.infoMinWeight} onChange={(e) => setProduct({ ...product, infoMinWeight: parseInt(e.target.value) })}
+            />
+          </div>
+
+          <div className="d-flex align-items-center" >
+            <label className="mx-2">Đến:</label>
+            <Form.Control type="number" placeholder="Max weight" name="infoMaxWeight" style={{ width: "120px" }}
+              value={product.infoMaxWeight} onChange={(e) => setProduct({ ...product, infoMaxWeight: parseInt(e.target.value) })}
+            />
+          </div>
+        </div>
+
       </Form.Group>
 
       <Form.Group className="mb-4">

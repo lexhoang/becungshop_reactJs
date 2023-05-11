@@ -61,10 +61,10 @@ export const ProductManager = () => {
                         <th>Tên</th>
                         <th>Dành cho</th>
                         <th>Loại</th>
+                        <th>Độ tuổi</th>
+                        <th>Cân nặng</th>
                         <th>Số lượng</th>
                         <th>Giá</th>
-                        <th>Màu sắc</th>
-                        <th>Kích cỡ</th>
                         <th rowSpan="3">Thao Tác</th>
                     </tr>
                 </thead>
@@ -74,15 +74,15 @@ export const ProductManager = () => {
                             return (
                                 <tr key={product._id}>
                                     <td>
-                                        <img src={product.image} alt="ảnh" width="120px" height='120px' />
+                                        <img src={product.photoUrl} alt="ảnh" width="120px" height='120px' />
                                     </td>
                                     <td> {product.name} </td>
                                     <td> {(product.productFor === "begai") ? "Bé gái" : "Bé trai"} </td>
                                     <td> {product.type.name} - {(product.productFor === "begai") ? "Bé gái" : "Bé trai"} </td>
+                                    <td> {product.infoMinAge} tuổi - {product.infoMaxAge} tuổi</td>
+                                    <td> {product.infoMinWeight} kg - {product.infoMaxWeight} kg </td>
                                     <td> {product.amount} </td>
                                     <td> {product.prices} </td>
-                                    <td> {product.color} </td>
-                                    <td> {product.size} </td>
                                     <td>
                                         <ButtonGroup aria-label="outlined primary button group">
                                             <Button variant='outlined' color="warning" onClick={() => handleEditProduct(product)}><ModeEditIcon /></Button>

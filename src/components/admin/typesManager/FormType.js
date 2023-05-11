@@ -111,7 +111,7 @@ export const FormType = (props) => {
 
             <div className="text-center mt-5">
               <Button className="w-100" variant="success" type='submit'>
-                {loadFormType.value !== "" ? "Thêm mới" : "Cập nhật"}
+                {loadFormType.value == "" ? "Thêm mới" : "Cập nhật"}
               </Button>
             </div>
           </Form>
