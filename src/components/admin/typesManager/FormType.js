@@ -39,9 +39,9 @@ export const FormType = (props) => {
     e.preventDefault();
 
     if (loadFormType.action === 'add') {
-      dispatch(api_types.postDataType({ ...type, image: imageUrls }));
+      dispatch(api_types.postDataType({ ...type, photoUrl: imageUrls }));
     } else {
-      dispatch(api_types.putDataType({ ...type, image: imageUrls }));
+      dispatch(api_types.putDataType({ ...type, photoUrl: imageUrls }));
     }
     props.handleCloseForm()
   }
@@ -53,7 +53,7 @@ export const FormType = (props) => {
       setImageUrls('');
     } else {
       setType({ ...loadFormType.value });
-      setImageUrls(loadFormType.value.image);
+      setImageUrls(loadFormType.value.photoUrl);
     }
   }, [loadFormType]);
 

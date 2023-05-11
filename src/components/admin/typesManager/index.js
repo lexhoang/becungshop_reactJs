@@ -71,7 +71,7 @@ export const TypeManager = () => {
                             return (
                                 <tr key={type._id}>
                                     <td>
-                                        <img src={type.image} alt="ảnh" width="120px" height='120px' />
+                                        <img src={type.photoUrl} alt="ảnh" width="120px" height='120px' />
                                     </td>
                                     <td> {type.name} </td>
                                     <td> {type.productFor === "begai" ? "Bé Gái" : "Bé Trai"} </td>
