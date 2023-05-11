@@ -3,7 +3,6 @@ import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux';
-import * as api_productFor from '../../../api/api_productFor';
 import * as api_types from '../../../api/api_types';
 
 
@@ -14,8 +13,6 @@ import Form from 'react-bootstrap/Form';
 import { Grid } from '@mui/material';
 
 export const FormType = (props) => {
-  const { dataProductFor } = useSelector(state => state.productForReducer);
-
   const { showForm, handleCloseForm, loadFormType } = props;
 
   const dispatch = useDispatch();
@@ -51,12 +48,11 @@ export const FormType = (props) => {
 
 
   useEffect(() => {
-    dispatch(api_productFor.getDataProductFor());
     if (loadFormType.value === '') {
       setType({ name: '', productFor: '', description: '' });
       setImageUrls('');
     } else {
-      setType({ ...loadFormType.value, productFor: loadFormType.value.productFor._id });
+      setType({ ...loadFormType.value });
       setImageUrls(loadFormType.value.image);
     }
   }, [loadFormType]);
@@ -68,7 +64,7 @@ export const FormType = (props) => {
         show={showForm} onHide={handleCloseForm}>
         <Modal.Header closeButton>
           <Modal.Title>
-            {/* {formDataProduct.value !== "" ? "Modal Edit" : "Modal Add New"} */}
+            {loadFormType.value !== "" ? "Sửa Loại Sản Phẩm" : "Tạo Mới Loại Sản Phẩm"}
           </Modal.Title>
         </Modal.Header>
 
@@ -99,15 +95,9 @@ export const FormType = (props) => {
                     value={type.productFor} onChange={(e) => setType({ ...type, productFor: e.target.value })}
                   >
                     <option value="">Sản Phẩm Dành Cho</option>
-                    {
-                      dataProductFor.map((productFor) => {
-                        return (
-                          <option key={productFor._id} value={productFor._id}>{productFor.name}</option>
-                        )
-                      })
-                    }
+                    <option value="begai">Bé Gái</option>
+                    <option value="betrai">Bé Trai</option>
                   </Form.Select>
-
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -121,7 +111,7 @@ export const FormType = (props) => {
 
             <div className="text-center mt-5">
               <Button className="w-100" variant="success" type='submit'>
-                SUBMIT
+                {loadFormType.value !== "" ? "Thêm mới" : "Cập nhật"}
               </Button>
             </div>
           </Form>

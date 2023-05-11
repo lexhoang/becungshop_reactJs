@@ -5,11 +5,9 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { FormType } from './FormType';
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_types from '../../../api/api_types'
-import * as api_productFor from '../../../api/api_productFor'
 
 export const TypeManager = () => {
     const { dataTypes } = useSelector(state => state.typesReducer)
-    const { dataProductFor } = useSelector(state => state.productForReducer)
     const dispatch = useDispatch();
 
     const [showForm, setShowForm] = useState(false);
@@ -37,7 +35,6 @@ export const TypeManager = () => {
 
     useEffect(() => {
         dispatch(api_types.getDataType())
-        dispatch(api_productFor.getDataProductFor())
     }, [])
 
 
@@ -77,7 +74,7 @@ export const TypeManager = () => {
                                         <img src={type.image} alt="ảnh" width="120px" height='120px' />
                                     </td>
                                     <td> {type.name} </td>
-                                    <td> {type.productFor.name} </td>
+                                    <td> {type.productFor === "begai" ? "Bé Gái" : "Bé Trai"} </td>
                                     <td> {type.description} </td>
                                     <td>
                                         <ButtonGroup aria-label="outlined primary button group">

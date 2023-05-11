@@ -4,35 +4,35 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, ButtonGroup, Grid, TextField } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import * as api_productFor from '../../../api/api_productFor';
-import { FormProductFor } from './FormProductFor';
+import * as api_product from '../../../api/api_product';
+import { FormProduct } from './formProductManager';
 
 
-export const ProductForManager = () => {
-    const { dataProductFor } = useSelector(state => state.productForReducer);
+export const ProductManager = () => {
+    const { dataProduct } = useSelector(state => state.productReducer);
     const dispatch = useDispatch();
 
-    const [loadFormProductFor, setLoadFormProductFor] = useState({ action: '', value: '' });
+    const [loadFormProduct, setLoadFormProduct] = useState({ action: '', value: '' });
 
     const [showForm, setShowForm] = useState(false);
     const handleCloseForm = () => setShowForm(false);
 
     const handleFormAddNew = () => {
         setShowForm(true);
-        setLoadFormProductFor({ action: 'add', value: '' })
+        setLoadFormProduct({ action: 'add', value: '' })
     }
 
-    const handleEditProductFor = (productFor) => {
+    const handleEditProduct = (product) => {
         setShowForm(true);
-        setLoadFormProductFor({ action: 'edit', value: productFor })
+        setLoadFormProduct({ action: 'edit', value: product })
     }
 
-    const handleDeleteProductFor = (IdProductFor) => {
-        dispatch(api_productFor.deleteDataProductFor(IdProductFor));
+    const handleDeleteProduct = (IdProduct) => {
+        dispatch(api_product.deleteDataProduct(IdProduct));
     }
 
     useEffect(() => {
-        dispatch(api_productFor.getDataProductFor())
+        dispatch(api_product.getDataProduct())
     }, []);
 
 
@@ -50,33 +50,43 @@ export const ProductForManager = () => {
                 />
             </div>
 
-            <FormProductFor showForm={showForm} handleCloseForm={handleCloseForm}
-                loadFormProductFor={loadFormProductFor}
+            <FormProduct showForm={showForm} handleCloseForm={handleCloseForm}
+                loadFormProduct={loadFormProduct}
             />
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
                     <tr>
                         <th>Ảnh</th>
-                        <th>Sản Phẩm Dành Cho</th>
-                        <th>Mô Tả</th>
+                        <th>Tên</th>
+                        <th>Dành cho</th>
+                        <th>Loại</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Màu sắc</th>
+                        <th>Kích cỡ</th>
                         <th rowSpan="3">Thao Tác</th>
                     </tr>
                 </thead>
                 <tbody className='text-center'>
                     {
-                        dataProductFor.map((productFor) => {
+                        dataProduct.map((product) => {
                             return (
-                                <tr key={productFor._id}>
+                                <tr key={product._id}>
                                     <td>
-                                        <img src={productFor.image} alt="ảnh" width="120px" height='120px' />
+                                        <img src={product.image} alt="ảnh" width="120px" height='120px' />
                                     </td>
-                                    <td> {productFor.name} </td>
-                                    <td> {productFor.description} </td>
+                                    <td> {product.name} </td>
+                                    <td> {product.productFor} </td>
+                                    <td> {product.type.name} </td>
+                                    <td> {product.amount} </td>
+                                    <td> {product.prices} </td>
+                                    <td> {product.color} </td>
+                                    <td> {product.size} </td>
                                     <td>
                                         <ButtonGroup aria-label="outlined primary button group">
-                                            <Button variant='outlined' color="warning" onClick={() => handleEditProductFor(productFor)}><ModeEditIcon /></Button>
-                                            <Button variant='outlined' color="error" onClick={() => handleDeleteProductFor(productFor._id)}><DeleteIcon /></Button>
+                                            <Button variant='outlined' color="warning" onClick={() => handleEditProduct(product)}><ModeEditIcon /></Button>
+                                            <Button variant='outlined' color="error" onClick={() => handleDeleteProduct(product._id)}><DeleteIcon /></Button>
                                         </ButtonGroup>
                                     </td>
                                 </tr>

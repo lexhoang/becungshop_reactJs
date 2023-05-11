@@ -36,13 +36,13 @@ export default function LayoutAdmin() {
                     items={[
                         {
                             key: '1',
-                            icon: <VideoCameraOutlined />,
-                            label: <NavLink to="" style={styleNavLink}>Dành cho</NavLink>,
+                            icon: <UserOutlined />,
+                            label: <NavLink to="" style={styleNavLink}>Loại sản phẩm</NavLink>,
                         },
                         {
                             key: '2',
-                            icon: <UserOutlined />,
-                            label: <NavLink to="typemanager" style={styleNavLink}>Loại sản phẩm</NavLink>,
+                            icon: <VideoCameraOutlined />,
+                            label: <NavLink to="productmanager" style={styleNavLink}>Sản phẩm</NavLink>,
                         }
                     ]}
                 />

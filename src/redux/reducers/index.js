@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { productForReducer } from "./productFor_reducer";
+import { productReducer } from "./reducer_product";
 import { typesReducer } from "./reducer_types";
 
-export const reducer = combineReducers({ productForReducer, typesReducer })
+export const reducer = combineReducers({ productReducer, typesReducer })
