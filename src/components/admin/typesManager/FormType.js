@@ -4,6 +4,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_types from '../../../api/api_types';
+import * as api_productFor from '../../../api/api_productFor';
 
 
 ////// START UI  /////
@@ -14,6 +15,8 @@ import { Grid } from '@mui/material';
 
 export const FormType = (props) => {
   const { showForm, handleCloseForm, loadFormType } = props;
+  const { dataProductFor } = useSelector(state => state.productForReducer);
+
 
   const dispatch = useDispatch();
 
@@ -48,6 +51,8 @@ export const FormType = (props) => {
 
 
   useEffect(() => {
+    dispatch(api_productFor.getDataProductFor());
+
     if (loadFormType.value === '') {
       setType({ name: '', productFor: '', description: '' });
       setImageUrls('');
@@ -95,8 +100,13 @@ export const FormType = (props) => {
                     value={type.productFor} onChange={(e) => setType({ ...type, productFor: e.target.value })}
                   >
                     <option value="">Sản Phẩm Dành Cho</option>
-                    <option value="begai">Bé Gái</option>
-                    <option value="betrai">Bé Trai</option>
+                    {
+                      dataProductFor.map((productFor) => {
+                        return (
+                          <option key={productFor._id} value={productFor._id}>{productFor.name}</option>
+                        )
+                      })
+                    }
                   </Form.Select>
                 </Form.Group>
 

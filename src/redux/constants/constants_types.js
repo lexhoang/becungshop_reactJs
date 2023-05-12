@@ -1,5 +1,5 @@
 export const GET_TYPE = "GET_TYPE"
-export const SEARCH_TYPE = "SEARCH_TYPE"
+export const FILTER_TYPE = "FILTER_TYPE"
 export const SUCCESS_TYPE = "SUCCESS_TYPE"
 export const POST_TYPE = "POST_TYPE"
 export const PUT_TYPE = "PUT_TYPE"

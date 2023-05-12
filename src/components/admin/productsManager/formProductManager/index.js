@@ -3,7 +3,7 @@ import { storage } from "../../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux';
-import * as api_product from '../../../../api/api_product';
+import * as api_product from '../../../../api/api_products';
 import * as api_types from '../../../../api/api_types';
 
 

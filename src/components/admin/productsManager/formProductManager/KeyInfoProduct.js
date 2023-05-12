@@ -2,15 +2,20 @@ import React, { useEffect } from 'react'
 import Form from 'react-bootstrap/Form';
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_types from '../../../../api/api_types';
+import * as api_productFor from '../../../../api/api_productFor';
+
 
 export const KeyInfoProduct = (props) => {
     const { product, setProduct } = props;
 
-    const { dataTypes } = useSelector(state => state.typesReducer)
+    const { dataTypes } = useSelector(state => state.typesReducer);
+    const { dataProductFor } = useSelector(state => state.productForReducer);
+
     const dispatch = useDispatch();
 
     useEffect(() => {
         dispatch(api_types.getDataType());
+        dispatch(api_productFor.getDataProductFor());
     }, []);
 
 
@@ -30,8 +35,13 @@ export const KeyInfoProduct = (props) => {
                     value={product.productFor} onChange={(e) => setProduct({ ...product, productFor: e.target.value })}
                 >
                     <option value="">Sản Phẩm Dành Cho</option>
-                    <option value="begai">Bé Gái</option>
-                    <option value="betrai">Bé Trai</option>
+                    {
+                        dataProductFor.map((productFor) => {
+                            return (
+                                <option key={productFor._id} value={productFor._id}>{productFor.name}</option>
+                            )
+                        })
+                    }
                 </Form.Select>
             </Form.Group>
 
@@ -44,7 +54,7 @@ export const KeyInfoProduct = (props) => {
                     {
                         dataTypes.map((type) => {
                             return (
-                                <option key={type._id} value={type._id}>{type.name} - {type.productFor === "begai" ? "Bé Gái" : "Bé Trai"}</option>
+                                <option key={type._id} value={type._id}>{type.name} - {type.productFor.name}</option>
                             )
                         })
                     }

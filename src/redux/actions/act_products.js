@@ -1,35 +1,35 @@
-import * as constants_product from '../constants/constants_product';
+import * as constants_products from '../constants/constants_products';
 
 export const act_product_get = () => {
     return {
-        type: constants_product.GET_PRODUCT
+        type: constants_products.GET_PRODUCT
     }
 }
 
 export const act_product_success = (product) => {
     return {
-        type: constants_product.SUCCESS_PRODUCT,
+        type: constants_products.SUCCESS_PRODUCT,
         payload: product
     }
 }
 
 export const act_product_port = (product) => {
     return {
-        type: constants_product.POST_PRODUCT,
+        type: constants_products.POST_PRODUCT,
         payload: product
     }
 }
 
 export const act_product_put = (product) => {
     return {
-        type: constants_product.PUT_PRODUCT,
+        type: constants_products.PUT_PRODUCT,
         payload: product
     }
 }
 
 export const act_product_delete = (IdProduct) => {
     return {
-        type: constants_product.DELETE_PRODUCT,
+        type: constants_products.DELETE_PRODUCT,
         payload: IdProduct
     }
 }
