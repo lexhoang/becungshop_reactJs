@@ -15,8 +15,6 @@ import { Grid } from '@mui/material';
 
 export const FormType = (props) => {
   const { showForm, handleCloseForm, loadFormType } = props;
-  const { dataProductFor } = useSelector(state => state.productForReducer);
-
 
   const dispatch = useDispatch();
 
@@ -34,7 +32,7 @@ export const FormType = (props) => {
   }
   ////////// END  UPLOAD IMAGE FIREBASE   ///////////
 
-  const [type, setType] = useState({ name: '', productFor: '', description: '' })
+  const [type, setType] = useState({ name: '', description: '' })
 
 
   ////////           CRUD          ////////////
@@ -51,10 +49,8 @@ export const FormType = (props) => {
 
 
   useEffect(() => {
-    dispatch(api_productFor.getDataProductFor());
-
     if (loadFormType.value === '') {
-      setType({ name: '', productFor: '', description: '' });
+      setType({ name: '', description: '' });
       setImageUrls('');
     } else {
       setType({ ...loadFormType.value });
@@ -92,22 +88,6 @@ export const FormType = (props) => {
                   <Form.Control type='text' placeholder="Name Type" name="name-type"
                     value={type.name} onChange={(e) => setType({ ...type, name: e.target.value })}
                   />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Sản Phẩm Dành Cho</Form.Label>
-                  <Form.Select aria-label="Sản Phẩm Dành Cho"
-                    value={type.productFor} onChange={(e) => setType({ ...type, productFor: e.target.value })}
-                  >
-                    <option value="">Sản Phẩm Dành Cho</option>
-                    {
-                      dataProductFor.map((productFor) => {
-                        return (
-                          <option key={productFor._id} value={productFor._id}>{productFor.name}</option>
-                        )
-                      })
-                    }
-                  </Form.Select>
                 </Form.Group>
 
                 <Form.Group className="mb-3" controlId="formBasicEmail">

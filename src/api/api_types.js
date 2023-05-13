@@ -14,9 +14,9 @@ export const getDataType = () => {
     }
 }
 
-export const filterDataType = (name, productFor) => {
+export const filterDataType = (name) => {
     return async (dispatch) => {
-        await instances.get(`types?name=${name}&productFor=${productFor}`)
+        await instances.get(`types?name=${name}`)
             .then((response) => {
                 dispatch(act_types.act_type_success(response.data.data));
             })

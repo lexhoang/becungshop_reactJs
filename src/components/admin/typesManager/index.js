@@ -15,7 +15,6 @@ import { FormType } from './FormType';
 
 export const TypesManager = () => {
     const { dataTypes } = useSelector(state => state.typesReducer);
-    const { dataProductFor } = useSelector(state => state.productForReducer);
 
     const dispatch = useDispatch();
 
@@ -27,10 +26,7 @@ export const TypesManager = () => {
     const [loadFormType, setLoadFormType] = useState({ action: '', value: '' })
 
     const [searchType, setSearchType] = useState("");
-    const [searchProductFor, setSearchProductFor] = useState("");
-    const handleFilter = () => {
-        dispatch(api_types.filterDataType(searchType, searchProductFor))
-    }
+
 
     ////////////      CRUD     ////////////
     const handleFormAddNew = () => {
@@ -48,9 +44,13 @@ export const TypesManager = () => {
     }
 
     useEffect(() => {
-        dispatch(api_types.getDataType());
-        dispatch(api_productFor.getDataProductFor());
-    }, [])
+        if (searchType === "") {
+            dispatch(api_types.getDataType());
+
+        } else {
+            dispatch(api_types.filterDataType(searchType));
+        }
+    }, [searchType])
 
 
     return (
@@ -59,28 +59,20 @@ export const TypesManager = () => {
             <Grid container mt={12} mb={5}>
                 <Grid item xs={8} className="mx-auto text-center">
                     <Grid container>
-                        <Grid item md={6} xs={12} my={1}>
-                            <TextField variant="outlined" size="small" label="Search Type"
-                                sx={{ width: "70%" }}
-                                value={searchType}
-                                onChange={(e) => { setSearchType(e.target.value) }}
-                            />
-                        </Grid>
-
-                        <Grid item md={6} xs={12} my={1}>
-                            <FormControl sx={{ width: "70%" }}>
-                                <InputLabel size="small">Product for</InputLabel>
+                        <Grid item md={9} xs={12} my={1}>
+                            <FormControl fullWidth>
+                                <InputLabel size="small">Loại sản phẩm</InputLabel>
                                 <Select
                                     size="small"
-                                    value={searchProductFor}
+                                    value={searchType}
                                     label="Product for"
-                                    onChange={(e) => setSearchProductFor(e.target.value)}
+                                    onChange={(e) => setSearchType(e.target.value)}
                                 >
                                     <MenuItem value=''>Tất cả</MenuItem>
                                     {
-                                        dataProductFor.map((productFor) => {
+                                        dataTypes.map((type) => {
                                             return (
-                                                <MenuItem key={productFor._id} value={productFor._id}>{productFor.name}</MenuItem>
+                                                <MenuItem key={type._id} value={type.name}>{type.name}</MenuItem>
                                             )
                                         })
                                     }
@@ -88,23 +80,14 @@ export const TypesManager = () => {
                             </FormControl>
                         </Grid>
 
-                        <Grid item xs={12} my={3}>
-                            <Button variant="contained" color="warning" className='w-50'
-                                onClick={() => handleFilter()}
-                            >Filter</Button>
+                        <Grid item md={3} xs={12} my={1}>
+                            <Button variant="contained" color="success"
+                                onClick={() => handleFormAddNew()}
+                            >+ Thêm mới</Button>
                         </Grid>
                     </Grid>
                 </Grid>
             </Grid>
-
-            <div className='d-flex justify-content-around'>
-                <Button variant="contained" color="success"
-                    onClick={() => handleFormAddNew()}
-                >+ Thêm mới</Button>
-                <select>
-                    <option value="" key="">50</option>
-                </select>
-            </div>
 
             <FormType showForm={showForm} handleCloseForm={handleCloseForm}
                 loadFormType={loadFormType}
@@ -114,7 +97,6 @@ export const TypesManager = () => {
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
                     <tr>
                         <th>Ảnh</th>
-                        <th>Sản phẩm dành cho</th>
                         <th>Loại sản phẩm</th>
                         <th>Mô Tả</th>
                         <th rowSpan="3">Thao Tác</th>
@@ -128,8 +110,7 @@ export const TypesManager = () => {
                                     <td>
                                         <img src={type.photoUrl} alt="ảnh" width="120px" height='120px' />
                                     </td>
-                                    <td> {type.productFor.name}</td>
-                                    <td> {type.name} - {type.productFor.name}</td>
+                                    <td> {type.name}</td>
                                     <td> {type.description} </td>
                                     <td>
                                         <ButtonGroup aria-label="outlined primary button group">

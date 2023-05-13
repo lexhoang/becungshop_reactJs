@@ -1,0 +1,7 @@
+.bg-footer {
+    background-image: url("/src/assets/images/footer-bg.jpg");
+}
+
+.backTop:hover {
+    color: rgb(0, 255, 0);
+}

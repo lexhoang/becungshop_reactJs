@@ -54,7 +54,7 @@ export const KeyInfoProduct = (props) => {
                     {
                         dataTypes.map((type) => {
                             return (
-                                <option key={type._id} value={type._id}>{type.name} - {type.productFor.name}</option>
+                                <option key={type._id} value={type._id}>{type.name}</option>
                             )
                         })
                     }

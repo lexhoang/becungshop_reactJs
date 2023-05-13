@@ -59,7 +59,7 @@ export const FormProduct = (props) => {
             setSizes([]);
         } else {
             setImageUrls(loadFormProduct.value.photoUrl);
-            setProduct({ ...loadFormProduct.value, type: loadFormProduct.value.type._id });
+            setProduct({ ...loadFormProduct.value, productFor: loadFormProduct.value.productFor._id, type: loadFormProduct.value.type._id });
             setColors(loadFormProduct.value.color);
             setSizes(loadFormProduct.value.size);
         }

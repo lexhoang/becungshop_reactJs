@@ -54,10 +54,10 @@ export const ProductsManager = () => {
     }
 
     useEffect(() => {
-        dispatch(api_products.getDataProduct());
         dispatch(api_types.getDataType())
         dispatch(api_productFor.getDataProductFor());
 
+        dispatch(api_products.getDataProduct());
     }, []);
 
 
@@ -87,7 +87,7 @@ export const ProductsManager = () => {
                                     {
                                         dataTypes.map((type) => {
                                             return (
-                                                <MenuItem key={type._id} value={type._id}>{type.name} - {type.productFor.name} </MenuItem>
+                                                <MenuItem key={type._id} value={type._id}>{type.name}</MenuItem>
                                             )
                                         })
                                     }
@@ -119,7 +119,7 @@ export const ProductsManager = () => {
                         <Grid item xs={12} my={4}>
                             <Button variant="contained" color="warning" className='w-50'
                                 onClick={() => handleFilter()}
-                            >Filter</Button>
+                            >Tìm kiếm</Button>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -145,8 +145,6 @@ export const ProductsManager = () => {
                         <th>Tên</th>
                         <th>Dành cho</th>
                         <th>Loại</th>
-                        <th>Độ tuổi</th>
-                        <th>Cân nặng</th>
                         <th>Số lượng</th>
                         <th>Giá</th>
                         <th rowSpan="3">Thao Tác</th>
@@ -171,17 +169,7 @@ export const ProductsManager = () => {
                                         }
                                     </td>
 
-                                    <td>
-                                        {
-                                            dataProductFor.map((productFor) => (
-                                                product.productFor === productFor._id ?
-                                                    <p key={productFor._id}> {product.type.name} - {productFor.name} </p>
-                                                    : null
-                                            ))
-                                        }
-                                    </td>
-                                    <td> {product.infoMinAge} tuổi - {product.infoMaxAge} tuổi</td>
-                                    <td> {product.infoMinWeight} kg - {product.infoMaxWeight} kg </td>
+                                    <td> {product.type.name} </td>
                                     <td> {product.amount} </td>
                                     <td> {product.prices} </td>
                                     <td>
