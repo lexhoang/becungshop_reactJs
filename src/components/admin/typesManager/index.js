@@ -9,12 +9,14 @@ import { Button, ButtonGroup, Grid, TextField, FormControl, InputLabel, Select, 
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 import { FormType } from './FormType';
-//////////     END UI     ///////////
+import * as act_filter from '../../../redux/actions/act_filter'
 
+//////////     END UI     ///////////
 
 
 export const TypesManager = () => {
     const { dataTypes } = useSelector(state => state.typesReducer);
+    const { searchType } = useSelector(state => state.filterReducer);
 
     const dispatch = useDispatch();
 
@@ -25,7 +27,7 @@ export const TypesManager = () => {
 
     const [loadFormType, setLoadFormType] = useState({ action: '', value: '' })
 
-    const [searchType, setSearchType] = useState("");
+    // const [searchType, setSearchType] = useState("");
 
 
     ////////////      CRUD     ////////////
@@ -66,7 +68,7 @@ export const TypesManager = () => {
                                     size="small"
                                     value={searchType}
                                     label="Product for"
-                                    onChange={(e) => setSearchType(e.target.value)}
+                                    onChange={(e) => dispatch(act_filter.filter_type(e.target.value))}
                                 >
                                     <MenuItem value=''>Tất cả</MenuItem>
                                     {

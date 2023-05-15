@@ -20,33 +20,35 @@ export default function ProductNew() {
     dispatch(api_products.getDataProduct())
   }, []);
   return (
-    <Grid container>
-      {
-        dataProducts.map((product, index) => {
-          return (
-            <Grid item key={product._id} xl={2} md={3} xs={6} p={3}>
-              <Card>
-                <CardActionArea>
-                  <CardMedia
-                    component="img"
-                    height="140"
-                    image={product.photoUrl}
-                    alt="green iguana"
-                  />
-                  <CardContent>
-                    <Typography gutterBottom variant="h5" component="div">
-                      {product.name}
-                    </Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {product.description}
-                    </Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          )
-        })
-      }
-    </Grid>
+    <div className="container">
+      <Grid container>
+        {
+          dataProducts.map((product, index) => {
+            return (
+              <Grid item key={product._id} xl={2} md={3} xs={6} p={3}>
+                <Card>
+                  <CardActionArea>
+                    <CardMedia
+                      component="img"
+                      height="140"
+                      image={product.photoUrl}
+                      alt="green iguana"
+                    />
+                    <CardContent>
+                      <Typography gutterBottom variant="h5" component="div">
+                        {product.name}
+                      </Typography>
+                      <Typography variant="body2" color="text.secondary">
+                        {product.description}
+                      </Typography>
+                    </CardContent>
+                  </CardActionArea>
+                </Card>
+              </Grid>
+            )
+          })
+        }
+      </Grid>
+    </div>
   )
 }

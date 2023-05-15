@@ -7,8 +7,9 @@ export default function LayoutUser() {
     return (
         <div>
             <Header />
-
-            <Outlet />
+            <div className='margin-header'>
+                <Outlet />
+            </div>
 
             {/* <Footer /> */}
         </div>

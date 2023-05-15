@@ -49,7 +49,7 @@ export default function Header() {
     }, [searchName, searchType, searchProductFor]);
 
     return (
-        <div className='bg-danger'>
+        <div className='bg-danger fixed-top px-5'>
             <Grid container p={1}>
                 <Grid item md={3} xs={6}>
                     <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
@@ -109,11 +109,11 @@ export default function Header() {
                 </Grid>
 
                 <Grid item md={3} xs={6} textAlign="right">
-                    <Button variant="outline" color="primary" >Login</Button>
+                    <Button variant="contained" color="primary" >Login</Button>
                 </Grid>
             </Grid >
 
-            <Grid item xs={12} className='bg-info p-1' sx={{ display: { md: 'none', xs: 'flex' }, justifyContent: 'space-evenly' }}>
+            <Grid item xs={12} className='bg-info p-1 rounded-top' sx={{ display: { md: 'none', xs: 'flex' }, justifyContent: 'space-evenly' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                     <div style={{ width: '35px', borderRadius: '50%', backgroundColor: '#fff', cursor: 'pointer' }}>
                         <img src={ImagesIcon[0].icon} alt="" width="100%"

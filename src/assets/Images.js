@@ -1,9 +1,18 @@
-export const ImagesBanner = {
-    banner_1: require('./images/banner-1.jpg'),
-    banner_2: require('./images/banner-2.jpg'),
-    banner_3: require('./images/banner-3.jpg'),
-    banner_4: require('./images/banner-4.jpg'),
-}
+export const ImagesBanner = [
+    {
+        banner: require('./images/banner-1.jpg'),
+    },
+    {
+        banner: require('./images/banner-2.jpg'),
+    },
+    {
+        banner: require('./images/banner-3.jpg'),
+    },
+    {
+        banner: require('./images/banner-4.jpg'),
+    }
+]
+
 
 export const ImagesIcon = [
     {
