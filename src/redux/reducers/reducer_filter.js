@@ -1,3 +1,5 @@
+import * as constants_filter from '../constants/constants_filter';
+
 const initialFilter = {
     searchName: '',
     searchType: '',
@@ -6,19 +8,19 @@ const initialFilter = {
 
 export const filterReducer = (state = initialFilter, action) => {
     switch (action.type) {
-        case "VALUE_NAME_PRODUCT": {
+        case constants_filter.FILTER_NAME: {
             return {
                 ...state,
                 searchName: action.payload,
             }
         }
-        case "VALUE_PRODUCT_TYPES": {
+        case constants_filter.FILTER_TYPE: {
             return {
                 ...state,
                 searchType: action.payload,
             }
         }
-        case "VALUE_PRODUCT_FOR": {
+        case constants_filter.FILTER_PRODUCT_FOR: {
             return {
                 ...state,
                 searchProductFor: action.payload,

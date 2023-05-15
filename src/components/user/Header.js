@@ -7,7 +7,7 @@ import * as api_products from '../../api/api_products';
 import * as api_types from '../../api/api_types';
 import * as api_productFor from '../../api/api_productFor';
 import { Link, useNavigate } from 'react-router-dom';
-
+import * as act_filter from '../../redux/actions/act_filter';
 
 export default function Header() {
     const { dataTypes } = useSelector(state => state.typesReducer);
@@ -20,32 +20,20 @@ export default function Header() {
 
     const handleAllProductFor = () => {
         navigate('/products');
-        dispatch({
-            type: "VALUE_PRODUCT_FOR",
-            payload: ""
-        })
+        dispatch(act_filter.filter_productFor(""))
     }
-    const handleSearchProductFor = (id) => {
+    const handleSearchProductFor = (IdProductFor) => {
         navigate('/products');
-        dispatch({
-            type: "VALUE_PRODUCT_FOR",
-            payload: id
-        })
+        dispatch(act_filter.filter_productFor(IdProductFor))
     }
 
     const handleAllType = () => {
         navigate('/products');
-        dispatch({
-            type: "VALUE_PRODUCT_TYPES",
-            payload: ""
-        })
+        dispatch(act_filter.filter_type(""))
     }
-    const handleSearchType = (id) => {
+    const handleSearchType = (IdType) => {
         navigate('/products');
-        dispatch({
-            type: "VALUE_PRODUCT_TYPES",
-            payload: id
-        })
+        dispatch(act_filter.filter_type(IdType))
     }
 
 

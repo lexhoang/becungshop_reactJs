@@ -27,6 +27,8 @@ export default function ProductsPage() {
             dispatch(api_products.getDataProduct());
         }
     }, [searchName, searchType, searchProductFor]);
+
+    
     return (
         <Grid container>
             {

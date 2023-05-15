@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as api_products from '../../../api/api_products';
 import * as api_types from '../../../api/api_types';
 import * as api_productFor from '../../../api/api_productFor';
+import * as act_filter from '../../../redux/actions/act_filter';
 
 import { FormProduct } from './formProductManager';
 
@@ -21,6 +22,7 @@ export const ProductsManager = () => {
     const { dataProducts } = useSelector(state => state.productsReducer);
     const { dataTypes } = useSelector(state => state.typesReducer)
     const { dataProductFor } = useSelector(state => state.productForReducer);
+    const { searchName, searchType, searchProductFor } = useSelector(state => state.filterReducer);
 
     const dispatch = useDispatch();
 
@@ -29,9 +31,9 @@ export const ProductsManager = () => {
     const [showForm, setShowForm] = useState(false);
     const handleCloseForm = () => setShowForm(false);
 
-    const [searchName, setSearchName] = useState('');
-    const [searchType, setSearchType] = useState('');
-    const [searchProductFor, setSearchProductFor] = useState('');
+    // const [searchName, setSearchName] = useState('');
+    // const [searchType, setSearchType] = useState('');
+    // const [searchProductFor, setSearchProductFor] = useState('');
 
     const handleFilter = () => {
         dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
@@ -70,7 +72,7 @@ export const ProductsManager = () => {
                     <Grid container>
                         <Grid item md={4} xs={12} my={1}>
                             <TextField variant="outlined" size="small" label="Search Name" sx={{ width: "90%" }}
-                                value={searchName} onChange={(e) => setSearchName(e.target.value)}
+                                value={searchName} onChange={(e) => dispatch(act_filter.filter_name(e.target.value))}
                             />
                         </Grid>
 
@@ -81,7 +83,7 @@ export const ProductsManager = () => {
                                     size="small"
                                     value={searchType}
                                     label="Product for"
-                                    onChange={(e) => setSearchType(e.target.value)}
+                                    onChange={(e) => dispatch(act_filter.filter_type(e.target.value))}
                                 >
                                     <MenuItem value=''>Tất cả</MenuItem>
                                     {
@@ -102,7 +104,7 @@ export const ProductsManager = () => {
                                     size="small"
                                     value={searchProductFor}
                                     label="Product for"
-                                    onChange={(e) => setSearchProductFor(e.target.value)}
+                                    onChange={(e) => dispatch(act_filter.filter_productFor(e.target.value))}
                                 >
                                     <MenuItem value=''>Tất cả</MenuItem>
                                     {
