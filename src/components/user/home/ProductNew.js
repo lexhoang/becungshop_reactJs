@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-
-
+import * as api_products from '../../../api/api_products';
+////////     START  UI      ////////
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import * as api_products from '../../../api/api_products';
+////////     END  UI      ////////
+
 
 
 export default function ProductNew() {
-
   const { dataProducts } = useSelector((state) => state.productsReducer);
   const dispatch = useDispatch();
 
@@ -25,7 +25,7 @@ export default function ProductNew() {
         {
           dataProducts.map((product, index) => {
             return (
-              <Grid item key={product._id} xl={2} md={3} xs={6} p={3}>
+              <Grid item key={product._id} lg={2} md={3} sm={4} xs={6} p={3}>
                 <Card>
                   <CardActionArea>
                     <CardMedia

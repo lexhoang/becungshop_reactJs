@@ -1,6 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './styles/carousel.css';
+import './styles/header.css';
+
 import { Routes, Route } from 'react-router-dom';
 import LayoutUser from './components/user/LayoutUser'
 

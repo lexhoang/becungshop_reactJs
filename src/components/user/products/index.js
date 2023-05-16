@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
-
-
+import * as api_products from '../../../api/api_products';
+////////     START  UI      ////////
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import * as api_products from '../../../api/api_products';
-import { useNavigate } from 'react-router-dom';
+////////     END  UI      ////////
 
 
 export default function ProductsPage() {
@@ -28,13 +28,13 @@ export default function ProductsPage() {
         }
     }, [searchName, searchType, searchProductFor]);
 
-    
+
     return (
         <Grid container>
             {
                 dataProducts.map((product, index) => {
                     return (
-                        <Grid item key={product._id} xl={2} md={3} xs={6} p={3}>
+                        <Grid item key={product._id} lg={2} md={3} sm={4} xs={6} p={3}>
                             <Card>
                                 <CardActionArea>
                                     <CardMedia

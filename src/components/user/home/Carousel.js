@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+////////     START  UI      ////////
 import { Container, Carousel, Col, Row } from 'react-bootstrap';
-import { ImagesBanner } from '../../../assets/Images'
-import BannerRight_1 from '../../../assets/images/banner-2.jpg'
-import BannerRight_2 from '../../../assets/images/banner-4.jpg'
+
+import { ImagesBanner } from '../../../assets/Images';
+import BannerRight from '../../../assets/images/bannerRight.jpg';
+////////     END  UI      ////////
 
 export default function CarouselComp() {
+  const navigate = useNavigate();
+
   const [index, setIndex] = useState(0);
 
   const handleSelect = (selectedIndex) => {
@@ -12,13 +17,13 @@ export default function CarouselComp() {
   };
 
   return (
-    <Container fluid>
+    <Container fluid >
       <Row className='justify-content-evenly'>
-        <Col xs={8}>
+        <Col md={8} xs={7}>
           <Carousel activeIndex={index} onSelect={handleSelect}>
             {
               ImagesBanner.map((image) => (
-                <Carousel.Item>
+                <Carousel.Item key={image.id}>
                   <img
                     className="d-block w-100"
                     src={image.banner}
@@ -30,18 +35,19 @@ export default function CarouselComp() {
           </Carousel>
         </Col>
 
-        <Col xs={3} className="d-flex flex-column justify-content-around">
-          <img
-            className="d-block w-100"
-            src={BannerRight_1}
-            alt="First slide"
-          />
+        <Col md={3} xs={5} className="d-flex flex-column justify-content-around">
+          <div>
+            <img
+              className="d-block w-100"
+              src={BannerRight}
+              alt="First slide"
+            />
+          </div>
 
-          <img
-            className="d-block w-100"
-            src={BannerRight_2}
-            alt="First slide"
-          />
+          <button className="custom-btn btn-sale mt-1"
+            onClick={() => navigate('/products')}>
+            <span>Mua sắm</span>
+          </button>
         </Col>
       </Row >
     </Container>

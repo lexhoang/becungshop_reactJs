@@ -1,14 +1,18 @@
 export const ImagesBanner = [
     {
+        id:1,
         banner: require('./images/banner-1.jpg'),
     },
     {
+        id:2,
         banner: require('./images/banner-2.jpg'),
     },
     {
+        id:3,
         banner: require('./images/banner-3.jpg'),
     },
     {
+        id:4,
         banner: require('./images/banner-4.jpg'),
     }
 ]
