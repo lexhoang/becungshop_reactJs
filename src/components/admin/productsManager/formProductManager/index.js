@@ -5,20 +5,26 @@ import { v4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_product from '../../../../api/api_products';
 import * as api_types from '../../../../api/api_types';
-
+import * as api_productFor from '../../../../api/api_productFor';
+import * as Yup from 'yup';
 
 ////// START UI  /////
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import { Grid } from '@mui/material';
 import { KeyInfoProduct } from './KeyInfoProduct';
 import { MoreInfoProduct } from './MoreInfoProduct';
 import SelectColor from './select-color';
 import SelectSize from './select-size';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import MyField from '../../../MyField';
+
 
 export const FormProduct = (props) => {
     const { showForm, handleCloseForm, loadFormProduct } = props;
+
+    const { dataTypes } = useSelector(state => state.typesReducer);
+    const { dataProductFor } = useSelector(state => state.productForReducer);
     const dispatch = useDispatch();
 
     ////////// START  UPLOAD IMAGE FIREBASE   ///////////
@@ -35,34 +41,63 @@ export const FormProduct = (props) => {
     }
     ////////// END  UPLOAD IMAGE FIREBASE   ///////////
 
-    const [product, setProduct] = useState({
-        name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoMinAge: '', infoMaxAge: '', infoMinWeight: '', infoMaxWeight: '', infoMaterial: '', infoMadeIn: '', description: ''
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required('Vui lòng điền tên sản phẩm'),
+        productFor: Yup.string().required('Vui lòng điền sản phảm dành cho ai'),
+        type: Yup.string().required('Vui lòng điền loại sản phẩm'),
+        amount: Yup.string().required('Vui lòng điền số lượng sản phẩm'),
+        prices: Yup.string().required('Vui lòng điền giá sản phẩm'),
+        infoCode: Yup.string().required('Vui lòng điền mã sản phẩm'),
+        infoMinAge: Yup.string().required('Vui lòng điền tuổi nhỏ nhất'),
+        infoMaxAge: Yup.string().required('Vui lòng điền tên tuổi lớn nhất'),
+        infoMinWeight: Yup.string().required('Vui lòng điền cân nặng'),
+        infoMaxWeight: Yup.string().required('Vui lòng điền cân nặng'),
+        infoMaterial: Yup.string().required('Vui lòng điền chất liệu'),
+        infoMadeIn: Yup.string().required('Vui lòng điền  xuất sứ'),
+        description: Yup.string().required('Vui lòng điền mô tả')
+
     })
+
+    const [product, setProduct] = useState({
+        name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoMinAge: 0, infoMaxAge: 0, infoMinWeight: 0, infoMaxWeight: 0, infoMaterial: '', infoMadeIn: '', description: ''
+    })
+
+
     const [colors, setColors] = useState([]);
     const [sizes, setSizes] = useState([]);
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
+    const handleSubmit = (values) => {
         if (loadFormProduct.action === 'add') {
-            dispatch(api_product.postDataProduct({ ...product, photoUrl: imageUrls, color: colors, size: sizes }));
+            console.log(values);
+            dispatch(api_product.postDataProduct({
+                ...values,
+                photoUrl: imageUrls, color: colors, size: sizes
+            }));
         } else {
-            dispatch(api_product.putDataProduct({ ...product, photoUrl: imageUrls, color: colors, size: sizes }));
+            dispatch(api_product.putDataProduct({
+                ...values,
+                photoUrl: imageUrls, color: colors, size: sizes
+            }));
         }
         props.handleCloseForm()
     }
 
     useEffect(() => {
+        dispatch(api_types.getDataType());
+        dispatch(api_productFor.getDataProductFor());
+
         if (loadFormProduct.value === '') {
             setImageUrls('');
-            setProduct({ name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoMinAge: '', infoMaxAge: '', infoMinWeight: '', infoMaxWeight: '', infoMaterial: '', infoMadeIn: '', description: '' });
+            setProduct({ name: '', productFor: '', type: '', amount: '', prices: '', infoCode: '', infoMinAge: '', infoMaxAge: '', infoMinWeight: '', infoMaxWeight: '', infoMaterial: '', infoMadeIn: '', description: '' });
             setColors([]);
             setSizes([]);
         } else {
             setImageUrls(loadFormProduct.value.photoUrl);
-            setProduct({ ...loadFormProduct.value, productFor: loadFormProduct.value.productFor._id, type: loadFormProduct.value.type._id });
+            setProduct({ ...loadFormProduct.value, productFor: loadFormProduct.value.productFor, type: loadFormProduct.value.type._id });
             setColors(loadFormProduct.value.color);
             setSizes(loadFormProduct.value.size);
         }
+
     }, [loadFormProduct])
 
     return (
@@ -76,77 +111,200 @@ export const FormProduct = (props) => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <Form onSubmit={handleSubmit}>
-                        <Grid container>
-                            {/*START IMAGES UPLOAD */}
-                            <Grid item md={6} xs={12} pr={8}>
-                                <Grid container>
-                                    <Grid item md={5} xs={12} px={1} sx={{ height: "150px", width: "150px" }}>
-                                        <img src={imageUrls} alt="img" style={{ maxWidth: "100%", maxHeight: "100%" }} />
-                                    </Grid>
+                    <Formik
+                        validationSchema={validationSchema}
+                        initialValues={product}
+                        onSubmit={handleSubmit}
+                        enableReinitialize={true}
+                    >
+                        <Form >
+                            <Grid container>
+                                {/*START IMAGES UPLOAD */}
+                                <Grid item md={6} xs={12} pr={8}>
+                                    <Grid container>
+                                        <Grid item md={5} xs={12} px={1} sx={{ height: "150px", width: "150px" }}>
+                                            <img src={imageUrls} alt="img" style={{ maxWidth: "100%", maxHeight: "100%" }} />
+                                        </Grid>
 
-                                    <Grid item md={7} xs={12} px={1}>
-                                        <Form.Group>
-                                            <Form.Label>Ảnh Sản Phẩm</Form.Label>
-                                            <Form.Control type="file" onChange={uploadImage} name="imgUrl" />
-                                        </Form.Group>
+                                        <Grid item md={7} xs={12} px={1}>
+                                            <div>
+                                                <label>Ảnh Sản Phẩm</label>
+                                                <input type="file" onChange={uploadImage} name="imgUrl" className="form-control" />
+                                            </div>
+                                        </Grid>
                                     </Grid>
                                 </Grid>
-                            </Grid>
-                            {/* END IMAGES UPLOAD */}
+                                {/* END IMAGES UPLOAD */}
 
-                            {/*START DESCRIPTION PRODUCT */}
-                            <Grid item md={6} xs={12} pl={8}>
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Mô Tả</Form.Label>
-                                    <Form.Control as="textarea" style={{ height: '100px' }} placeholder="Description" name="description"
-                                        value={product.description} onChange={(e) => setProduct({ ...product, description: e.target.value })}
+                                {/*START DESCRIPTION PRODUCT */}
+                                <Grid item md={6} xs={12} pl={8}>
+                                    <div className="mb-3">
+                                        <label htmlFor="description">Mô Tả</label>
+                                        <Field as="textarea" name="description" id="description"
+                                            className="form-control"
+                                            placeholder="Description"
+                                            style={{ height: '100px' }}
+                                        />
+                                        <ErrorMessage name='description' component="div" className="text-danger" />
+                                    </div>
+                                </Grid>
+                                {/*END DESCRIPTION PRODUCT */}
+                            </Grid>
+
+
+                            <Grid container>
+                                <Grid item md={6} xs={12} pr={8}>
+                                    {/*START KEY INFO PRODUCT */}
+                                    <MyField type="text" name="name" label="Tên sản phẩm"
+                                        placeholder="Name Product"
+                                        className="form-control"
                                     />
-                                </Form.Group>
+
+                                    <div className="mt-4">
+                                        <Field aria-label="Sản Phẩm Dành Cho" name="productFor" label="Sản Phẩm Dành Cho"
+                                            component="select"
+                                            className="form-select"
+                                        >
+                                            <option value="">Sản Phẩm Dành Cho</option>
+                                            {
+                                                dataProductFor.map((productFor) => {
+                                                    return (
+                                                        <option key={productFor._id} value={productFor._id}>{productFor.name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </Field>
+                                        <ErrorMessage name='productFor' component="div" className="text-danger" />
+                                    </div>
+
+                                    <div className="mt-4">
+                                        <Field aria-label="Loại sản phẩm" name="type" label="Loại sản phẩm"
+                                            component="select"
+                                            className="form-select"
+                                        >
+                                            <option value="">Loại sản phẩm</option>
+                                            {
+                                                dataTypes.map((type) => {
+                                                    return (
+                                                        <option key={type._id} value={type._id}>{type.name}</option>
+                                                    )
+                                                })
+                                            }
+                                        </Field>
+                                        <ErrorMessage name='type' component="div" className="text-danger" />
+                                    </div>
+
+                                    <MyField type="number" name="amount" label="Số lượng" placeholder="Amount Product"
+                                        className="form-control"
+                                    />
+
+                                    <MyField type="number" name="prices" label="Giá"
+                                        placeholder="Prices Product"
+                                        className="form-control"
+                                    />
+                                    {/*END KEY INFO PRODUCT */}
+                                </Grid>
+
+                                <Grid item md={6} xs={12} pl={8}>
+                                    {/*START MORE INFO PRODUCT */}
+                                    <MyField type="text" name="infoCode" id="infoCode" label="Mã sản phẩm"
+                                        placeholder="Name Product"
+                                        className="form-control"
+                                    />
+
+                                    <div className="mb-4">
+                                        <label>Dành cho độ tuổi...</label>
+                                        <div className="d-flex justify-content-evenly">
+                                            <div className="d-flex align-items-center" >
+                                                <label htmlFor='infoMinAge' className="mx-2">Từ:</label>
+                                                <Field type="number" name="infoMinAge" id="infoMinAge"
+                                                    className="form-control"
+                                                    placeholder="Min age"
+                                                    style={{ width: "120px" }}
+                                                />
+                                                <ErrorMessage name='infoMinAge' component="div" className="text-danger" />
+                                            </div>
+
+                                            <div className="d-flex align-items-center" >
+                                                <label htmlFor='infoMaxAge' className="mx-2">Đến:</label>
+                                                <Field type="number" name="infoMaxAge" id="infoMaxAge"
+                                                    className="form-control"
+                                                    placeholder="Max age"
+                                                    style={{ width: "120px" }}
+                                                />
+                                                <ErrorMessage name='infoMaxAge' component="div" className="text-danger" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label>Dành cho cân nặng từ...</label>
+                                        <div className="d-flex justify-content-evenly">
+                                            <div className="d-flex align-items-center" >
+                                                <label htmlFor="infoMinWeight" className="mx-2">Từ:</label>
+                                                <Field type="number" name="infoMinWeight" id="infoMinWeight"
+                                                    className="form-control"
+                                                    placeholder="Min Weight"
+                                                    style={{ width: "120px" }}
+                                                />
+                                                <ErrorMessage name='infoMinWeight' component="div" className="text-danger" />
+                                            </div>
+
+                                            <div className="d-flex align-items-center" >
+                                                <label htmlFor='infoMaxWeight' className="mx-2">Đến:</label>
+                                                <Field type="number" name="infoMaxWeight" id="infoMaxWeight"
+                                                    className="form-control"
+                                                    placeholder="Max weight"
+                                                    style={{ width: "120px" }}
+                                                />
+                                                <ErrorMessage name='infoMaxWeight' component="div" className="text-danger" />
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    <MyField type="text" name="infoMaterial" id="infoMaterial" label="Chất liệu"
+                                        className="form-control"
+                                        placeholder="Info Material Product"
+                                    />
+
+                                    <MyField type="text" name="infoMadeIn" id="infoMadeIn" label="Xuất sứ"
+                                        className="form-control"
+                                        placeholder="Info MadeIn Product"
+                                    />
+                                    {/*END MORE INFO PRODUCT */}
+                                </Grid>
                             </Grid>
-                            {/*END DESCRIPTION PRODUCT */}
-                        </Grid>
+
+                            <Grid container>
+                                <Grid item md={6} xs={12} pr={8}>
+                                    {/*START COLOR PRODUCT */}
+                                    <div className="mb-3">
+                                        <label>Màu sắc</label>
+                                        <SelectColor colors={colors} setColors={setColors} />
+                                    </div>
+                                    {/*END COLOR PRODUCT */}
+                                </Grid>
+
+                                <Grid item md={6} xs={12} pl={8}>
+                                    {/*START SIZE PRODUCT */}
+                                    <div className="mb-3">
+                                        <label>Kích cỡ</label>
+                                        <SelectSize sizes={sizes} setSizes={setSizes} />
+                                    </div>
+                                    {/*END SIZE PRODUCT */}
+                                </Grid>
+                            </Grid>
+                            <div className="text-center mt-5">
+                                <Button className="w-100" variant="success" type='submit'>
+                                    {loadFormProduct.value == "" ? "Thêm mới" : "Cập nhật"}
+                                </Button>
+                            </div>
+                        </Form>
+                    </Formik>
 
 
-                        <Grid container>
-                            <Grid item md={6} xs={12} pr={8}>
-                                {/*START KEY INFO PRODUCT */}
-                                <KeyInfoProduct product={product} setProduct={setProduct} />
-                                {/*END KEY INFO PRODUCT */}
-                            </Grid>
 
-                            <Grid item md={6} xs={12} pl={8}>
-                                {/*START MORE INFO PRODUCT */}
-                                <MoreInfoProduct product={product} setProduct={setProduct} />
-                                {/*END MORE INFO PRODUCT */}
-                            </Grid>
-                        </Grid>
-
-                        <Grid container>
-                            <Grid item md={6} xs={12} pr={8}>
-                                {/*START COLOR PRODUCT */}
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Màu sắc</Form.Label>
-                                    <SelectColor colors={colors} setColors={setColors} />
-                                </Form.Group>
-                                {/*END COLOR PRODUCT */}
-                            </Grid>
-
-                            <Grid item md={6} xs={12} pl={8}>
-                                {/*START SIZE PRODUCT */}
-                                <Form.Group className="mb-3">
-                                    <Form.Label>Kích cỡ</Form.Label>
-                                    <SelectSize sizes={sizes} setSizes={setSizes} />
-                                </Form.Group>
-                                {/*END SIZE PRODUCT */}
-                            </Grid>
-                        </Grid>
-                        <div className="text-center mt-5">
-                            <Button className="w-100" variant="success" type='submit'>
-                                {loadFormProduct.value == "" ? "Thêm mới" : "Cập nhật"}
-                            </Button>
-                        </div>
-                    </Form>
                 </Modal.Body>
 
                 <Modal.Footer>

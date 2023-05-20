@@ -4,13 +4,14 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_productFor from '../../../api/api_productFor';
-
+import * as Yup from 'yup';
 
 ////// START UI  /////
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import { Grid } from '@mui/material';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import MyField from '../../MyField';
 
 export const FormProductFor = (props) => {
     const { showForm, handleCloseForm, loadFormProductFor } = props;
@@ -32,16 +33,17 @@ export const FormProductFor = (props) => {
     ////////// END  UPLOAD IMAGE FIREBASE   ///////////
 
     const [productFor, setProductFor] = useState({ name: '', description: '' })
-
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Vui lòng nhập tên"),
+        description: Yup.string().required("Vui lòng nhập mô tả")
+    })
 
     ////////           CRUD          ////////////
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
+    const handleSubmit = (values) => {
         if (loadFormProductFor.action === 'add') {
-            dispatch(api_productFor.postDataProductFor({ ...productFor, photoUrl: imageUrls }));
+            dispatch(api_productFor.postDataProductFor({ ...values, photoUrl: imageUrls }));
         } else {
-            dispatch(api_productFor.putDataProductFor({ ...productFor, photoUrl: imageUrls }));
+            dispatch(api_productFor.putDataProductFor({ ...values, photoUrl: imageUrls }));
         }
         props.handleCloseForm()
     }
@@ -69,41 +71,50 @@ export const FormProductFor = (props) => {
                 </Modal.Header>
 
                 <Modal.Body>
-                    <Form onSubmit={handleSubmit}>
-                        <Grid container>
-                            <Grid item md={6} xs={12} px={1}>
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Ảnh Sản Phẩm</Form.Label>
-                                    <Form.Control type="file" onChange={uploadImage}
-                                        placeholder="Name Movie" name="imgUrl" />
-                                </Form.Group>
+                    <Formik
+                        validationSchema={validationSchema}
+                        initialValues={productFor}
+                        onSubmit={handleSubmit}
+                        enableReinitialize={true}>
+                        <Form>
+                            <Grid container>
+                                <Grid item md={6} xs={12} px={1}>
+                                    <div className="mb-3 form-group">
+                                        <label>Ảnh Sản Phẩm</label>
+                                        <Field className="form-control" type="file" onChange={uploadImage}
+                                            placeholder="Name Movie" name="imgUrl" />
+                                    </div>
 
-                                <img src={imageUrls} alt="img" width={200} />
-                            </Grid>
+                                    <img src={imageUrls} alt="img" width={200} />
+                                </Grid>
 
-                            <Grid item md={6} xs={12} px={1}>
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Loại sản phẩm</Form.Label>
-                                    <Form.Control type='text' placeholder="Name Type" name="name-type"
-                                        value={productFor.name} onChange={(e) => setProductFor({ ...productFor, name: e.target.value })}
+                                <Grid item md={6} xs={12} px={1}>
+                                    <MyField type='text' name="name" id="name"
+                                        label='Loại sản phẩm'
+                                        placeholder="Name Type"
+                                        className="form-control"
                                     />
-                                </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail">
-                                    <Form.Label>Mô Tả</Form.Label>
-                                    <Form.Control as="textarea" style={{ height: '100px' }} placeholder="Description" name="description"
-                                        value={productFor.description} onChange={(e) => setProductFor({ ...productFor, description: e.target.value })}
-                                    />
-                                </Form.Group>
+                                    <div className="mb-3 form-group">
+                                        <label>Mô Tả</label>
+                                        <Field as="textarea" name="description" id="description" label="Mô Tả" placeholder="Description"
+                                            style={{ height: '100px' }}
+                                            className="form-control"
+                                        />
+                                        <ErrorMessage name="description" component="div" className="text-danger" />
+                                    </div>
+                                </Grid>
+
+                                <div className="text-center mt-5">
+                                    <Button className="w-100" variant="success" type='submit'>
+                                        {loadFormProductFor.value == "" ? "Thêm mới" : "Cập nhật"}
+                                    </Button>
+                                </div>
                             </Grid>
-                        </Grid>
-
-                        <div className="text-center mt-5">
-                            <Button className="w-100" variant="success" type='submit'>
-                                {loadFormProductFor.value == "" ? "Thêm mới" : "Cập nhật"}
-                            </Button>
-                        </div>
-                    </Form>
+                        </Form>
+                    </Formik>
+                    {/* <Form onSubmit={handleSubmit}>
+                    </Form> */}
                 </Modal.Body>
 
                 <Modal.Footer>
@@ -111,7 +122,7 @@ export const FormProductFor = (props) => {
                         Close
                     </Button>
                 </Modal.Footer>
-            </Modal>
+            </Modal >
         </>
     )
 }

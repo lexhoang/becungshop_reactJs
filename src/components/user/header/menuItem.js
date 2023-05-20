@@ -33,7 +33,7 @@ export default function MenuItem(props) {
                         onClick={() => handleAllProductFor()}
                     />
                 </div>
-                <span style={{ fontSize: '13px' }} className='text-white'>Tất cả</span>
+                <span style={{ fontSize: '11px', fontWeight: "700" }} className='text-white'>Tất cả</span>
             </div>
             {
                 dataProductFor.map(productFor => {
@@ -43,7 +43,7 @@ export default function MenuItem(props) {
                             >
                                 <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor._id)} />
                             </div>
-                            <span style={{ fontSize: '13px' }} className={`text-${productFor._id === searchProductFor ? "warning" : "white"}`}>
+                            <span style={{ fontSize: '11px', fontWeight: "700" }} className={`text-${productFor._id === searchProductFor ? "warning" : "white"}`}>
                                 {productFor.name}
                             </span>
                         </div>
@@ -51,14 +51,13 @@ export default function MenuItem(props) {
                 })
             }
             <hr />
-
             <div className='icon-content'>
                 <div className='icon-img'>
                     <img src={IconAll} alt="" width="100%"
                         onClick={() => handleAllType()}
                     />
                 </div>
-                <span style={{ fontSize: '13px' }} className='text-white'>Tất cả</span>
+                <span style={{ fontSize: '11px', fontWeight: "700" }} className='text-white'>Tất cả</span>
             </div>
             {
                 dataTypes.map(type => {
@@ -68,7 +67,7 @@ export default function MenuItem(props) {
                             >
                                 <img src={type.photoUrl} alt="" width="100%" onClick={() => handleSearchType(type._id)} />
                             </div>
-                            <span style={{ fontSize: '13px' }} className={`text-${type._id === searchType ? "warning" : "white"}`}>{type.name}</span>
+                            <span style={{ fontSize: '11px', fontWeight: "700" }} className={`text-${type._id === searchType ? "warning" : "white"}`}>{type.name}</span>
                         </div>
                     )
                 })

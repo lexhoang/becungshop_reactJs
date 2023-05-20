@@ -57,8 +57,8 @@ export default function Header() {
 
     return (
         <div className='bg-danger fixed-top px-3'>
-            <Grid container p={1} className='align-items-center justify-content-around'>
-                <Grid item md={2} xs={3}>
+            <Grid container p={1} className='align-items-center justify-content-evenly'>
+                <Grid item xl={1} md={2} xs={3}>
                     <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
                         <Grid item sx={{ width: { md: '120px', xs: '100px' } }}>
                             <img src={LogoImage} alt="" width='100%' />
@@ -66,7 +66,7 @@ export default function Header() {
                     </Link>
                 </Grid>
 
-                <Grid item md={3} xs={5}>
+                <Grid item xl={4} md={3} xs={6}>
                     <Grid item sx={{ width: { md: '90%', sm: '80%', xs: '100%' } }}>
                         <Search placeholder="input search text"
                             onSearch={onSearch} enterButton
@@ -74,13 +74,19 @@ export default function Header() {
                     </Grid>
                 </Grid>
 
-                <Grid item md={5} sx={{ display: { md: 'flex', xs: 'none' }, justifyContent: 'space-between' }}>
+                <Grid item xl={4} md={5} sx={{ display: { md: 'flex', xs: 'none' }, justifyContent: 'space-between' }}>
                     <MenuItem handleAllType={handleAllType} handleAllProductFor={handleAllProductFor} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
                 </Grid>
 
-                <Grid item md={2} xs={4} textAlign="right">
-                    <Button><ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} /></Button>
-                    <Button size="small" variant="contained" color="primary" >Login</Button>
+                <Grid item md={2} xs={3} >
+                    <Grid container>
+                        <Grid item xs={6} textAlign="right">
+                            <Button><ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} /></Button>
+                        </Grid>
+                        <Grid item xs={6} textAlign="right">
+                            <Button size="small" variant="contained" color="primary">Login</Button>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid >
 

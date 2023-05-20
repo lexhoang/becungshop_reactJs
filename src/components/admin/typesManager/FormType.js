@@ -5,13 +5,14 @@ import { v4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_types from '../../../api/api_types';
 import * as api_productFor from '../../../api/api_productFor';
-
+import MyField from '../../MyField';
+import * as Yup from 'yup'
 
 ////// START UI  /////
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import Form from 'react-bootstrap/Form';
 import { Grid } from '@mui/material';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 export const FormType = (props) => {
   const { showForm, handleCloseForm, loadFormType } = props;
@@ -34,15 +35,17 @@ export const FormType = (props) => {
 
   const [type, setType] = useState({ name: '', description: '' })
 
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Vui lòng điền loại sản phẩm"),
+    description: Yup.string().required("Vui lòng điền mô tả sản phẩm")
+  })
 
   ////////           CRUD          ////////////
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
+  const handleSubmit = (values) => {
     if (loadFormType.action === 'add') {
-      dispatch(api_types.postDataType({ ...type, photoUrl: imageUrls }));
+      dispatch(api_types.postDataType({ ...values, photoUrl: imageUrls }));
     } else {
-      dispatch(api_types.putDataType({ ...type, photoUrl: imageUrls }));
+      dispatch(api_types.putDataType({ ...values, photoUrl: imageUrls }));
     }
     props.handleCloseForm()
   }
@@ -70,41 +73,46 @@ export const FormType = (props) => {
         </Modal.Header>
 
         <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            <Grid container>
-              <Grid item md={6} xs={12} px={1}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Ảnh Sản Phẩm</Form.Label>
-                  <Form.Control type="file" onChange={uploadImage}
-                    placeholder="Name Movie" name="imgUrl" />
-                </Form.Group>
+          <Formik
+            validationSchema={validationSchema}
+            initialValues={type}
+            onSubmit={handleSubmit}
+            enableReinitialize={true}
+          >
+            <Form>
+              <Grid container>
+                <Grid item md={6} xs={12} px={1}>
+                  <div className="mb-3">
+                    <label>Ảnh Sản Phẩm</label>
+                    <input type="file" onChange={uploadImage}
+                      placeholder="Name Movie" name="imgUrl" className='form-control' />
+                  </div>
 
-                <img src={imageUrls} alt="img" width={200} />
+                  <img src={imageUrls} alt="img" width={200} />
+                </Grid>
+
+                <Grid item md={6} xs={12} px={1}>
+                  <MyField type='text' name="name" id="name" label="Loại sản phẩm" placeholder="Name Type"
+                    className='form-control'
+                  />
+
+                  <div className="mb-3">
+                    <label>Mô Tả</label>
+                    <Field as="textarea" name="description" label="Mô tả" placeholder="Description"
+                      style={{ height: '100px' }} className='form-control'
+                    />
+                    <ErrorMessage name="description" component="div" className="text-danger" />
+                  </div>
+                </Grid>
               </Grid>
 
-              <Grid item md={6} xs={12} px={1}>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Loại sản phẩm</Form.Label>
-                  <Form.Control type='text' placeholder="Name Type" name="name-type"
-                    value={type.name} onChange={(e) => setType({ ...type, name: e.target.value })}
-                  />
-                </Form.Group>
-
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                  <Form.Label>Mô Tả</Form.Label>
-                  <Form.Control as="textarea" style={{ height: '100px' }} placeholder="Description" name="description"
-                    value={type.description} onChange={(e) => setType({ ...type, description: e.target.value })}
-                  />
-                </Form.Group>
-              </Grid>
-            </Grid>
-
-            <div className="text-center mt-5">
-              <Button className="w-100" variant="success" type='submit'>
-                {loadFormType.value == "" ? "Thêm mới" : "Cập nhật"}
-              </Button>
-            </div>
-          </Form>
+              <div className="text-center mt-5">
+                <Button className="w-100" variant="success" type='submit'>
+                  {loadFormType.value == "" ? "Thêm mới" : "Cập nhật"}
+                </Button>
+              </div>
+            </Form>
+          </Formik>
         </Modal.Body>
 
         <Modal.Footer>
