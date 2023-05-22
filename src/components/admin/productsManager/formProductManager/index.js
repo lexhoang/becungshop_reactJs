@@ -27,20 +27,6 @@ export const FormProduct = (props) => {
     const { dataProductFor } = useSelector(state => state.productForReducer);
     const dispatch = useDispatch();
 
-    ////////// START  UPLOAD IMAGE FIREBASE   ///////////
-    const [imageUrls, setImageUrls] = useState("");
-    const uploadImage = (e) => {
-        let imageUpload = e.target.files[0];
-        if (imageUpload == null) return;
-        const imageRef = ref(storage, `uploadImageProduct/${imageUpload.name}${v4()}`);
-        uploadBytes(imageRef, imageUpload).then((snapshot) => {
-            getDownloadURL(snapshot.ref).then((url) => {
-                setImageUrls(url);
-            });
-        });
-    }
-    ////////// END  UPLOAD IMAGE FIREBASE   ///////////
-
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('Vui lòng điền tên sản phẩm'),
         productFor: Yup.string().required('Vui lòng điền sản phảm dành cho ai'),
@@ -59,25 +45,62 @@ export const FormProduct = (props) => {
     })
 
     const [product, setProduct] = useState({
-        name: '', productFor: '', type: '', amount: 0, prices: 0, infoCode: '', infoMinAge: 0, infoMaxAge: 0, infoMinWeight: 0, infoMaxWeight: 0, infoMaterial: '', infoMadeIn: '', description: ''
-    })
+        name: '', productFor: '', type: '', amount: 0, prices: 0,
+        infoCode: '', infoMinAge: 0, infoMaxAge: 0, infoMinWeight: 0, infoMaxWeight: 0,
+        infoMaterial: '', infoMadeIn: '', description: ''
+    });
 
 
+    //////////  COLOR, SIZE, PHOTO_URL  ///////////
+    const [textError, setTextError] = useState({ image: '', color: '', size: '' })
     const [colors, setColors] = useState([]);
     const [sizes, setSizes] = useState([]);
+    ////////// START  UPLOAD IMAGE FIREBASE   ///////////
+    const [imageUrls, setImageUrls] = useState("");
+    const uploadImage = (e) => {
+        let imageUpload = e.target.files[0];
+        if (imageUpload == null) return;
+        const imageRef = ref(storage, `uploadImageProduct/${imageUpload.name}${v4()}`);
+        uploadBytes(imageRef, imageUpload).then((snapshot) => {
+            getDownloadURL(snapshot.ref).then((url) => {
+                setImageUrls(url);
+            });
+        });
+    }
+    ////////// END  UPLOAD IMAGE FIREBASE   ///////////
+
 
     const handleSubmit = (values) => {
-        if (loadFormProduct.action === 'add') {
-            console.log(values);
-            dispatch(api_product.postDataProduct({
-                ...values,
-                photoUrl: imageUrls, color: colors, size: sizes
-            }));
+        const cloneError = { image: '', color: '', size: '' }
+        let haveError = false;
+        if (imageUrls === "") {
+            cloneError.image = "Vui lòng chọn ảnh sản phẩm"
+            haveError = true
+        }
+        if (colors.length === 0) {
+            cloneError.color = "Vui lòng chọn màu cho sản phẩm"
+            haveError = true
+        }
+        if (sizes.length === 0) {
+            cloneError.size = "Vui lòng chọn kích cỡ sản phẩm"
+            haveError = true
+        }
+        setTextError(cloneError);
+        if (haveError == true) {
+            return
         } else {
-            dispatch(api_product.putDataProduct({
-                ...values,
-                photoUrl: imageUrls, color: colors, size: sizes
-            }));
+            if (loadFormProduct.action === 'add') {
+                // console.log(values);
+                dispatch(api_product.postDataProduct({
+                    ...values,
+                    photoUrl: imageUrls, color: colors, size: sizes
+                }));
+            } else {
+                dispatch(api_product.putDataProduct({
+                    ...values,
+                    photoUrl: imageUrls, color: colors, size: sizes
+                }));
+            }
         }
         props.handleCloseForm()
     }
@@ -133,6 +156,7 @@ export const FormProduct = (props) => {
                                             </div>
                                         </Grid>
                                     </Grid>
+                                    <p className='text-danger'>{textError.image}</p>
                                 </Grid>
                                 {/* END IMAGES UPLOAD */}
 
@@ -161,6 +185,7 @@ export const FormProduct = (props) => {
                                     />
 
                                     <div className="mt-4">
+                                        <label>Sản phẩm dành cho</label>
                                         <Field aria-label="Sản Phẩm Dành Cho" name="productFor" label="Sản Phẩm Dành Cho"
                                             component="select"
                                             className="form-select"
@@ -177,7 +202,8 @@ export const FormProduct = (props) => {
                                         <ErrorMessage name='productFor' component="div" className="text-danger" />
                                     </div>
 
-                                    <div className="mt-4">
+                                    <div className="my-4">
+                                        <label>Loại sản phẩm</label>
                                         <Field aria-label="Loại sản phẩm" name="type" label="Loại sản phẩm"
                                             component="select"
                                             className="form-select"
@@ -194,7 +220,8 @@ export const FormProduct = (props) => {
                                         <ErrorMessage name='type' component="div" className="text-danger" />
                                     </div>
 
-                                    <MyField type="number" name="amount" label="Số lượng" placeholder="Amount Product"
+                                    <MyField type="number" name="amount" label="Số lượng"
+                                        placeholder="Amount Product"
                                         className="form-control"
                                     />
 
@@ -282,6 +309,7 @@ export const FormProduct = (props) => {
                                     <div className="mb-3">
                                         <label>Màu sắc</label>
                                         <SelectColor colors={colors} setColors={setColors} />
+                                        <p className='text-danger'>{textError.color}</p>
                                     </div>
                                     {/*END COLOR PRODUCT */}
                                 </Grid>
@@ -291,6 +319,7 @@ export const FormProduct = (props) => {
                                     <div className="mb-3">
                                         <label>Kích cỡ</label>
                                         <SelectSize sizes={sizes} setSizes={setSizes} />
+                                        <p className='text-danger'>{textError.size}</p>
                                     </div>
                                     {/*END SIZE PRODUCT */}
                                 </Grid>
