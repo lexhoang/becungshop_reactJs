@@ -58,43 +58,44 @@ export default function Header() {
     }, [searchName, searchType, searchProductFor]);
 
     return (
-        <div className='bg-danger fixed-top px-3'>
-            <Grid container p={1} className='align-items-center justify-content-evenly'>
-                <Grid item xl={1} md={2} xs={3}>
-                    <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
-                        <Grid item sx={{ width: { md: '120px', xs: '100px' } }}>
-                            <img src={LogoImage} alt="" width='100%' />
-                        </Grid>
-                    </Link>
-                </Grid>
-
-                <Grid item xl={4} md={3} xs={6}>
-                    <Grid item sx={{ width: { md: '90%', sm: '80%', xs: '100%' } }}>
-                        <Search placeholder="input search text"
-                            onSearch={onSearch} enterButton
-                        />
+        <div>
+            <div className='bg-danger fixed-top px-3'>
+                <Grid container p={1} className='align-items-center justify-content-evenly'>
+                    <Grid item xl={1} md={2} sx={{ display: { md: 'flex', xs: 'none' } }}>
+                        <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
+                            <Grid item sx={{ width: '120px' }}>
+                                <img src={LogoImage} alt="" width='100%' />
+                            </Grid>
+                        </Link>
                     </Grid>
-                </Grid>
 
-                <Grid item xl={4} md={5} sx={{ display: { md: 'flex', xs: 'none' }, justifyContent: 'space-between' }}>
-                    <MenuItem handleAllType={handleAllType} handleAllProductFor={handleAllProductFor} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
-                </Grid>
-
-                <Grid item md={2} xs={3} >
-                    <Grid container>
-                        <Grid item xs={6} textAlign="right">
-                            <Button><ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} /></Button>
-                        </Grid>
-                        <Grid item xs={6} textAlign="right">
-                            <Button size="small" variant="contained" color="primary">Login</Button>
+                    <Grid item xl={4} md={3} xs={7}>
+                        <Grid item sx={{ width: { md: '90%', sm: '80%', xs: '100%' } }}>
+                            <Search placeholder="input search text"
+                                onSearch={onSearch} enterButton
+                            />
                         </Grid>
                     </Grid>
-                </Grid>
-            </Grid >
 
-            <Grid item xs={12} className='bg-info p-1 rounded-top' sx={{ display: { md: 'none', xs: 'flex' }, justifyContent: 'space-evenly' }}>
-                <MenuItem handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
+                    <Grid item xl={4} md={5} sx={{ display: { md: 'flex', xs: 'none' }, justifyContent: 'space-between' }}>
+                        <MenuItem handleAllType={handleAllType} handleAllProductFor={handleAllProductFor} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
+                    </Grid>
+
+                    <Grid item md={2} xs={5} >
+                        <Grid container>
+                            <Grid item xs={6} textAlign="right">
+                                <Button><ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} /></Button>
+                            </Grid>
+                            <Grid item xs={6} textAlign="right">
+                                <Button size="small" variant="contained" color="primary">Login</Button>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid >
+            </div >
+            <Grid item xs={12} className='bg-info p-1 rounded-top fixed-bottom' sx={{ display: { md: 'none', xs: 'flex' }, justifyContent: 'space-evenly' }}>
+                <MenuItem handleAllType={handleAllType} handleAllProductFor={handleAllProductFor} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
             </Grid>
-        </div >
+        </div>
     )
 }

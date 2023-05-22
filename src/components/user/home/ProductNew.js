@@ -29,7 +29,7 @@ export default function ProductNew() {
         {
           dataProducts.map((product, index) => {
             return (
-              <Grid item key={product._id} lg={2} md={3} sm={4} xs={6} p={3}>
+              <Grid item key={product._id} lg={2} md={3} sm={4} xs={6} p={1}>
                 <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
                   <div className='card-content'>
                     <Card style={{ backgroundColor: '#fffbf947' }}>
@@ -50,7 +50,7 @@ export default function ProductNew() {
                           </Stack>
 
                           <div style={{ height: '50px' }}>
-                            <Typography gutterBottom variant="body1" component="div" className='name-product'>
+                            <Typography gutterBottom variant="body2" component="div" className='name-product'>
                               {product.name}
                             </Typography>
                           </div>
