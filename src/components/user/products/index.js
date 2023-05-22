@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as api_products from '../../../api/api_products';
+
 ////////     START  UI      ////////
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -9,6 +10,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
 import Grid from '@mui/material/Grid';
+import Rating from '@mui/material/Rating';
+import Stack from '@mui/material/Stack';
 ////////     END  UI      ////////
 
 
@@ -35,24 +38,35 @@ export default function ProductsPage() {
                 dataProducts.map((product, index) => {
                     return (
                         <Grid item key={product._id} lg={2} md={3} sm={4} xs={6} p={3}>
-                            <Card>
-                                <CardActionArea>
-                                    <CardMedia
-                                        component="img"
-                                        height="140"
-                                        image={product.photoUrl}
-                                        alt="green iguana"
-                                    />
-                                    <CardContent>
-                                        <Typography gutterBottom variant="h5" component="div">
-                                            {product.name}
-                                        </Typography>
-                                        <Typography variant="body2" color="text.secondary">
-                                            {product.description}
-                                        </Typography>
-                                    </CardContent>
-                                </CardActionArea>
-                            </Card>
+                            <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
+                                <div className='card-content'>
+                                    <Card style={{ backgroundColor: '#fffbf947' }}>
+                                        <CardActionArea>
+                                            <CardMedia
+                                                component="img"
+                                                width="200"
+                                                image={product.photoUrl}
+                                                alt="green iguana"
+                                            />
+                                            <CardContent>
+                                                <Typography variant="body1" color="error">
+                                                    {product.prices} đ
+                                                </Typography>
+
+                                                <Stack spacing={1} className="my-2" >
+                                                    <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />
+                                                </Stack>
+
+                                                <div style={{ height: '50px' }}>
+                                                    <Typography gutterBottom variant="body1" component="div" className='name-product'>
+                                                        {product.name}
+                                                    </Typography>
+                                                </div>
+                                            </CardContent>
+                                        </CardActionArea>
+                                    </Card>
+                                </div>
+                            </Link>
                         </Grid>
                     )
                 })

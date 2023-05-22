@@ -30,7 +30,8 @@ export default function Header() {
 
     const handleAllProductFor = () => {
         navigate('/products');
-        dispatch(act_filter.filter_productFor(""))
+        let IdProductFor = ""
+        dispatch(act_filter.filter_productFor(IdProductFor))
     }
     const handleSearchProductFor = (IdProductFor) => {
         navigate('/products');
@@ -39,7 +40,8 @@ export default function Header() {
 
     const handleAllType = () => {
         navigate('/products');
-        dispatch(act_filter.filter_type(""))
+        let IdType = ""
+        dispatch(act_filter.filter_type(IdType))
     }
     const handleSearchType = (IdType) => {
         navigate('/products');
