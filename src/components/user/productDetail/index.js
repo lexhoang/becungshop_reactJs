@@ -13,6 +13,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Modal from 'react-bootstrap/Modal';
+import RelatedProduct from './RelatedProduct';
 
 export default function ProductDetail() {
     const [showForm, setShowForm] = useState(false);
@@ -68,7 +69,7 @@ export default function ProductDetail() {
     }, [quantity]);
 
     return (
-        <div className="bg-white">
+        <div>
             <Container>
                 <Grid container p={2}>
                     <Grid item md={6} xs={12} p={1}>
@@ -229,6 +230,15 @@ export default function ProductDetail() {
                         <span>{productInfo.infoMadeIn}</span>
                     </li>
                 </ul>
+
+
+                <RelatedProduct productInfo={productInfo} />
+
+
+
+
+
+
 
                 <Modal size="md" centered
                     show={showForm} onHide={handleCloseForm}>
