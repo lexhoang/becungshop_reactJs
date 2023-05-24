@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+
+
 import './styles/carousel.css';
 import './styles/header.css';
 import './styles/card.css';

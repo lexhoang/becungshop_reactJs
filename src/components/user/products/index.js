@@ -30,6 +30,8 @@ export default function ProductsPage() {
         } else {
             dispatch(api_products.getDataProduct());
         }
+        // Cuộn lên đầu trang
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [searchName, searchType, searchProductFor]);
 
 

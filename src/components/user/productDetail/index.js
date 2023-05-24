@@ -65,11 +65,13 @@ export default function ProductDetail() {
         };
         fetchDataById();
 
-        setSelectedProduct({ ...selectedProduct, productId: productInfo._id, quantity: quantity })
+        setSelectedProduct({ ...selectedProduct, productId: productInfo._id, quantity: quantity });
+        // Cuộn lên đầu trang
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [quantity]);
 
     return (
-        <div>
+        <div style={{ backgroundColor: '#ffffff' }}>
             <Container>
                 <Grid container p={2}>
                     <Grid item md={6} xs={12} p={1}>
