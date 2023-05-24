@@ -14,8 +14,6 @@ import Stack from '@mui/material/Stack';
 import { Link, NavLink } from 'react-router-dom';
 ////////     END  UI      ////////
 
-
-
 export default function ProductNew() {
   const { dataProducts } = useSelector((state) => state.productsReducer);
   const dispatch = useDispatch();
@@ -24,38 +22,39 @@ export default function ProductNew() {
   }, []);
 
   return (
-    <Container>
-      <Grid container my={12}>
+    <div className="m-5">
+      <h2 className="text-center">Sản phẩm mới</h2>
+      <Grid container my={4}>
         {
-          dataProducts.map((product, index) => {
+          dataProducts.reverse().map((product, index) => {
             return (
-              <Grid item key={product._id} md={3} sm={4} xs={6} p={1}>
+              <Grid item key={product._id} xl={2} md={3} sm={4} xs={6} p={1}>
                 <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
                   <div className='card-content'>
                     {/* <Card> */}
-                      <CardActionArea>
-                        <CardMedia
-                          component="img"
-                          width="100%"
-                          image={product.photoUrl}
-                          alt="green iguana"
-                        />
-                        <CardContent>
-                          <Typography variant="body1" color="error" textAlign='center'>
-                            {product.prices} đ
+                    <CardActionArea>
+                      <CardMedia
+                        component="img"
+                        width="100%"
+                        image={product.photoUrl}
+                        alt="green iguana"
+                      />
+                      <CardContent>
+                        <Typography variant="body1" color="error" textAlign='center'>
+                          {product.prices} đ
+                        </Typography>
+
+                        <Stack spacing={1} className="my-2"  >
+                          <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />
+                        </Stack>
+
+                        <div style={{ height: '40px' }}>
+                          <Typography gutterBottom variant="subtitle2" component="div" className='name-product'>
+                            {product.name}
                           </Typography>
-
-                          <Stack spacing={1} className="my-2"  >
-                            <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />
-                          </Stack>
-
-                          <div style={{ height: '40px' }}>
-                            <Typography gutterBottom variant="subtitle2" component="div" className='name-product'>
-                              {product.name}
-                            </Typography>
-                          </div>
-                        </CardContent>
-                      </CardActionArea>
+                        </div>
+                      </CardContent>
+                    </CardActionArea>
                     {/* </Card> */}
                   </div>
                 </Link>
@@ -64,6 +63,6 @@ export default function ProductNew() {
           })
         }
       </Grid>
-    </Container>
+    </div>
   )
 }

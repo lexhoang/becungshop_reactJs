@@ -34,15 +34,15 @@ export default function ProductsPage() {
 
 
     return (
-        <Container>
-            <Grid container my={8}>
+        <div className="mx-5">
+            <Grid container my={12}>
                 {
                     dataProducts.map((product, index) => {
                         return (
-                            <Grid item key={product._id} md={3} sm={4} xs={6} p={1}>
+                            <Grid item key={product._id} xl={2} md={3} sm={4} xs={6} p={1}>
                                 <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
                                     <div className='card-content'>
-                                        {/* <Card style={{ backgroundColor: '#f5f5f5' }}> */}
+                                        {/* <Card> */}
                                         <CardActionArea>
                                             <CardMedia
                                                 component="img"
@@ -59,8 +59,8 @@ export default function ProductsPage() {
                                                     <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />
                                                 </Stack>
 
-                                                <div style={{ height: '30px' }}>
-                                                    <Typography gutterBottom variant="caption" component="div" className='name-product'>
+                                                <div style={{ height: '40px' }}>
+                                                    <Typography gutterBottom variant="subtitle2" component="div" className='name-product'>
                                                         {product.name}
                                                     </Typography>
                                                 </div>
@@ -74,6 +74,6 @@ export default function ProductsPage() {
                     })
                 }
             </Grid>
-        </Container>
+        </div>
     )
 }
