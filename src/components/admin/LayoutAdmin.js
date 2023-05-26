@@ -43,6 +43,11 @@ export default function LayoutAdmin() {
                             key: '2',
                             icon: <UserOutlined />,
                             label: <NavLink to="typesmanager" style={styleNavLink}>Loại sản phẩm</NavLink>,
+                        },
+                        {
+                            key: '3',
+                            icon: <UserOutlined />,
+                            label: <NavLink to="usersmanager" style={styleNavLink}>Người dùng</NavLink>,
                         }
                     ]}
                 />
