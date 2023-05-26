@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as api_products from '../../../api/api_products';
 
 ////////     START  UI      ////////
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
@@ -34,6 +34,13 @@ export default function ProductsPage() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [searchName, searchType, searchProductFor]);
 
+    // const clickOke = (ad) => {
+    //     console.log(typeof(ad));
+    // }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
 
     return (
         <div className="mx-5">
@@ -53,8 +60,8 @@ export default function ProductsPage() {
                                                 alt="green iguana"
                                             />
                                             <CardContent>
-                                                <Typography variant="body1" color="error" textAlign='center'>
-                                                    {product.prices} đ
+                                                <Typography variant="body1" color="error" textAlign='center' className='fw-bold'>
+                                                    {numberWithCommas(product.prices)}đ
                                                 </Typography>
 
                                                 <Stack spacing={1} className="my-2"  >
@@ -66,11 +73,13 @@ export default function ProductsPage() {
                                                         {product.name}
                                                     </Typography>
                                                 </div>
+
                                             </CardContent>
                                         </CardActionArea>
                                         {/* </Card> */}
                                     </div>
                                 </Link>
+                                {/* <button onClick={() => clickOke(product.prices)}>Oke</button> */}
                             </Grid>
                         )
                     })

@@ -4,11 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import * as api_products from '../../../api/api_products';
 import * as api_types from '../../../api/api_types';
-import * as api_productFor from '../../../api/api_productFor';
 import * as act_filter from '../../../redux/actions/act_filter';
 
 import { FormProduct } from './formProductManager';
-
+import { productForData } from '../../text/TextProductFor'
 
 //////////     START UI     ///////////
 import { Button, ButtonGroup, Grid, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
@@ -21,7 +20,6 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 export const ProductsManager = () => {
     const { dataProducts } = useSelector(state => state.productsReducer);
     const { dataTypes } = useSelector(state => state.typesReducer)
-    const { dataProductFor } = useSelector(state => state.productForReducer);
     const { searchName, searchType, searchProductFor } = useSelector(state => state.filterReducer);
 
     const dispatch = useDispatch();
@@ -30,10 +28,6 @@ export const ProductsManager = () => {
 
     const [showForm, setShowForm] = useState(false);
     const handleCloseForm = () => setShowForm(false);
-
-    // const [searchName, setSearchName] = useState('');
-    // const [searchType, setSearchType] = useState('');
-    // const [searchProductFor, setSearchProductFor] = useState('');
 
     const handleFilter = () => {
         dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
@@ -57,12 +51,13 @@ export const ProductsManager = () => {
 
     useEffect(() => {
         dispatch(api_types.getDataType())
-        dispatch(api_productFor.getDataProductFor());
-
         dispatch(api_products.getDataProduct());
     }, []);
 
 
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
 
     return (
         <>
@@ -106,13 +101,10 @@ export const ProductsManager = () => {
                                     label="Product for"
                                     onChange={(e) => dispatch(act_filter.filter_productFor(e.target.value))}
                                 >
-                                    <MenuItem value=''>Tất cả</MenuItem>
                                     {
-                                        dataProductFor.map((productFor) => {
-                                            return (
-                                                <MenuItem key={productFor._id} value={productFor._id}>{productFor.name}</MenuItem>
-                                            )
-                                        })
+                                        productForData.map((productFor) => (
+                                            <MenuItem key={productFor.id} value={productFor.value}>{productFor.name}</MenuItem>
+                                        ))
                                     }
                                 </Select>
                             </FormControl>
@@ -161,19 +153,10 @@ export const ProductsManager = () => {
                                         <img src={product.photoUrl} alt="ảnh" width="120px" height='120px' />
                                     </td>
                                     <td> {product.name} </td>
-                                    <td>
-                                        {
-                                            dataProductFor.map((productFor) => (
-                                                product.productFor === productFor._id ?
-                                                    <p key={productFor._id}>{productFor.name}</p>
-                                                    : null
-                                            ))
-                                        }
-                                    </td>
-
+                                    <td> {product.productFor == productForData[1].value ? productForData[1].name : productForData[2].name} </td>
                                     <td> {product.type.name} </td>
                                     <td> {product.amount} </td>
-                                    <td> {product.prices} </td>
+                                    <td> {numberWithCommas(product.prices)} </td>
                                     <td>
                                         <ButtonGroup aria-label="outlined primary button group">
                                             <Button variant='outlined' color="warning" onClick={() => handleEditProduct(product)}><ModeEditIcon /></Button>

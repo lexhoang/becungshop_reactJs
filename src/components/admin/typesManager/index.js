@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_types from '../../../api/api_types'
-import * as api_productFor from '../../../api/api_productFor'
 
 //////////     START UI     ///////////
 import { Button, ButtonGroup, Grid, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
@@ -26,8 +25,6 @@ export const TypesManager = () => {
     }
 
     const [loadFormType, setLoadFormType] = useState({ action: '', value: '' })
-
-    // const [searchType, setSearchType] = useState("");
 
 
     ////////////      CRUD     ////////////

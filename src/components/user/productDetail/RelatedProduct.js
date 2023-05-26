@@ -28,6 +28,10 @@ export default function RelatedProduct(props) {
         setRelatedProduct(relate);
     }, [productInfo]);
 
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
+
     return (
         <Container>
             <Grid container my={12}>
@@ -46,8 +50,8 @@ export default function RelatedProduct(props) {
                                                     alt="green iguana"
                                                 />
                                                 <CardContent>
-                                                    <Typography variant="body1" color="error" textAlign='center'>
-                                                        {product.prices} đ
+                                                    <Typography variant="body1" color="error" textAlign='center' className='fw-bold'>
+                                                        {numberWithCommas(product.prices)}đ
                                                     </Typography>
 
                                                     <Stack spacing={1} className="my-2"  >

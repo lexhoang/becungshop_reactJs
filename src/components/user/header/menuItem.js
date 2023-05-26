@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_types from '../../../api/api_types';
-import * as api_productFor from '../../../api/api_productFor';
-
+import { productForData } from '../../text/TextProductFor'
 ////////     START  UI      ////////
 
 import IconAll from '../../../assets/images/icon-all.jpg';
@@ -11,10 +10,9 @@ import IconAll from '../../../assets/images/icon-all.jpg';
 
 
 export default function MenuItem(props) {
-    const { handleAllType, handleAllProductFor, handleSearchType, handleSearchProductFor } = props;
+    const { handleAllType, handleSearchType, handleSearchProductFor } = props;
 
     const { dataTypes } = useSelector(state => state.typesReducer);
-    const { dataProductFor } = useSelector(state => state.productForReducer);
     const { searchType, searchProductFor } = useSelector(state => state.filterReducer);
 
     const dispatch = useDispatch();
@@ -22,33 +20,22 @@ export default function MenuItem(props) {
 
     useEffect(() => {
         dispatch(api_types.getDataType());
-        dispatch(api_productFor.getDataProductFor());
     }, []);
 
     return (
         <>
-            <div className='icon-content'>
-                <div className='icon-img'>
-                    <img src={IconAll} alt="" width="100%"
-                        onClick={() => handleAllProductFor()}
-                    />
-                </div>
-                <span style={{ fontSize: '11px', fontWeight: "700" }} className='text-white'>Tất cả</span>
-            </div>
             {
-                dataProductFor.map(productFor => {
-                    return (
-                        <div key={productFor._id} className='icon-content'>
-                            <div className={`icon-img bg-${productFor._id === searchProductFor ? "warning" : "white"}`}
-                            >
-                                <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor._id)} />
-                            </div>
-                            <span style={{ fontSize: '11px', fontWeight: "700" }} className={`text-${productFor._id === searchProductFor ? "warning" : "white"}`}>
-                                {productFor.name}
-                            </span>
+                productForData.map((productFor, index) => (
+                    <div key={productFor.id} className='icon-content'>
+                        <div className={`icon-img bg-${(productFor.value === searchProductFor && productFor.value !== "") ? "warning" : "white"}`}
+                        >
+                            <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor.value)} />
                         </div>
-                    )
-                })
+                        <span style={{ fontSize: '11px', fontWeight: "700" }} className={`text-${productFor.value === searchProductFor ? "warning" : "white"}`}>
+                            {productFor.name}
+                        </span>
+                    </div>
+                ))
             }
             <hr />
             <div className='icon-content'>

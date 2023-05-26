@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import instances from '../../../api';
-import * as api_products from '../../../api/api_products';
-import { useDispatch, useSelector } from 'react-redux';
+import '../../../styles/productDetail.css';
+
+// import * as api_products from '../../../api/api_products';
+// import { useDispatch, useSelector } from 'react-redux';
 
 import ImageSizeTable from '../../../assets/images/bangsize.png'
 
@@ -50,9 +52,13 @@ export default function ProductDetail() {
     };
 
     const addToCart = () => {
-        console.log(selectedProduct);
+        // console.log(selectedProduct);
+        console.log(productInfo.prices);
     }
 
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
 
     useEffect(() => {
         const fetchDataById = async () => {
@@ -65,10 +71,14 @@ export default function ProductDetail() {
         };
         fetchDataById();
 
+        console.log(productInfo.prices);
         setSelectedProduct({ ...selectedProduct, productId: productInfo._id, quantity: quantity });
         // Cuộn lên đầu trang
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [quantity]);
+
+
+
 
     return (
         <div style={{ backgroundColor: '#ffffff' }}>
@@ -166,10 +176,19 @@ export default function ProductDetail() {
                         {/* ADD TO CART */}
                         <Grid item xs={12}>
                             <Button variant='contained' color='warning'
-                                className='w-100 my-4 p-3'
+                                className='w-100 my-4 p-2 fw-bold'
                                 onClick={() => addToCart()}
                             >
-                                Mua sản phẩm với giá {productInfo.prices} đ
+                                Mua sản phẩm với giá
+                                {
+                                    productInfo.prices !== undefined ?
+                                        <Typography variant="body1" textAlign='center'
+                                            className='p-2 fw-bold'
+                                        >
+                                            {numberWithCommas(productInfo.prices)}đ
+                                        </Typography>
+                                        : null
+                                }
                             </Button>
                         </Grid>
 
@@ -201,33 +220,33 @@ export default function ProductDetail() {
                 </Grid>
 
                 <Typography p={2} variant="subtitle1" fontWeight="bold">Thông tin sản phẩm</Typography>
-                <ul className="list-group">
-                    <li className="list-group-item d-flex border border-0 p-3">
+                <ul className="ul-detail list-group">
+                    <li className="li-detail list-group-item d-flex border border-0 p-3">
                         <div style={{ minWidth: '120px' }}>Mã SP:</div>
                         <span>{productInfo.infoCode}</span>
                     </li>
 
-                    <li className="list-group-item d-flex border border-0 p-3">
+                    <li className="li-detail list-group-item d-flex border border-0 p-3">
                         <div style={{ minWidth: '120px' }}>Độ tuổi:</div>
                         <span>{productInfo.infoMinAge} - {productInfo.infoMaxAge}tuổi</span>
                     </li>
 
-                    <li className="list-group-item d-flex border border-0 p-3">
+                    <li className="li-detail list-group-item d-flex border border-0 p-3">
                         <div style={{ minWidth: '120px' }}>Độ tuổi:</div>
                         <span>{productInfo.infoMinAge} - {productInfo.infoMaxAge}tuổi</span>
                     </li>
 
-                    <li className="list-group-item d-flex border border-0 p-3">
+                    <li className="li-detail list-group-item d-flex border border-0 p-3">
                         <div style={{ minWidth: '120px' }}>Cân nặng:</div>
                         <span>{productInfo.infoMinWeight}kg - {productInfo.infoMaxWeight}kg</span>
                     </li>
 
-                    <li className="list-group-item d-flex border border-0 p-3">
+                    <li className="li-detail list-group-item d-flex border border-0 p-3">
                         <div style={{ minWidth: '120px' }}>Chất liệu:</div>
                         <span>{productInfo.infoMaterial}</span>
                     </li>
 
-                    <li className="list-group-item d-flex border border-0 p-3">
+                    <li className="li-detail list-group-item d-flex border border-0 p-3">
                         <div style={{ minWidth: '120px' }}>Xuất sứ:</div>
                         <span>{productInfo.infoMadeIn}</span>
                     </li>
@@ -235,12 +254,6 @@ export default function ProductDetail() {
 
 
                 <RelatedProduct productInfo={productInfo} />
-
-
-
-
-
-
 
                 <Modal size="md" centered
                     show={showForm} onHide={handleCloseForm}>

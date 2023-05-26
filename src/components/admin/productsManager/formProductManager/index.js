@@ -5,26 +5,26 @@ import { v4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_product from '../../../../api/api_products';
 import * as api_types from '../../../../api/api_types';
-import * as api_productFor from '../../../../api/api_productFor';
 import * as Yup from 'yup';
+
+import SelectColor from './select-color';
+import SelectSize from './select-size';
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import MyField from '../../../MyField';
+import { productForData } from '../../../text/TextProductFor'
 
 ////// START UI  /////
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { Grid } from '@mui/material';
-import { KeyInfoProduct } from './KeyInfoProduct';
-import { MoreInfoProduct } from './MoreInfoProduct';
-import SelectColor from './select-color';
-import SelectSize from './select-size';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import MyField from '../../../MyField';
+
+
 
 
 export const FormProduct = (props) => {
     const { showForm, handleCloseForm, loadFormProduct } = props;
 
     const { dataTypes } = useSelector(state => state.typesReducer);
-    const { dataProductFor } = useSelector(state => state.productForReducer);
     const dispatch = useDispatch();
 
     const validationSchema = Yup.object().shape({
@@ -39,9 +39,7 @@ export const FormProduct = (props) => {
         infoMinWeight: Yup.string().required('Vui lòng điền cân nặng'),
         infoMaxWeight: Yup.string().required('Vui lòng điền cân nặng'),
         infoMaterial: Yup.string().required('Vui lòng điền chất liệu'),
-        infoMadeIn: Yup.string().required('Vui lòng điền  xuất sứ'),
-        description: Yup.string().required('Vui lòng điền mô tả')
-
+        infoMadeIn: Yup.string().required('Vui lòng điền  xuất sứ')
     })
 
     const [product, setProduct] = useState({
@@ -107,7 +105,6 @@ export const FormProduct = (props) => {
 
     useEffect(() => {
         dispatch(api_types.getDataType());
-        dispatch(api_productFor.getDataProductFor());
 
         if (loadFormProduct.value === '') {
             setImageUrls('');
@@ -116,12 +113,13 @@ export const FormProduct = (props) => {
             setSizes([]);
         } else {
             setImageUrls(loadFormProduct.value.photoUrl);
-            setProduct({ ...loadFormProduct.value, productFor: loadFormProduct.value.productFor, type: loadFormProduct.value.type._id });
+            setProduct({ ...loadFormProduct.value, type: loadFormProduct.value.type._id });
             setColors(loadFormProduct.value.color);
             setSizes(loadFormProduct.value.size);
         }
-
     }, [loadFormProduct])
+
+
 
     return (
         <>
@@ -177,8 +175,8 @@ export const FormProduct = (props) => {
 
 
                             <Grid container>
+                                {/*START KEY INFO PRODUCT */}
                                 <Grid item md={6} xs={12} pr={8}>
-                                    {/*START KEY INFO PRODUCT */}
                                     <MyField type="text" name="name" label="Tên sản phẩm"
                                         placeholder="Name Product"
                                         className="form-control"
@@ -190,13 +188,10 @@ export const FormProduct = (props) => {
                                             component="select"
                                             className="form-select"
                                         >
-                                            <option value="">Sản Phẩm Dành Cho</option>
                                             {
-                                                dataProductFor.map((productFor) => {
-                                                    return (
-                                                        <option key={productFor._id} value={productFor._id}>{productFor.name}</option>
-                                                    )
-                                                })
+                                                productForData.map((productFor) => (
+                                                    <option key={productFor.id} value={productFor.value}>{productFor.name}</option>
+                                                ))
                                             }
                                         </Field>
                                         <ErrorMessage name='productFor' component="div" className="text-danger" />
@@ -229,11 +224,11 @@ export const FormProduct = (props) => {
                                         placeholder="Prices Product"
                                         className="form-control"
                                     />
-                                    {/*END KEY INFO PRODUCT */}
                                 </Grid>
+                                {/*END KEY INFO PRODUCT */}
 
+                                {/*START MORE INFO PRODUCT */}
                                 <Grid item md={6} xs={12} pl={8}>
-                                    {/*START MORE INFO PRODUCT */}
                                     <MyField type="text" name="infoCode" id="infoCode" label="Mã sản phẩm"
                                         placeholder="Name Product"
                                         className="form-control"
@@ -299,30 +294,30 @@ export const FormProduct = (props) => {
                                         className="form-control"
                                         placeholder="Info MadeIn Product"
                                     />
-                                    {/*END MORE INFO PRODUCT */}
                                 </Grid>
+                                {/*END MORE INFO PRODUCT */}
                             </Grid>
 
                             <Grid container>
+                                {/*START COLOR PRODUCT */}
                                 <Grid item md={6} xs={12} pr={8}>
-                                    {/*START COLOR PRODUCT */}
                                     <div className="mb-3">
                                         <label>Màu sắc</label>
                                         <SelectColor colors={colors} setColors={setColors} />
                                         <p className='text-danger'>{textError.color}</p>
                                     </div>
-                                    {/*END COLOR PRODUCT */}
                                 </Grid>
+                                {/*END COLOR PRODUCT */}
 
+                                {/*START SIZE PRODUCT */}
                                 <Grid item md={6} xs={12} pl={8}>
-                                    {/*START SIZE PRODUCT */}
                                     <div className="mb-3">
                                         <label>Kích cỡ</label>
                                         <SelectSize sizes={sizes} setSizes={setSizes} />
                                         <p className='text-danger'>{textError.size}</p>
                                     </div>
-                                    {/*END SIZE PRODUCT */}
                                 </Grid>
+                                {/*END SIZE PRODUCT */}
                             </Grid>
                             <div className="text-center mt-5">
                                 <Button className="w-100" variant="success" type='submit'>
@@ -331,9 +326,6 @@ export const FormProduct = (props) => {
                             </div>
                         </Form>
                     </Formik>
-
-
-
                 </Modal.Body>
 
                 <Modal.Footer>

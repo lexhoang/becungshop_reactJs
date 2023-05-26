@@ -39,6 +39,10 @@ export default function ProductNew() {
     setReversedProducts(copiedProducts.reverse());
   }, [dataProducts]);
 
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+  }
+
   return (
     <div className="m-5">
       <h2 className="text-center">Sản phẩm mới</h2>
@@ -57,8 +61,8 @@ export default function ProductNew() {
                       alt="green iguana"
                     />
                     <CardContent>
-                      <Typography variant="body1" color="error" textAlign='center'>
-                        {product.prices} đ
+                      <Typography variant="body1" color="error" textAlign='center' className='fw-bold'>
+                        {numberWithCommas(product.prices)}đ
                       </Typography>
 
                       <Stack spacing={1} className="my-2"  >

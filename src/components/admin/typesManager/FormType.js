@@ -2,9 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import * as api_types from '../../../api/api_types';
-import * as api_productFor from '../../../api/api_productFor';
 import MyField from '../../MyField';
 import * as Yup from 'yup'
 
