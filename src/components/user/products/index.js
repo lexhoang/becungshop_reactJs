@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as api_products from '../../../api/api_products';
@@ -13,30 +13,37 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import { Pagination } from "@mui/material";
 ////////     END  UI      ////////
 
 
 export default function ProductsPage() {
     const { searchName, searchType, searchProductFor } = useSelector(state => state.filterReducer);
+    const { dataProducts, totalPages } = useSelector((state) => state.productsReducer);
 
-    const { dataProducts } = useSelector((state) => state.productsReducer);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+
+    const limit = 6; // Số lượng sản phẩm trên mỗi trang
+    const [currentPage, setCurrentPage] = useState(1);
+
+
     useEffect(() => {
-        if (searchName !== '' || searchType !== '' || searchProductFor !== '') {
+        if (searchName == '' && searchType == '' && searchProductFor == '') {
+            dispatch(api_products.getDataProduct(limit, currentPage));
+        } else {
             navigate("/products")
             dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
-        } else {
-            dispatch(api_products.getDataProduct());
         }
         // Cuộn lên đầu trang
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [searchName, searchType, searchProductFor]);
+    }, [searchName, searchType, searchProductFor, currentPage]);
 
-    // const clickOke = (ad) => {
-    //     console.log(typeof(ad));
-    // }
+
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+    };
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -44,7 +51,18 @@ export default function ProductsPage() {
 
     return (
         <div className="mx-5">
-            <Grid container my={12}>
+            <Grid container justifyContent="center" mt={12}>
+                <Stack spacing={2}>
+                    <Pagination
+                        variant="outlined" color="primary"
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                    />
+                </Stack>
+            </Grid>
+
+            <Grid container my={3}>
                 {
                     dataProducts.map((product, index) => {
                         return (
@@ -84,6 +102,17 @@ export default function ProductsPage() {
                         )
                     })
                 }
+            </Grid>
+
+            <Grid container justifyContent="center">
+                <Stack spacing={2}>
+                    <Pagination
+                        variant="outlined" color="primary"
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                    />
+                </Stack>
             </Grid>
         </div>
     )

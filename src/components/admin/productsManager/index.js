@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-
+import { Pagination } from "@mui/material";
 
 import * as api_products from '../../../api/api_products';
 import * as api_types from '../../../api/api_types';
@@ -10,7 +10,7 @@ import { FormProduct } from './formProductManager';
 import { productForData } from '../../text/TextProductFor'
 
 //////////     START UI     ///////////
-import { Button, ButtonGroup, Grid, TextField, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
+import { Button, ButtonGroup, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
@@ -18,9 +18,12 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
 //////////     END UI     ///////////
 export const ProductsManager = () => {
-    const { dataProducts } = useSelector(state => state.productsReducer);
+    const { dataProducts, totalPages } = useSelector(state => state.productsReducer);
     const { dataTypes } = useSelector(state => state.typesReducer)
     const { searchName, searchType, searchProductFor } = useSelector(state => state.filterReducer);
+
+    const limit = 2; // Số lượng sản phẩm trên mỗi trang
+    const [currentPage, setCurrentPage] = useState(1);
 
     const dispatch = useDispatch();
 
@@ -30,7 +33,11 @@ export const ProductsManager = () => {
     const handleCloseForm = () => setShowForm(false);
 
     const handleFilter = () => {
-        dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
+        if (searchName == '' && searchType == '' && searchProductFor == '') {
+            dispatch(api_products.getDataProduct(limit, currentPage));
+        } else {
+            dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
+        }
     }
 
 
@@ -46,14 +53,18 @@ export const ProductsManager = () => {
     }
 
     const handleDeleteProduct = (IdProduct) => {
-        dispatch(api_products.deleteDataProduct(IdProduct));
+        dispatch(api_products.deleteDataProduct(IdProduct, limit, currentPage));
     }
 
     useEffect(() => {
         dispatch(api_types.getDataType())
-        dispatch(api_products.getDataProduct());
-    }, []);
+        dispatch(api_products.getDataProduct(limit, currentPage));
+    }, [currentPage]);
 
+
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+    };
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -129,7 +140,7 @@ export const ProductsManager = () => {
             </div>
 
             <FormProduct showForm={showForm} handleCloseForm={handleCloseForm}
-                loadFormProduct={loadFormProduct}
+                loadFormProduct={loadFormProduct} limit={limit} currentPage={currentPage}
             />
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
@@ -170,6 +181,17 @@ export const ProductsManager = () => {
 
                 </tbody>
             </table >
+
+            <Grid container justifyContent="center">
+                <Stack spacing={2}>
+                    <Pagination
+                        variant="outlined" color="primary"
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                    />
+                </Stack>
+            </Grid>
         </>
     )
 }

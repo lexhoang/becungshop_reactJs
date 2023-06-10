@@ -24,7 +24,9 @@ export default function RelatedProduct(props) {
     useEffect(() => {
         dispatch(api_products.getDataProduct());
 
-        let relate = dataProducts.filter(product => product.productFor == productInfo.productFor && product.type._id == productInfo.type)
+        let relate = dataProducts.filter(product => product.productFor == productInfo.productFor
+            && product.type._id == productInfo.type);
+            
         setRelatedProduct(relate);
     }, [productInfo]);
 

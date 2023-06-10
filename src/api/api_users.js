@@ -29,6 +29,19 @@ export const postDataUser = (user) => {
     }
 }
 
+export const patchDataUser = (user) => {
+    return async (dispatch) => {
+        await instances.patch(`users/${user._id}`, user)
+            .then((response) => {
+                dispatch(act_users.act_patch_user(response.data.data));
+                dispatch(getDataUser());
+            })
+            .catch((error) => {
+                console.log("error: ", error);
+            })
+    }
+}
+
 export const deleteDataUser = (userID) => {
     return async (dispatch) => {
         await instances.delete(`users/${userID}`)

@@ -22,9 +22,11 @@ import { Grid } from '@mui/material';
 
 
 export const FormProduct = (props) => {
-    const { showForm, handleCloseForm, loadFormProduct } = props;
+    const { showForm, handleCloseForm, loadFormProduct, limit, currentPage } = props;
 
     const { dataTypes } = useSelector(state => state.typesReducer);
+    const { dataProducts } = useSelector(state => state.productsReducer);
+
     const dispatch = useDispatch();
 
     const validationSchema = Yup.object().shape({
@@ -89,15 +91,15 @@ export const FormProduct = (props) => {
         } else {
             if (loadFormProduct.action === 'add') {
                 // console.log(values);
-                dispatch(api_product.postDataProduct({
-                    ...values,
-                    photoUrl: imageUrls, color: colors, size: sizes
-                }));
+                dispatch(api_product.postDataProduct(
+                    { ...values, photoUrl: imageUrls, color: colors, size: sizes },
+                    limit, currentPage
+                ));
             } else {
-                dispatch(api_product.putDataProduct({
-                    ...values,
-                    photoUrl: imageUrls, color: colors, size: sizes
-                }));
+                dispatch(api_product.putDataProduct(
+                    { ...values, photoUrl: imageUrls, color: colors, size: sizes },
+                    limit, currentPage
+                ));
             }
         }
         props.handleCloseForm()

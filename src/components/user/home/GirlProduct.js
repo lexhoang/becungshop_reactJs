@@ -22,7 +22,9 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 
 
-export default function GirlProduct() {
+export default function GirlProduct(props) {
+  const { limit, currentPage } = props;
+
   const { dataProducts } = useSelector((state) => state.productsReducer);
 
   const dispatch = useDispatch();
@@ -34,7 +36,7 @@ export default function GirlProduct() {
   }
 
   useEffect(() => {
-    dispatch(api_products.getDataProduct())
+    dispatch(api_products.getDataProduct(limit, currentPage))
   }, []);
 
   // useEffect(() => {
@@ -48,7 +50,7 @@ export default function GirlProduct() {
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
   }
-  
+
   return (
     <div className="m-5">
       <h2 className="text-center">Dành cho bé gái</h2>

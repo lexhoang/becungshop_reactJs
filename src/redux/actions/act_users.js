@@ -13,10 +13,16 @@ export const act_success_user = (user) => {
     }
 }
 
-
 export const act_post_user = (user) => {
     return {
         type: constants_users.POST_USER,
+        payload: user
+    }
+}
+
+export const act_patch_user = (user) => {
+    return {
+        type: constants_users.PATCH_USER,
         payload: user
     }
 }

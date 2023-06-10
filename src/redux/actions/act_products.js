@@ -6,10 +6,10 @@ export const act_product_get = () => {
     }
 }
 
-export const act_product_success = (product) => {
+export const act_product_success = (product, totalPages) => {
     return {
         type: constants_products.SUCCESS_PRODUCT,
-        payload: product
+        payload: { product, totalPages }
     }
 }
 

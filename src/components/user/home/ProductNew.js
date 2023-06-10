@@ -17,7 +17,8 @@ import Stack from '@mui/material/Stack';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 ////////     END  UI      ////////
 
-export default function ProductNew() {
+export default function ProductNew(props) {
+  const { limit, currentPage } = props;
   const { dataProducts } = useSelector((state) => state.productsReducer);
 
   const [reversedProducts, setReversedProducts] = useState([]);
@@ -31,7 +32,7 @@ export default function ProductNew() {
   }
 
   useEffect(() => {
-    dispatch(api_products.getDataProduct())
+    dispatch(api_products.getDataProduct(limit, currentPage))
   }, []);
 
   useEffect(() => {

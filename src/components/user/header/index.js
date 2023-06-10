@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import * as act_filter from '../../../redux/actions/act_filter';
@@ -23,6 +23,11 @@ export default function Header() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+
+    const limit = 6; // Số lượng sản phẩm trên mỗi trang
+    const [currentPage, setCurrentPage] = useState(1);
+
 
     const onSearchName = (value) => {
         navigate('/products');
@@ -51,12 +56,13 @@ export default function Header() {
 
 
     useEffect(() => {
-        if (searchName !== '' || searchType !== '' || searchProductFor !== '') {
-            dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
+        if (searchName == '' && searchType == '' && searchProductFor == '') {
+            dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
-            dispatch(api_products.getDataProduct());
+            navigate("/products")
+            dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
         }
-    }, [searchName, searchType, searchProductFor]);
+    }, [searchName, searchType, searchProductFor, currentPage]);
 
     return (
         <div>

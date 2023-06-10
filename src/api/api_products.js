@@ -1,14 +1,17 @@
 import * as act_products from '../redux/actions/act_products';
+
 import instances from '.';
 
 
-export const getDataProduct = () => {
+
+export const getDataProduct = (limit, currentPage) => {
     return async (dispatch) => {
         dispatch(act_products.act_product_get());
-        await instances.get(`products`)
+        await instances.get(`products?limit=${limit}&skip=${(currentPage - 1) * limit}`)
             .then((response) => {
                 // console.log(response.data);
-                dispatch(act_products.act_product_success(response.data.data))
+                const { data, totalPages } = response.data;
+                dispatch(act_products.act_product_success(data, totalPages))
             })
             .catch((error) => {
                 console.log("error: ", error);
@@ -30,13 +33,16 @@ export const filterDataProduct = (name, type, productFor) => {
     }
 }
 
-export const postDataProduct = (product) => {
+export const postDataProduct = (product, limit, currentPage) => {
     return async (dispatch) => {
         dispatch(act_products.act_product_get());
         await instances.post(`products/`, product)
             .then((response) => {
                 dispatch(act_products.act_product_port(response.data.data));
-                dispatch(getDataProduct());
+                dispatch(getDataProduct(limit, currentPage));
+                // const newProducts = [...dataProducts]
+                // newProducts.push(response.data.data)
+                // dispatch(act_products.act_product_success(newProducts))
             })
             .catch((error) => {
                 console.log("error: ", error);
@@ -44,13 +50,13 @@ export const postDataProduct = (product) => {
     }
 }
 
-export const putDataProduct = (product) => {
+export const putDataProduct = (product, limit, currentPage) => {
     return async (dispatch) => {
         dispatch(act_products.act_product_get());
         await instances.put(`products/${product._id}`, product)
             .then((response) => {
                 dispatch(act_products.act_product_put(response.data.data));
-                dispatch(getDataProduct());
+                dispatch(getDataProduct(limit, currentPage));
             })
             .catch((error) => {
                 console.log("error: ", error);
@@ -58,13 +64,13 @@ export const putDataProduct = (product) => {
     }
 }
 
-export const deleteDataProduct = (IdProduct) => {
+export const deleteDataProduct = (IdProduct, limit, currentPage) => {
     return async (dispatch) => {
         dispatch(act_products.act_product_get());
         await instances.delete(`products/${IdProduct}`)
             .then((response) => {
                 dispatch(act_products.act_product_delete(IdProduct))
-                dispatch(getDataProduct());
+                dispatch(getDataProduct(limit, currentPage));
             })
             .catch((error) => {
                 console.log("error: ", error);

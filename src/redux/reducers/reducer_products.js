@@ -2,6 +2,7 @@ import * as constants_products from '../constants/constants_products';
 
 const initialProducts = {
     dataProducts: [],
+    totalPages: 1
 }
 
 export const productsReducer = (state = initialProducts, action) => {
@@ -13,7 +14,8 @@ export const productsReducer = (state = initialProducts, action) => {
         case constants_products.SUCCESS_PRODUCT:
             return {
                 ...state,
-                dataProducts: action.payload
+                dataProducts: action.payload.product,
+                totalPages: action.payload.totalPages
             }
         default:
             return state;
