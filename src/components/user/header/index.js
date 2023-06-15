@@ -69,22 +69,18 @@ export default function Header() {
         <div className='fixed-top '>
             <div className='bg-danger px-3'>
                 <Grid container p={1} className='align-items-center justify-content-evenly'>
-                    {/* LOGO */}
-                    <Grid item xl={1} md={1} xs={3}>
+                    <Grid item xl={1} md={1} xs={6}>
                         <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
                             <Grid item sx={{ width: { lg: '120px', md: '100px', xs: '100px' } }}>
                                 <img src={LogoImage} alt="" width='100%' />
                             </Grid>
                         </Link>
                     </Grid>
-                    {/* LOGO */}
 
-                    <Grid item xl={4} md={3} px={2}>
-                        <Grid item sx={{ display: { md: 'flex', xs: 'none' } }}>
-                            <Search placeholder="input search text"
-                                onSearch={onSearchName} enterButton
-                            />
-                        </Grid>
+                    <Grid item xl={4} md={3} px={2} sx={{ display: { md: 'flex', xs: 'none' } }}>
+                        <Search placeholder="input search text"
+                            onSearch={onSearchName} enterButton
+                        />
                     </Grid>
 
                     <Grid item xl={4} md={5} sx={{ display: { md: 'flex', xs: 'none' }, justifyContent: 'space-between' }}>
@@ -101,6 +97,7 @@ export default function Header() {
                 </Grid >
             </div >
 
+            {/* RESPONSIVE */}
             <Grid container sx={{ display: { md: 'none', xs: 'flex' }, alignItems: 'center' }}
                 className='shadow bg-body-tertiary rounded'
             >
@@ -116,6 +113,7 @@ export default function Header() {
 
                 <Grid item xs={2}></Grid>
             </Grid>
+            {/* RESPONSIVE */}
         </div>
     )
 }
