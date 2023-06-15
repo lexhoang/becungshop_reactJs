@@ -14,6 +14,7 @@ import LogoImage from '../../../assets/images/logo_becungshop.svg';
 import LogoImage_mb from '../../../assets/images/logo.png';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import MenuItemResponsive from './menuItemResponsive';
 ////////     END  UI      ////////
 
 const { Search } = Input
@@ -65,26 +66,21 @@ export default function Header() {
     }, [searchName, searchType, searchProductFor, currentPage]);
 
     return (
-        <div>
-            <div className='bg-danger fixed-top px-3'>
+        <div className='fixed-top '>
+            <div className='bg-danger px-3'>
                 <Grid container p={1} className='align-items-center justify-content-evenly'>
-                    <Grid item xl={1} md={2} sx={{ display: { md: 'flex', xs: 'none' } }}>
+                    {/* LOGO */}
+                    <Grid item xl={1} md={1} xs={3}>
                         <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
-                            <Grid item sx={{ width: '120px' }}>
+                            <Grid item sx={{ width: { lg: '120px', md: '100px', xs: '100px' } }}>
                                 <img src={LogoImage} alt="" width='100%' />
                             </Grid>
                         </Link>
                     </Grid>
-                    <Grid item xl={1} md={2} xs={2} sx={{ display: { md: 'none', xs: 'flex' } }}>
-                        <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
-                            <Grid item sx={{ width: '40px' }}>
-                                <img src={LogoImage_mb} alt="" width='100%' />
-                            </Grid>
-                        </Link>
-                    </Grid>
+                    {/* LOGO */}
 
-                    <Grid item xl={4} md={3} xs={6}>
-                        <Grid item sx={{ width: { md: '90%', sm: '80%', xs: '100%' } }}>
+                    <Grid item xl={4} md={3} px={2}>
+                        <Grid item sx={{ display: { md: 'flex', xs: 'none' } }}>
                             <Search placeholder="input search text"
                                 onSearch={onSearchName} enterButton
                             />
@@ -95,20 +91,30 @@ export default function Header() {
                         <MenuItem handleAllType={handleAllType} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
                     </Grid>
 
-                    <Grid item md={2} xs={4} >
-                        <Grid container>
-                            <Grid item xs={6} textAlign="right">
-                                <Button><ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} /></Button>
-                            </Grid>
-                            <Grid item xs={6} textAlign="right">
-                                <Button size="small" variant="contained" color="primary">Login</Button>
-                            </Grid>
-                        </Grid>
+
+                    <Grid item md={1} xs={3} textAlign="right">
+                        <Button><ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} /></Button>
+                    </Grid>
+                    <Grid item md={1} xs={3} textAlign="right">
+                        <Button size="small" variant="contained" color="primary">Login</Button>
                     </Grid>
                 </Grid >
             </div >
-            <Grid item xs={12} className='bg-info p-1 rounded-top fixed-bottom' sx={{ display: { md: 'none', xs: 'flex' }, justifyContent: 'space-evenly' }}>
-                <MenuItem handleAllType={handleAllType} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
+
+            <Grid container sx={{ display: { md: 'none', xs: 'flex' }, alignItems: 'center' }}
+                className='shadow bg-body-tertiary rounded'
+            >
+                <Grid item xs={2}>
+                    <MenuItemResponsive handleAllType={handleAllType} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
+                </Grid>
+
+                <Grid item xs={8} className='mx-auto' sx={{ display: { md: 'none', xs: 'flex' } }}>
+                    <Search placeholder="input search text"
+                        onSearch={onSearchName} enterButton
+                    />
+                </Grid>
+
+                <Grid item xs={2}></Grid>
             </Grid>
         </div>
     )
