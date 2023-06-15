@@ -1,0 +1,7 @@
+export const GET_AUTH = "GET_AUTH"
+export const FILTER_AUTH = "FILTER_AUTH"
+export const SUCCESS_AUTH = "SUCCESS_AUTH"
+export const POST_AUTH = "POST_AUTH"
+export const PATCH_AUTH = "PATCH_AUTH"
+export const PUT_AUTH = "PUT_AUTH"
+export const DELETE_AUTH = "DELETE_AUTH"

@@ -3,7 +3,9 @@ import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
 import * as Yup from 'yup';
-import * as api_users from '../../../api/api_users';
+import * as api_auth from '../../../api/api_auth';
+import Avatar from '../../../assets/images/avt.jpg';
+
 
 import { Formik, Form } from 'formik';
 import Modal from 'react-bootstrap/Modal';
@@ -20,7 +22,7 @@ export default function FormAuth(props) {
     const dispatch = useDispatch();
 
     ////////// START  UPLOAD IMAGE FIREBASE   ///////////
-    const [imageUrls, setImageUrls] = useState("");
+    const [imageUrls, setImageUrls] = useState(Avatar);
     const uploadImage = (e) => {
         let imageUpload = e.target.files[0];
         if (imageUpload == null) return;
@@ -33,7 +35,7 @@ export default function FormAuth(props) {
     }
     ////////// END  UPLOAD IMAGE FIREBASE   ///////////
 
-    const [auth, setAuth] = useState({ account: '', password: '', name: '', phone: '' })
+    const [formAuth, setFormAuth] = useState({ account: '', password: '', name: '', phone: '' })
 
     const validationSchema = Yup.object().shape({
         account: Yup.string().required("Vui lòng điền tên đăng nhập"),
@@ -43,9 +45,9 @@ export default function FormAuth(props) {
     })
 
     const handleSubmit = (values, { resetForm }) => {
-        dispatch(api_users.postDataUser({ ...values, photoUrl: imageUrls }))
+        dispatch(api_auth.postDataAuth({ ...values, photoUrl: imageUrls }))
         resetForm();
-        handleCloseForm()
+        handleCloseForm();
     }
 
     return (
@@ -60,7 +62,7 @@ export default function FormAuth(props) {
             <Modal.Body>
                 <Formik
                     validationSchema={validationSchema}
-                    initialValues={auth}
+                    initialValues={formAuth}
                     onSubmit={handleSubmit}
                     enableReinitialize={true}
                 >
@@ -69,7 +71,7 @@ export default function FormAuth(props) {
                             <Grid item md={5} xs={12} px={4}>
                                 <div className="mb-3">
                                     <label>Ảnh Sản Phẩm</label>
-                                    <input type="file" onChange={uploadImage}
+                                    <input type="file" disabled={true} onChange={uploadImage}
                                         placeholder="Name Movie" name="imgUrl" className='form-control' />
                                 </div>
 

@@ -47,7 +47,7 @@ export default function LayoutAdmin() {
                         {
                             key: '3',
                             icon: <UserOutlined />,
-                            label: <NavLink to="usersmanager" style={styleNavLink}>Người dùng</NavLink>,
+                            label: <NavLink to="authManager" style={styleNavLink}>Người dùng</NavLink>,
                         }
                     ]}
                 />

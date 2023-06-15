@@ -12,7 +12,7 @@ import LayoutUser from './components/user/LayoutUser'
 import LayoutAdmin from './components/admin/LayoutAdmin';
 import { ProductsManager } from './components/admin/productsManager';
 import { TypesManager } from './components/admin/typesManager';
-import UsersManager from './components/admin/usersManager';
+import AuthManager from './components/admin/authManager';
 
 import HomePage from './components/user/home';
 import ProductsPage from './components/user/products';
@@ -30,7 +30,7 @@ function App() {
       <Route path="/admin" element={<LayoutAdmin />}>
         <Route index path='productsmanager' element={<ProductsManager />} />
         <Route path='typesmanager' element={<TypesManager />} />
-        <Route path='usersmanager' element={<UsersManager />} />
+        <Route path='authManager' element={<AuthManager />} />
       </Route>
     </Routes>
   );
