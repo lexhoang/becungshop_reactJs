@@ -92,7 +92,9 @@ export default function Header() {
                         <Button><ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} /></Button>
                     </Grid>
                     <Grid item md={1} xs={3} textAlign="right">
-                        <Button size="small" variant="contained" color="primary">Login</Button>
+                        <Button size="small" variant="contained" color="primary"
+                            onClick={() => navigate('/login')}
+                        >Login</Button>
                     </Grid>
                 </Grid >
             </div >

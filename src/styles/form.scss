@@ -1,0 +1,59 @@
+.form-body {
+    position: relative;
+    background-image: url("../assets/images/bg-login.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    min-height: 100vh;
+
+    .form-css {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 400px;
+        padding: 50px;
+        border-radius: 24px;
+        border: 1px solid #eeeded;
+        background-color: #0403032b;
+        box-shadow: 0 0 20px rgb(251, 251, 251);
+        color: #fff;
+
+        input {
+            background-color: transparent;
+            color: #fff;
+            border: 2px solid #ffffff;
+
+            &:focus {
+                background-color: #fff;
+                box-shadow: 0 0 10px rgba(172, 171, 171, 0.381);
+                border: 2px solid #4feffe;
+            }
+
+            &::placeholder {
+                color: #fff;
+            }
+        }
+        button {
+            transition: 0.7s;
+            &:hover {
+                background-color: rgb(38, 169, 251);
+            }
+        }
+
+        .text-register {
+            color: #fff;
+            &:hover {
+                color: rgb(0, 123, 255);
+            }
+        }
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .form-css {
+        width: 270px;
+        padding: 50px 15px;
+    }
+}

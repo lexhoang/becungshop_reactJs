@@ -2,11 +2,12 @@ import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import './styles/form.scss';
 import './styles/carousel.css';
 import './styles/header.css';
 import './styles/card.css';
 
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Router } from 'react-router-dom';
 import LayoutUser from './components/user/LayoutUser'
 
 import LayoutAdmin from './components/admin/LayoutAdmin';
@@ -17,6 +18,8 @@ import AuthManager from './components/admin/authManager';
 import HomePage from './components/user/home';
 import ProductsPage from './components/user/products';
 import ProductDetail from './components/user/productDetail';
+import Login from './components/auth/Login';
+import Resgister from './components/auth/Register';
 
 function App() {
   return (
@@ -32,6 +35,9 @@ function App() {
         <Route path='typesmanager' element={<TypesManager />} />
         <Route path='authManager' element={<AuthManager />} />
       </Route>
+
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Resgister />} />
     </Routes>
   );
 }
