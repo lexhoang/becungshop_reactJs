@@ -1,4 +1,4 @@
-import * as constants_auths from '../constants/constans_auth';
+import * as constants_auths from '../constants/constants_auth';
 
 export const act_get_auth = () => {
     return {

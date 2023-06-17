@@ -1,10 +1,11 @@
-import * as constants_auth from '../constants/constans_auth';
+import * as constants_auth from '../constants/constants_auth';
 
-const initialUser = {
-    dataAuth: []
+const initialAuth = {
+    dataAuth: [],
+    user: null
 }
 
-export const authReducer = (state = initialUser, action) => {
+export const authReducer = (state = initialAuth, action) => {
     switch (action.type) {
         case constants_auth.GET_AUTH:
             return { ...state }

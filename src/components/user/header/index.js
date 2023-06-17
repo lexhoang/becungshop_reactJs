@@ -21,6 +21,7 @@ const { Search } = Input
 
 export default function Header() {
     const { searchName, searchType, searchProductFor } = useSelector(state => state.filterReducer);
+    const { user } = useSelector(state => state.loginReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -91,11 +92,21 @@ export default function Header() {
                     <Grid item md={1} xs={3} textAlign="right">
                         <Button><ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} /></Button>
                     </Grid>
-                    <Grid item md={1} xs={3} textAlign="right">
-                        <Button size="small" variant="contained" color="primary"
-                            onClick={() => navigate('/login')}
-                        >Login</Button>
-                    </Grid>
+
+                    {
+                        user !== null ?
+                            <Grid item md={1} xs={3} textAlign="right">
+                                <Button size="small" variant="contained" color="primary"
+                                    onClick={() => navigate('/login')}
+                                >{user.account}</Button>
+                            </Grid>
+                            :
+                            <Grid item md={1} xs={3} textAlign="right">
+                                <Button size="small" variant="contained" color="primary"
+                                    onClick={() => navigate('/login')}
+                                >Login</Button>
+                            </Grid>
+                    }
                 </Grid >
             </div >
 
