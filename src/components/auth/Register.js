@@ -14,7 +14,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 
-const Resgister = () => {
+const Register = () => {
     const { dataAuth } = useSelector(state => (state.authReducer));
 
     const dispatch = useDispatch();
@@ -91,33 +91,4 @@ const Resgister = () => {
     );
 }
 
-export default Resgister;
-
-
-{/* <div className="form-group mb-3">
-                        <label htmlFor='acount' style={{ letterSpacing: '2px' }} className="form-label fw-bold">Tài khoản</label>
-                        <input type="text" name='acount' id='acount'
-                            className="form-control form-control_auth input-form_auth" placeholder='acount'
-                        />
-                    </div>
-
-                    <div className="form-group mb-3">
-                        <label htmlFor='password' style={{ letterSpacing: '2px' }} className="form-label fw-bold">Mật khẩu</label>
-                        <input type="text" name='password' id='password'
-                            className="form-control form-control_auth input-form_auth" placeholder='password'
-                        />
-                    </div>
-
-                    <div className="form-group mb-3">
-                        <label htmlFor='confirmPassword' style={{ letterSpacing: '2px' }} className="form-label fw-bold">Xác nhận mật khẩu</label>
-                        <input type="text" name='confirmPassword' id='confirmPassword'
-                            className="form-control form-control_auth input-form_auth" placeholder='confirm password'
-                        />
-                    </div>
-
-                    <div className="form-group mb-3">
-                        <label htmlFor='phone' style={{ letterSpacing: '2px' }} className="form-label fw-bold">Số điện thoại</label>
-                        <input type="text" name='phone' id='phone'
-                            className="form-control form-control_auth input-form_auth" placeholder='phone'
-                        />
-                    </div> */}
+export default Register;

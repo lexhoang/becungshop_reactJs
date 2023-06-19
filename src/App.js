@@ -8,18 +8,22 @@ import './styles/header.css';
 import './styles/card.css';
 
 import { Routes, Route, Router } from 'react-router-dom';
-import LayoutUser from './components/user/LayoutUser'
+
+import Login from './components/auth/Login';
+import Register from './components/auth/Register';
 
 import LayoutAdmin from './components/admin/LayoutAdmin';
 import { ProductsManager } from './components/admin/productsManager';
 import { TypesManager } from './components/admin/typesManager';
 import AuthManager from './components/admin/authManager';
 
+import LayoutUser from './components/user/LayoutUser'
 import HomePage from './components/user/home';
 import ProductsPage from './components/user/products';
 import ProductDetail from './components/user/productDetail';
-import Login from './components/auth/Login';
-import Resgister from './components/auth/Register';
+import InfoUser from './components/user/infoUser';
+
+
 
 function App() {
   return (
@@ -28,6 +32,7 @@ function App() {
         <Route index element={<HomePage />} />
         <Route path='products' element={<ProductsPage />} />
         <Route path='products/:productId' element={<ProductDetail />} />
+        <Route path='editInfoUser' element={<InfoUser />} />
       </Route>
 
       <Route path="/admin" element={<LayoutAdmin />}>
@@ -37,7 +42,7 @@ function App() {
       </Route>
 
       <Route path='/login' element={<Login />} />
-      <Route path='/register' element={<Resgister />} />
+      <Route path='/register' element={<Register />} />
     </Routes>
   );
 }

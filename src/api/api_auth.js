@@ -42,6 +42,19 @@ export const patchDataAuth = (auth) => {
     }
 }
 
+export const putDataAuth = (auth) => {
+    return async (dispatch) => {
+        await instances.put(`auths/${auth._id}`, auth)
+            .then((response) => {
+                dispatch(act_auth.act_put_auth(response.data.data));
+                dispatch(getDataAuth());
+            })
+            .catch((error) => {
+                console.log("error: ", error);
+            })
+    }
+}
+
 export const deleteDataAuth = (authID) => {
     return async (dispatch) => {
         await instances.delete(`auths/${authID}`)

@@ -2,7 +2,6 @@ import * as constants_auth from '../constants/constants_auth';
 
 const initialAuth = {
     dataAuth: [],
-    user: null
 }
 
 export const authReducer = (state = initialAuth, action) => {

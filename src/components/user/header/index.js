@@ -1,31 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import * as act_filter from '../../../redux/actions/act_filter';
+import ListMenuItem from './ListMenuItem';
+import ListMenuItemResponsive from './ListMenuItemResponsive';
+
 import * as api_products from '../../../api/api_products';
+import * as api_auth from '../../../api/api_auth';
+import * as act_filter from '../../../redux/actions/act_filter';
+import { act_logout } from '../../../redux/actions/act_login';
 
 ////////     START  UI      ////////
-import MenuItem from './menuItem';
 
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, Avatar, Box } from '@mui/material';
 import { Input } from 'antd';
+
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import Tooltip from '@mui/material/Tooltip';
+import PersonAdd from '@mui/icons-material/PersonAdd';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+
 
 import LogoImage from '../../../assets/images/logo_becungshop.svg';
 import LogoImage_mb from '../../../assets/images/logo.png';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import MenuItemResponsive from './menuItemResponsive';
 ////////     END  UI      ////////
 
 const { Search } = Input
 
+const stylePaperProps = {
+    elevation: 0,
+    sx: {
+        overflow: 'visible',
+        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+        mt: 1.5,
+        '& .MuiAvatar-root': {
+            width: 32,
+            height: 32,
+            ml: -0.5,
+            mr: 1,
+        },
+        '&:before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            top: 0,
+            right: 14,
+            width: 10,
+            height: 10,
+            bgcolor: 'background.paper',
+            transform: 'translateY(-50%) rotate(45deg)',
+            zIndex: 0,
+        },
+    },
+}
+
+
 export default function Header() {
     const { searchName, searchType, searchProductFor } = useSelector(state => state.filterReducer);
-    const { user } = useSelector(state => state.loginReducer);
+    const { dataAuth } = useSelector(state => (state.authReducer));
+    const { user } = useSelector(state => (state.loginReducer));
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
 
     const limit = 6; // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +77,6 @@ export default function Header() {
         navigate('/products');
         dispatch(act_filter.filter_name(value));
     }
-
     const handleAllProductFor = () => {
         navigate('/products');
         let searchProductFor = ""
@@ -45,7 +86,6 @@ export default function Header() {
         navigate('/products');
         dispatch(act_filter.filter_productFor(searchProductFor))
     }
-
     const handleAllType = () => {
         navigate('/products');
         let searchType = ""
@@ -57,7 +97,28 @@ export default function Header() {
     }
 
 
+    //NAVBAR
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const open = Boolean(anchorElUser);
+    const handleOpenUser = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+    const handleCloseUser = () => {
+        setAnchorElUser(null);
+    };
+    const handleEditUser = () => {
+        navigate('/editInfoUser')
+        handleCloseUser()
+    }
+    const LogOut = () => {
+        dispatch(act_logout());
+        navigate('/')
+        handleCloseUser()
+    }
+
+
     useEffect(() => {
+        dispatch(api_auth.getDataAuth());
         if (searchName == '' && searchType == '' && searchProductFor == '') {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
@@ -66,8 +127,10 @@ export default function Header() {
         }
     }, [searchName, searchType, searchProductFor, currentPage]);
 
+
+
     return (
-        <div className='fixed-top '>
+        <div className='fixed-top'>
             <div className='bg-danger px-3'>
                 <Grid container p={1} className='align-items-center justify-content-evenly'>
                     <Grid item xl={1} md={1} xs={6}>
@@ -85,7 +148,7 @@ export default function Header() {
                     </Grid>
 
                     <Grid item xl={4} md={5} sx={{ display: { md: 'flex', xs: 'none' }, justifyContent: 'space-between' }}>
-                        <MenuItem handleAllType={handleAllType} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
+                        <ListMenuItem handleAllType={handleAllType} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
                     </Grid>
 
 
@@ -95,17 +158,68 @@ export default function Header() {
 
                     {
                         user !== null ?
-                            <Grid item md={1} xs={3} textAlign="right">
-                                <Button size="small" variant="contained" color="primary"
-                                    onClick={() => navigate('/login')}
-                                >{user.account}</Button>
-                            </Grid>
+                            dataAuth.map((item) => (
+                                item._id === user[0]?.id
+                                    ?
+                                    <Grid item md={1} xs={3} textAlign="right" key={item._id}>
+                                        <React.Fragment>
+                                            <Box>
+                                                <Tooltip title="Account settings">
+                                                    <IconButton
+                                                        onClick={handleOpenUser}
+                                                        size="small"
+                                                        sx={{ ml: 2 }}
+                                                        aria-controls={open ? 'account-menu' : undefined}
+                                                        aria-haspopup="true"
+                                                        aria-expanded={open ? 'true' : undefined}
+                                                    >
+                                                        <Avatar alt="Remy Sharp"
+                                                            src={item.photoUrl}
+                                                            sx={{ width: 40, height: 40 }}
+                                                        >
+                                                        </Avatar>
+                                                    </IconButton>
+                                                </Tooltip>
+                                            </Box>
+                                            <Menu
+                                                anchorEl={anchorElUser}
+                                                id="account-menu"
+                                                open={open}
+                                                onClose={handleCloseUser}
+                                                onClick={handleCloseUser}
+                                                PaperProps={stylePaperProps}
+                                                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                                            >
+                                                <MenuItem onClick={handleEditUser}>
+                                                    <Avatar />
+                                                    {item.name}
+                                                </MenuItem>
+                                                <Divider />
+                                                <MenuItem onClick={handleCloseUser}>
+                                                    <ListItemIcon>
+                                                        <Settings fontSize="small" />
+                                                    </ListItemIcon>
+                                                    Settings My Account
+                                                </MenuItem>
+                                                <MenuItem onClick={LogOut}>
+                                                    <ListItemIcon>
+                                                        <Logout fontSize="small" />
+                                                    </ListItemIcon>
+                                                    Logout
+                                                </MenuItem>
+                                            </Menu>
+                                        </React.Fragment>
+                                    </Grid>
+                                    : null
+                            ))
                             :
                             <Grid item md={1} xs={3} textAlign="right">
                                 <Button size="small" variant="contained" color="primary"
                                     onClick={() => navigate('/login')}
                                 >Login</Button>
                             </Grid>
+
                     }
                 </Grid >
             </div >
@@ -115,7 +229,11 @@ export default function Header() {
                 className='shadow bg-body-tertiary rounded'
             >
                 <Grid item xs={2}>
-                    <MenuItemResponsive handleAllType={handleAllType} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
+                    <ListMenuItemResponsive
+                        handleAllType={handleAllType}
+                        handleSearchType={handleSearchType}
+                        handleSearchProductFor={handleSearchProductFor}
+                    />
                 </Grid>
 
                 <Grid item xs={8} className='mx-auto' sx={{ display: { md: 'none', xs: 'flex' } }}>

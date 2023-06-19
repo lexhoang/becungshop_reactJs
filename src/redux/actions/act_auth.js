@@ -27,6 +27,13 @@ export const act_patch_auth = (auth) => {
     }
 }
 
+export const act_put_auth = (auth) => {
+    return {
+        type: constants_auths.PUT_AUTH,
+        payload: auth
+    }
+}
+
 export const act_delete_auth = (ID) => {
     return {
         type: constants_auths.DELETE_AUTH,

@@ -6,9 +6,15 @@ export const act_user = () => {
     }
 }
 
-export const act_login = (user) => {
+export const act_login = (user, password) => {
     return {
         type: constants_login.LOGIN,
-        payload: user
+        payload: { user, password }
+    }
+}
+
+export const act_logout = () => {
+    return {
+        type: constants_login.LOGOUT,
     }
 }

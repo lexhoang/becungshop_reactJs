@@ -17,7 +17,8 @@ import { Link, useNavigate } from 'react-router-dom';
 
 
 const Login = () => {
-    const { dataAuth, user } = useSelector(state => (state.authReducer));
+    const { dataAuth } = useSelector(state => (state.authReducer));
+    const [idUser, setIdUser] = useState('')
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -26,13 +27,14 @@ const Login = () => {
 
     const validateForm = (values) => {
         const errors = {}
-        const checkUser = dataAuth.filter(item => item.account == values.account);
-
-        if (!checkUser[0] || !checkUser[0].account) {
-            errors.account = "Tài khoản không tồn tại"
-        }
-        if (!checkUser[0] || checkUser[0].password !== values.password) {
-            errors.password = "Mật khẩu không đúng"
+        const checkUser = dataAuth.find((item) => item.account === values.account);
+        setIdUser(checkUser?._id)
+        if (checkUser) {
+            if (checkUser.password !== values.password) {
+                errors.password = "Mật khẩu không đúng";
+            }
+        } else {
+            errors.account = "Tài khoản không tồn tại";
         }
         return errors
     }
@@ -40,15 +42,13 @@ const Login = () => {
 
     const handleSubmit = (value) => {
         navigate('/');
-        dispatch(act_login(value));
-        console.log(user);
+        dispatch(act_login([{ id: idUser, account: value.account }], value.password));
     }
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth());
         dispatch(act_user());
-        console.log(user);
-    }, [user])
+    }, [])
 
     return (
         <div className="form-body">
