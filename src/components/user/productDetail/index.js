@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo, useState } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import instances from '../../../api';
 import '../../../styles/productDetail.css';
 import * as api_auth from '../../../api/api_auth'
 import * as api_products from '../../../api/api_products';
-// import { useDispatch, useSelector } from 'react-redux';
+import swal from 'sweetalert';
 
 import ImageSizeTable from '../../../assets/images/bangsize.png'
 
@@ -62,30 +63,33 @@ export default function ProductDetail() {
     }, [dataAuth, user]);
 
     const addToCart = () => {
-        console.log(filterProduct);
-        const existProductIndex = infoUser.cart.findIndex(item =>
-            item.productId === selectedProduct.productId
-            && item.size === selectedProduct.size
-            && item.color === selectedProduct.color
-        )
-        if (existProductIndex !== -1) {
-            const updatedCart = [...infoUser.cart];
-            updatedCart[existProductIndex].number += selectedProduct.number
-            updatedCart[existProductIndex].totalPrices = updatedCart[existProductIndex].number * filterProduct.prices
-            dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
+        if (user !== null) {
+            const existProductIndex = infoUser.cart.findIndex(item =>
+                item.productId === selectedProduct.productId
+                && item.size === selectedProduct.size
+                && item.color === selectedProduct.color
+            )
+            if (existProductIndex !== -1) {
+                const updatedCart = [...infoUser.cart];
+                updatedCart[existProductIndex].number += selectedProduct.number
+                updatedCart[existProductIndex].totalPrices = updatedCart[existProductIndex].number * filterProduct.prices
+                dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
 
-            const newAmount = parseInt(filterProduct.amount - updatedCart[existProductIndex].number)
-            dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }))
-        } else {
-            const updateProduct = {
-                ...selectedProduct,
-                totalPrices: selectedProduct.number * filterProduct.prices
+                const newAmount = parseInt(filterProduct.amount - updatedCart[existProductIndex].number)
+                dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }))
+            } else {
+                const updateProduct = {
+                    ...selectedProduct,
+                    totalPrices: selectedProduct.number * filterProduct.prices
+                }
+                const updatedCart = [...infoUser.cart, updateProduct];
+                dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
+
+                const newAmount = parseInt(filterProduct.amount - selectedProduct.number)
+                dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }))
             }
-            const updatedCart = [...infoUser.cart, updateProduct];
-            dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
-
-            const newAmount = parseInt(filterProduct.amount - selectedProduct.number)
-            dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }))
+        } else {
+            swal("Hãy đăng nhập !", "", "error");
         }
     }
     ////////    BUY     ////////////

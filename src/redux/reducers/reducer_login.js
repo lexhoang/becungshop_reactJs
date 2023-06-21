@@ -1,7 +1,5 @@
 import * as constants_login from '../constants/constants_login';
 
-
-
 const initialLogin = {
     user: localStorage.getItem("user") !== null ? JSON.parse(localStorage.getItem("user")) : null,
     password: null,

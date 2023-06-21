@@ -40,9 +40,6 @@ export const postDataProduct = (product, limit, currentPage) => {
             .then((response) => {
                 dispatch(act_products.act_product_port(response.data.data));
                 dispatch(getDataProduct(limit, currentPage));
-                // const newProducts = [...dataProducts]
-                // newProducts.push(response.data.data)
-                // dispatch(act_products.act_product_success(newProducts))
             })
             .catch((error) => {
                 console.log("error: ", error);

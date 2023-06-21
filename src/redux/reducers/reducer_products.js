@@ -17,6 +17,29 @@ export const productsReducer = (state = initialProducts, action) => {
                 dataProducts: action.payload.product,
                 totalPages: action.payload.totalPages
             }
+
+        case constants_products.POST_PRODUCT:
+            return {
+                ...state,
+                dataProducts: [action.payload, ...state.dataProducts] // Thêm auth mới vào mảng dataAuth
+            }
+
+        case constants_products.PUT_PRODUCT:
+            return {
+                ...state,
+                dataProducts: state.dataProducts.map((product) => {
+                    if (product._id === action.payload._id) {
+                        return action.payload;
+                    }
+                    return product;
+                })
+            };
+
+        case constants_products.DELETE_PRODUCT:
+            return {
+                ...state,
+                dataProducts: state.dataProducts.filter(product => product._id !== action.payload) // Lọc ra các phần tử khác với auth bị xóa
+            }
         default:
             return state;
     }

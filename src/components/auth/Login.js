@@ -1,19 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { storage } from "../../firebase";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { v4 } from 'uuid'
-import * as Yup from 'yup';
+import { Link, useNavigate } from 'react-router-dom';
 import * as api_auth from '../../api/api_auth';
 import { act_login, act_user } from '../../redux/actions/act_login';
-
+import MyField from '../MyField';
 
 import { Form, Formik } from 'formik';
-
-
-import MyField from '../MyField';
-import { Link, useNavigate } from 'react-router-dom';
-
+import swal from 'sweetalert';
 
 
 const Login = () => {
@@ -29,11 +22,12 @@ const Login = () => {
         const errors = {}
         const checkUser = dataAuth.find((item) => item.account === values.account);
         setIdUser(checkUser?._id)
-        if (checkUser) {
-            if (checkUser.password !== values.password) {
-                errors.password = "Mật khẩu không đúng";
-            }
-        } else {
+        if (checkUser && checkUser.active === false) {
+            swal("Tài khoản này đã bị khóa!", "", "error");
+            errors.account = "Tài khoản đã bị khóa";
+        } else if (checkUser && checkUser.password !== values.password) {
+            errors.password = "Mật khẩu không đúng";
+        } else if (!checkUser) {
             errors.account = "Tài khoản không tồn tại";
         }
         return errors

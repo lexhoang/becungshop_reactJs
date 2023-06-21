@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import * as api_auth from '../../../api/api_auth';
-import { Input } from 'antd';
+import CartDetail from './CartDetail';
+
 
 
 import { Button, ButtonGroup, Grid, TextField } from '@mui/material';
 import FormAuth from './FormAuth';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import CircleIcon from '@mui/icons-material/Circle';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 
+import { Input } from 'antd';
 const { Search } = Input
 
 export default function AuthManager() {
@@ -20,6 +25,19 @@ export default function AuthManager() {
     }
     const handleFormAddNew = () => {
         setShowForm(true);
+    }
+
+    const [selectedCart, setSelectedCart] = useState([]);
+    const [showCartDetail, setShowCartDetail] = useState(false);
+    const handleCloseCartDetail = () => {
+        setShowCartDetail(false);
+    }
+    const handleOpenCartDetail = () => {
+        setShowCartDetail(true);
+    }
+    const handleDetail = (user) => {
+        handleOpenCartDetail()
+        setSelectedCart(user)
     }
 
     const handleActive = (user) => {
@@ -35,15 +53,11 @@ export default function AuthManager() {
 
     }
 
-
     useEffect(() => {
         dispatch(api_auth.getDataAuth())
-    }, []);
+    }, [selectedCart, dispatch]);
 
 
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    }
 
 
     return (
@@ -75,7 +89,14 @@ export default function AuthManager() {
                 </select>
             </div>
 
-            <FormAuth showForm={showForm} handleCloseForm={handleCloseForm} />
+            <FormAuth showForm={showForm}
+                handleCloseForm={handleCloseForm}
+            />
+            <CartDetail selectedCart={selectedCart} setSelectedCart={setSelectedCart}
+                showCartDetail={showCartDetail}
+                handleCloseCartDetail={handleCloseCartDetail}
+            />
+
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
@@ -99,29 +120,36 @@ export default function AuthManager() {
                                 <td> {user.name} </td>
                                 <td> {user.account} </td>
                                 <td> {user.phone} </td>
-                                {
-                                    user.cart.map((item, index) => (
-                                        <td key={index}>
-                                            <img src={item.image} alt="" width='60px' />
-                                            <div>
-                                                <p>{item.name}</p>
-                                                <p>{item.size}</p>
-                                                <p>{item.color}</p>
-                                                <p>{item.number}</p>
-                                                <p>{numberWithCommas(item.totalPrices)}</p>
-                                            </div>
-                                        </td>
-                                    ))
+                                <td>
+                                    <ButtonGroup aria-label="outlined primary button group">
+                                        <Button variant='outlined' color="info"
+                                            onClick={() => handleDetail(user)}><ShoppingCartIcon />
+                                        </Button>
+                                    </ButtonGroup>
+                                </td>
+                                <td> {
+                                    user.active == true ?
+                                        <>
+                                            <CircleIcon fontSize='small' color='success' />
+                                            <span>Đang hoạt động</span>
+                                        </>
+                                        :
+                                        <>
+                                            <HighlightOffIcon fontSize='small' color='error' />
+                                            <span>Đã bị khóa</span>
+                                        </>
                                 }
-                                <td> {user.active == true ? "Đang hoạt động" : 'Đã bị khóa'} <br />
-                                    <button className={`btn btn-sm ${user.active == true ? "btn-outline-danger" : 'btn-outline-success'}`}
+                                    <br />
+                                    <button className={`btn btn-sm ${user.active == true ? "btn-outline-warning" : 'btn-outline-success'}`}
                                         onClick={() => handleActive(user)}>
-                                        {user.active == true ? "Khóa" : 'Kích hoạt'}
+                                        {user.active == true ? "Tạm dừng" : 'Kích hoạt'}
                                     </button>
                                 </td>
                                 <td>
                                     <ButtonGroup aria-label="outlined primary button group">
-                                        <Button variant='outlined' color="error" onClick={() => handleDelete(user._id)}><DeleteIcon /></Button>
+                                        <Button variant='outlined' color="error"
+                                            onClick={() => handleDelete(user._id)}><DeleteIcon />
+                                        </Button>
                                     </ButtonGroup>
                                 </td>
                             </tr>
