@@ -64,6 +64,20 @@ export const putDataProduct = (product, limit, currentPage) => {
     }
 }
 
+export const patchDataProduct = (IdProduct, EditAmount) => {
+    return async (dispatch) => {
+        dispatch(act_products.act_product_get());
+        await instances.patch(`products/${IdProduct}`, EditAmount)
+            .then((response) => {
+                dispatch(act_products.act_product_patch(response.data.data));
+                // dispatch(getDataProduct(limit, currentPage));
+            })
+            .catch((error) => {
+                console.log("error: ", error);
+            })
+    }
+}
+
 export const deleteDataProduct = (IdProduct, limit, currentPage) => {
     return async (dispatch) => {
         dispatch(act_products.act_product_get());

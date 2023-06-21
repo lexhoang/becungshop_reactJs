@@ -1,17 +1,17 @@
 import * as constants_filter from '../constants/constants_filter';
 
 const initialFilter = {
-    searchName: '',
+    searchProduct: '',
     searchType: '',
     searchProductFor: ''
 }
 
 export const filterReducer = (state = initialFilter, action) => {
     switch (action.type) {
-        case constants_filter.FILTER_NAME: {
+        case constants_filter.FILTER_PRODUCT: {
             return {
                 ...state,
-                searchName: action.payload,
+                searchProduct: action.payload,
             }
         }
         case constants_filter.FILTER_TYPE: {

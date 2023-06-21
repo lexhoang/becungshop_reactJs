@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import instances from '../../../api';
 import '../../../styles/productDetail.css';
-
-// import * as api_products from '../../../api/api_products';
+import * as api_auth from '../../../api/api_auth'
+import * as api_products from '../../../api/api_products';
 // import { useDispatch, useSelector } from 'react-redux';
 
 import ImageSizeTable from '../../../assets/images/bangsize.png'
@@ -16,66 +16,99 @@ import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Modal from 'react-bootstrap/Modal';
 import RelatedProduct from './RelatedProduct';
+import { useDispatch, useSelector } from 'react-redux';
+
 
 export default function ProductDetail() {
-    const [showForm, setShowForm] = useState(false);
-    const handleCloseForm = () => {
-        setShowForm(false);
-    }
-
+    const { dataAuth } = useSelector(state => (state.authReducer));
+    const { user } = useSelector(state => (state.loginReducer));
+    const { dataProducts } = useSelector((state) => state.productsReducer);
     const { productId } = useParams();
+    const dispatch = useDispatch();
+
     const [productInfo, setProductInfo] = useState(null);
+    const getDataProductById = async () => {
+        try {
+            const response = await instances.get(`products/${productId}`);
+            setProductInfo(response.data.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    ////////    BUY     ////////////
     const [selectedProduct, setSelectedProduct] = useState({
-        productId: '',
+        productId: productId,
+        image: '',
+        name: '',
         size: '',
         color: '',
-        quantity: ''
+        number: 0,
+        totalPrices: 0
     });
-
-    const [quantity, setQuantity] = useState(0);
-
-    const handleIncrease = () => {
-        setQuantity(quantity + 1);
-    };
-
-    const handleDecrease = () => {
-        if (quantity > 0) {
-            setQuantity(quantity - 1);
+    const filterProduct = useMemo(() => {
+        if (dataProducts && dataProducts.length > 0) {
+            const product = dataProducts.find(item => item._id === productId);
+            return product ? product : null;
         }
-    };
-    const handleChange = (event) => {
-        const value = parseInt(event.target.value);
-        if (!isNaN(value)) {
-            setQuantity(value);
+        return '';
+    }, [dataProducts, productId]);
+
+    const infoUser = useMemo(() => {
+        if (dataAuth && dataAuth.length > 0 && user && user[0]?.id) {
+            return dataAuth.find(item => item._id === user[0]?.id);
         }
-    };
+        return [];
+    }, [dataAuth, user]);
 
     const addToCart = () => {
-        // console.log(selectedProduct);
-        console.log(productInfo.prices);
-    }
+        console.log(filterProduct);
+        const existProductIndex = infoUser.cart.findIndex(item =>
+            item.productId === selectedProduct.productId
+            && item.size === selectedProduct.size
+            && item.color === selectedProduct.color
+        )
+        if (existProductIndex !== -1) {
+            const updatedCart = [...infoUser.cart];
+            updatedCart[existProductIndex].number += selectedProduct.number
+            updatedCart[existProductIndex].totalPrices = updatedCart[existProductIndex].number * filterProduct.prices
+            dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
 
+            const newAmount = parseInt(filterProduct.amount - updatedCart[existProductIndex].number)
+            dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }))
+        } else {
+            const updateProduct = {
+                ...selectedProduct,
+                totalPrices: selectedProduct.number * filterProduct.prices
+            }
+            const updatedCart = [...infoUser.cart, updateProduct];
+            dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
+
+            const newAmount = parseInt(filterProduct.amount - selectedProduct.number)
+            dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }))
+        }
+    }
+    ////////    BUY     ////////////
+
+    useEffect(() => {
+        getDataProductById();
+
+        if (filterProduct) {
+            setSelectedProduct({
+                ...selectedProduct,
+                name: filterProduct.name,
+                image: filterProduct.photoUrl
+            })
+        }
+        // Cuộn lên đầu trang
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [filterProduct]);
+
+
+    const [showInstructionSize, setShowInstructionSize] = useState(false);
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     }
-
-    useEffect(() => {
-        const fetchDataById = async () => {
-            try {
-                const response = await instances.get(`products/${productId}`);
-                setProductInfo(response.data.data);
-                console.log(productInfo)
-            } catch (error) {
-                console.log(error);
-            }
-        };
-        fetchDataById();
-
-        // Cuộn lên đầu trang
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, []);
-
-
 
 
     return (
@@ -98,7 +131,7 @@ export default function ProductDetail() {
                                     <Grid item xs={7}>
                                         <Typography variant="subtitle1">
                                             Chọn kích cỡ
-                                            <Button onClick={() => setShowForm(true)} >
+                                            <Button onClick={() => setShowInstructionSize(true)} >
                                                 (Cách chọn size)
                                             </Button>
                                         </Typography>
@@ -147,8 +180,12 @@ export default function ProductDetail() {
                                     </Grid>
                                 </Grid>
 
+                                <Typography variant="subtitle2" mt={2}>
+                                    Còn {productInfo.amount} sản phẩm
+                                </Typography>
+
                                 {/* SỐ LƯỢNG */}
-                                <Grid container mt={4} className="align-items-center">
+                                <Grid container my={3} className="align-items-center">
                                     <Grid item xs={7}>
                                         <Typography variant="subtitle1">
                                             Chọn số lượng
@@ -156,17 +193,41 @@ export default function ProductDetail() {
                                     </Grid>
                                     <Grid item xs={5}>
                                         <Box display="flex" alignItems="center">
-                                            <IconButton aria-label="Decrease" onClick={handleDecrease}>
+                                            <IconButton aria-label="Decrease"
+                                                onClick={() => {
+                                                    if (selectedProduct.number > 0) {
+                                                        setSelectedProduct({
+                                                            ...selectedProduct,
+                                                            number: selectedProduct.number - 1
+                                                        });
+                                                    }
+                                                }}
+                                            >
                                                 <RemoveIcon />
                                             </IconButton>
                                             <Input
                                                 type="number"
-                                                value={quantity}
-                                                onChange={handleChange}
+                                                value={selectedProduct.number}
+                                                onChange={(e) => {
+                                                    const value = parseInt(e.target.value);
+                                                    if (!isNaN(value)) {
+                                                        setSelectedProduct({
+                                                            ...selectedProduct,
+                                                            number: parseInt(e.target.value)
+                                                        });
+                                                    }
+                                                }}
                                                 inputProps={{ min: 0 }}
                                                 sx={{ width: '50px', textAlign: 'center' }}
                                             />
-                                            <IconButton aria-label="Increase" onClick={handleIncrease}>
+                                            <IconButton aria-label="Increase"
+                                                onClick={() => {
+                                                    setSelectedProduct({
+                                                        ...selectedProduct,
+                                                        number: selectedProduct.number + 1
+                                                    });
+                                                }}
+                                            >
                                                 <AddIcon />
                                             </IconButton>
                                         </Box>
@@ -247,7 +308,7 @@ export default function ProductDetail() {
                         <RelatedProduct productInfo={productInfo} />
 
                         <Modal size="md" centered
-                            show={showForm} onHide={handleCloseForm}>
+                            show={showInstructionSize} onHide={() => setShowInstructionSize(false)}>
                             <Modal.Header closeButton>
                                 <Modal.Title>
                                     <h3>Bảng size cho bé</h3>
@@ -259,7 +320,7 @@ export default function ProductDetail() {
                             </Modal.Body>
 
                             <Modal.Footer>
-                                <Button variant="contained" onClick={() => handleCloseForm()}>
+                                <Button variant="contained" onClick={() => setShowInstructionSize(false)}>
                                     Đã hiểu
                                 </Button>
                             </Modal.Footer>

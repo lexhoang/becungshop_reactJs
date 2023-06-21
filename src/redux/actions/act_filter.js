@@ -1,9 +1,9 @@
 import * as constants_filter from '../constants/constants_filter';
 
-export const filter_name = (name) => {
+export const filter_product = (product) => {
     return {
-        type: constants_filter.FILTER_NAME,
-        payload: name
+        type: constants_filter.FILTER_PRODUCT,
+        payload: product
     }
 }
 

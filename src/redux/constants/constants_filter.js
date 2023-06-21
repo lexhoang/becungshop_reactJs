@@ -1,3 +1,3 @@
-export const FILTER_NAME = "FILTER_NAME";
+export const FILTER_PRODUCT = "FILTER_PRODUCT";
 export const FILTER_TYPE = "FILTER_TYPE";
 export const FILTER_PRODUCT_FOR = "FILTER_PRODUCT_FOR";

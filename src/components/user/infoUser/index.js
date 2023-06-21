@@ -65,6 +65,7 @@ export default function InfoUser() {
 
     return (
         <Container>
+            <h3 className='text-center' style={{ marginTop: '150px' }}>Hồ Sơ Của Bạn</h3>
             <Formik
                 validationSchema={validationSchema}
                 initialValues={formAuth}
@@ -73,19 +74,20 @@ export default function InfoUser() {
             >
                 <Form>
                     <Grid container justifyContent={'center'} mt={12}>
-                        <Grid item xs={3} px={4}>
+                        <Grid item md={3} xs={12} px={3} mb={5}>
                             <img src={imageUrls} alt="img" width={200} />
-                            <div className="mb-3">
-                                <label>Ảnh Sản Phẩm</label>
+                            <div className="my-3">
                                 <input type="file" onChange={uploadImage}
                                     placeholder="Name Movie" name="imgUrl" className='form-control' />
                             </div>
                         </Grid>
 
-                        <Grid item xs={6} px={3}>
-                            <MyField type='text' name="account" id="account" label="Tên đăng nhập" placeholder="account"
-                                className='form-control'
-                            />
+                        <Grid item md={6} xs={12} px={3}>
+                            <div className="mb-3">
+                                <label className="fw-bold">Tài khoản</label>
+                                <input type="text" disabled={true} name="account" className='form-control'
+                                    value={formAuth.account} />
+                            </div>
 
                             <MyField type='text' name="password" id="password" label="Mật khẩu" placeholder="password"
                                 className='form-control'

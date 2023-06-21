@@ -2,7 +2,7 @@ import * as constants_products from '../constants/constants_products';
 
 const initialProducts = {
     dataProducts: [],
-    totalPages: 1
+    totalPages: 0
 }
 
 export const productsReducer = (state = initialProducts, action) => {

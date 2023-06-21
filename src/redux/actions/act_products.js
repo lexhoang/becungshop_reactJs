@@ -27,6 +27,13 @@ export const act_product_put = (product) => {
     }
 }
 
+export const act_product_patch = (product) => {
+    return {
+        type: constants_products.PATCH_PRODUCT,
+        payload: product
+    }
+}
+
 export const act_product_delete = (IdProduct) => {
     return {
         type: constants_products.DELETE_PRODUCT,

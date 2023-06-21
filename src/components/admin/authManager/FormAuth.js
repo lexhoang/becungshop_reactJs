@@ -18,6 +18,7 @@ import { useDispatch } from 'react-redux';
 
 export default function FormAuth(props) {
     const { showForm, handleCloseForm } = props;
+    
 
     const dispatch = useDispatch();
 

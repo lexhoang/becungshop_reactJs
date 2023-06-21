@@ -20,7 +20,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 export const ProductsManager = () => {
     const { dataProducts, totalPages } = useSelector(state => state.productsReducer);
     const { dataTypes } = useSelector(state => state.typesReducer)
-    const { searchName, searchType, searchProductFor } = useSelector(state => state.filterReducer);
+    const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
 
     const limit = 2; // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
@@ -33,10 +33,10 @@ export const ProductsManager = () => {
     const handleCloseForm = () => setShowForm(false);
 
     const handleFilter = () => {
-        if (searchName == '' && searchType == '' && searchProductFor == '') {
+        if (searchProduct == '' && searchType == '' && searchProductFor == '') {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
-            dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
+            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor));
         }
     }
 
@@ -78,7 +78,7 @@ export const ProductsManager = () => {
                     <Grid container>
                         <Grid item md={4} xs={12} my={1}>
                             <TextField variant="outlined" size="small" label="Search Name" sx={{ width: "90%" }}
-                                value={searchName} onChange={(e) => dispatch(act_filter.filter_name(e.target.value))}
+                                value={searchProduct} onChange={(e) => dispatch(act_filter.filter_product(e.target.value))}
                             />
                         </Grid>
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import * as api_products from '../../../api/api_products';
 
@@ -9,8 +9,9 @@ import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea, Container } from '@mui/material';
 import Grid from '@mui/material/Grid';
-import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
+import { Pagination } from "@mui/material";
+import Rating from '@mui/material/Rating';
 import { Link } from 'react-router-dom';
 ////////     END  UI      ////////
 
@@ -18,17 +19,24 @@ import { Link } from 'react-router-dom';
 
 export default function RelatedProduct(props) {
     const { productInfo } = props
-    const { dataProducts } = useSelector((state) => state.productsReducer);
-    const [relatedProduct, setRelatedProduct] = useState([])
+    const { dataProducts, totalPages } = useSelector((state) => state.productsReducer);
     const dispatch = useDispatch();
-    useEffect(() => {
-        dispatch(api_products.getDataProduct());
 
-        let relate = dataProducts.filter(product => product.productFor == productInfo.productFor
-            && product.type._id == productInfo.type);
-            
-        setRelatedProduct(relate);
-    }, [productInfo]);
+    // const [relatedProduct, setRelatedProduct] = useState([])
+
+    const limit = 6; // Số lượng sản phẩm trên mỗi trang
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+    };
+
+    const relatedProduct = useMemo(() => {
+        return dataProducts.filter(product => product.productFor == productInfo.productFor && product.type._id == productInfo.type)
+    }, [productInfo, dataProducts])
+
+    useEffect(() => {
+        dispatch(api_products.getDataProduct(limit, currentPage));
+    }, []);
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -36,7 +44,18 @@ export default function RelatedProduct(props) {
 
     return (
         <Container>
-            <Grid container my={12}>
+            <Grid container justifyContent="center" mt={12}>
+                <Stack spacing={2}>
+                    <Pagination
+                        variant="outlined" color="primary"
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                    />
+                </Stack>
+            </Grid>
+
+            <Grid container my={3}>
                 {
                     relatedProduct.map((product, index) => {
                         return (
@@ -74,6 +93,17 @@ export default function RelatedProduct(props) {
                         )
                     })
                 }
+            </Grid>
+
+            <Grid container justifyContent="center" mt={3}>
+                <Stack spacing={2}>
+                    <Pagination
+                        variant="outlined" color="primary"
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                    />
+                </Stack>
             </Grid>
         </Container>
     )

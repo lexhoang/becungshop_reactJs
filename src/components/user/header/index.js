@@ -62,7 +62,7 @@ const stylePaperProps = {
 
 
 export default function Header() {
-    const { searchName, searchType, searchProductFor } = useSelector(state => state.filterReducer);
+    const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
     const { dataAuth } = useSelector(state => (state.authReducer));
     const { user } = useSelector(state => (state.loginReducer));
 
@@ -73,23 +73,23 @@ export default function Header() {
     const [currentPage, setCurrentPage] = useState(1);
 
 
-    const onSearchName = (value) => {
+    const onSearchProduct = (value) => {
         navigate('/products');
-        dispatch(act_filter.filter_name(value));
+        dispatch(act_filter.filter_product(value));
     }
     const handleAllProductFor = () => {
         navigate('/products');
         let searchProductFor = ""
         dispatch(act_filter.filter_productFor(searchProductFor))
     }
-    const handleSearchProductFor = (searchProductFor) => {
-        navigate('/products');
-        dispatch(act_filter.filter_productFor(searchProductFor))
-    }
     const handleAllType = () => {
         navigate('/products');
         let searchType = ""
         dispatch(act_filter.filter_type(searchType))
+    }
+    const handleSearchProductFor = (searchProductFor) => {
+        navigate('/products');
+        dispatch(act_filter.filter_productFor(searchProductFor))
     }
     const handleSearchType = (IdType) => {
         navigate('/products');
@@ -119,13 +119,13 @@ export default function Header() {
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth());
-        if (searchName == '' && searchType == '' && searchProductFor == '') {
+        if (searchProduct == '' && searchType == '' && searchProductFor == '') {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
             navigate("/products")
-            dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
+            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor));
         }
-    }, [searchName, searchType, searchProductFor, currentPage]);
+    }, [searchProduct, searchType, searchProductFor, currentPage]);
 
 
 
@@ -143,7 +143,7 @@ export default function Header() {
 
                     <Grid item xl={4} md={3} px={2} sx={{ display: { md: 'flex', xs: 'none' } }}>
                         <Search placeholder="input search text"
-                            onSearch={onSearchName} enterButton
+                            onSearch={onSearchProduct} enterButton
                         />
                     </Grid>
 
@@ -173,7 +173,7 @@ export default function Header() {
                                                         aria-haspopup="true"
                                                         aria-expanded={open ? 'true' : undefined}
                                                     >
-                                                        <Avatar alt="Remy Sharp"
+                                                        <Avatar alt="Avatar"
                                                             src={item.photoUrl}
                                                             sx={{ width: 40, height: 40 }}
                                                         >
@@ -192,11 +192,14 @@ export default function Header() {
                                                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                                             >
                                                 <MenuItem onClick={handleEditUser}>
-                                                    <Avatar />
+                                                    <Avatar alt="Avatar"
+                                                        src={item.photoUrl}
+                                                        sx={{ width: 40, height: 40 }}
+                                                    />
                                                     {item.name}
                                                 </MenuItem>
                                                 <Divider />
-                                                <MenuItem onClick={handleCloseUser}>
+                                                <MenuItem onClick={handleEditUser}>
                                                     <ListItemIcon>
                                                         <Settings fontSize="small" />
                                                     </ListItemIcon>
@@ -238,7 +241,7 @@ export default function Header() {
 
                 <Grid item xs={8} className='mx-auto' sx={{ display: { md: 'none', xs: 'flex' } }}>
                     <Search placeholder="input search text"
-                        onSearch={onSearchName} enterButton
+                        onSearch={onSearchProduct} enterButton
                     />
                 </Grid>
 

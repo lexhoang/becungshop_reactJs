@@ -38,7 +38,14 @@ export default function AuthManager() {
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth())
-    }, [])
+    }, []);
+
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
+
+
     return (
         <div>
             <h3 className="text-center">AUTH MANAGER</h3>
@@ -77,7 +84,8 @@ export default function AuthManager() {
                         <th>Tên</th>
                         <th>Tài khoản</th>
                         <th>Số điện thoại</th>
-                        <th>Active</th>
+                        <th>Chi tiết</th>
+                        <th>Trạng thái</th>
                         <th>Thao Tác</th>
                     </tr>
                 </thead>
@@ -91,6 +99,20 @@ export default function AuthManager() {
                                 <td> {user.name} </td>
                                 <td> {user.account} </td>
                                 <td> {user.phone} </td>
+                                {
+                                    user.cart.map((item, index) => (
+                                        <td key={index}>
+                                            <img src={item.image} alt="" width='60px' />
+                                            <div>
+                                                <p>{item.name}</p>
+                                                <p>{item.size}</p>
+                                                <p>{item.color}</p>
+                                                <p>{item.number}</p>
+                                                <p>{numberWithCommas(item.totalPrices)}</p>
+                                            </div>
+                                        </td>
+                                    ))
+                                }
                                 <td> {user.active == true ? "Đang hoạt động" : 'Đã bị khóa'} <br />
                                     <button className={`btn btn-sm ${user.active == true ? "btn-outline-danger" : 'btn-outline-success'}`}
                                         onClick={() => handleActive(user)}>

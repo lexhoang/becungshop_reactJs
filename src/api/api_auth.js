@@ -29,9 +29,9 @@ export const postDataAuth = (auth) => {
     }
 }
 
-export const patchDataAuth = (auth) => {
+export const patchDataAuth = (userId, dataProduct) => {
     return async (dispatch) => {
-        await instances.patch(`auths/${auth._id}`, auth)
+        await instances.patch(`auths/${userId}`, dataProduct)
             .then((response) => {
                 dispatch(act_auth.act_patch_auth(response.data.data));
                 dispatch(getDataAuth());

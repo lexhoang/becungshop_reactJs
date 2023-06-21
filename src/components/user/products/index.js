@@ -18,7 +18,7 @@ import { Pagination } from "@mui/material";
 
 
 export default function ProductsPage() {
-    const { searchName, searchType, searchProductFor } = useSelector(state => state.filterReducer);
+    const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
     const { dataProducts, totalPages } = useSelector((state) => state.productsReducer);
 
     const dispatch = useDispatch();
@@ -27,23 +27,23 @@ export default function ProductsPage() {
 
     const limit = 6; // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
-
-
-    useEffect(() => {
-        if (searchName == '' && searchType == '' && searchProductFor == '') {
-            dispatch(api_products.getDataProduct(limit, currentPage));
-        } else {
-            navigate("/products")
-            dispatch(api_products.filterDataProduct(searchName, searchType, searchProductFor));
-        }
-        // Cuộn lên đầu trang
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [searchName, searchType, searchProductFor, currentPage]);
-
-
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
     };
+
+    useEffect(() => {
+        if (searchProduct == '' && searchType == '' && searchProductFor == '') {
+            dispatch(api_products.getDataProduct(limit, currentPage));
+        } else {
+            navigate("/products")
+            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor));
+        }
+        // Cuộn lên đầu trang
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [searchProduct, searchType, searchProductFor, currentPage, totalPages]);
+
+
+
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
