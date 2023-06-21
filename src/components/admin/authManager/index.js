@@ -24,7 +24,7 @@ export default function AuthManager() {
 
     const handleActive = (user) => {
         const newActive = !user.active
-        dispatch(api_auth.patchDataAuth({ ...user, active: newActive }))
+        dispatch(api_auth.putDataAuth({ ...user, active: newActive }))
     }
 
     const handleDelete = (userID) => {
