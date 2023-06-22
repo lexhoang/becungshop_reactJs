@@ -3,7 +3,8 @@ import * as constants_filter from '../constants/constants_filter';
 const initialFilter = {
     searchProduct: '',
     searchType: '',
-    searchProductFor: ''
+    searchProductFor: '',
+    searchAccount: ''
 }
 
 export const filterReducer = (state = initialFilter, action) => {
@@ -24,6 +25,12 @@ export const filterReducer = (state = initialFilter, action) => {
             return {
                 ...state,
                 searchProductFor: action.payload,
+            }
+        }
+        case constants_filter.FILTER_ACCOUNT: {
+            return {
+                ...state,
+                searchAccount: action.payload,
             }
         }
         default:

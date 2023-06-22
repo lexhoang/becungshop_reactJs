@@ -20,3 +20,10 @@ export const filter_productFor = (productFor) => {
         payload: productFor
     }
 }
+
+export const filter_account = (account) => {
+    return {
+        type: constants_filter.FILTER_ACCOUNT,
+        payload: account
+    }
+}

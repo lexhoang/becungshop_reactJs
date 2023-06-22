@@ -15,6 +15,20 @@ export const getDataAuth = () => {
     }
 }
 
+export const filterUserAccount = (account) => {
+    return async (dispatch) => {
+        dispatch(act_auth.act_get_auth());
+        await instances.get(`auths?account=${account}`)
+            .then((response) => {
+                // console.log(response.data);
+                dispatch(act_auth.act_success_auth(response.data.data))
+            })
+            .catch((error) => {
+                console.log("error: ", error);
+            })
+    }
+}
+
 
 export const postDataAuth = (auth) => {
     return async (dispatch) => {

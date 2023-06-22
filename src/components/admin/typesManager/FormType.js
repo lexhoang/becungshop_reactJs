@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import * as api_types from '../../../api/api_types';
 import MyField from '../../MyField';
 import * as Yup from 'yup'
-
+import Loading from '../../Loading'
 ////// START UI  /////
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
@@ -20,13 +20,17 @@ export const FormType = (props) => {
 
   ////////// START  UPLOAD IMAGE FIREBASE   ///////////
   const [imageUrls, setImageUrls] = useState("");
+  const [loading, setLoading] = useState(false);
+
   const uploadImage = (e) => {
     let imageUpload = e.target.files[0];
     if (imageUpload == null) return;
+    setLoading(true)
     const imageRef = ref(storage, `uploadImageTypes/${imageUpload.name}${v4()}`);
     uploadBytes(imageRef, imageUpload).then((snapshot) => {
       getDownloadURL(snapshot.ref).then((url) => {
         setImageUrls(url);
+        setLoading(false)
       });
     });
   }
@@ -87,6 +91,7 @@ export const FormType = (props) => {
                       placeholder="Name Movie" name="imgUrl" className='form-control' />
                   </div>
 
+                  {loading ? <Loading /> : null}
                   <img src={imageUrls} alt="img" width={200} />
                 </Grid>
 

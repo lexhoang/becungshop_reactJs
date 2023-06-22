@@ -6,11 +6,12 @@
 
 body {
   background-color: #f5f5f5;
+  background-color: rgb(216, 33, 248);
 
 }
 
 /* .bg-layout {
-  background-image: url('https://thuthuatnhanh.com/wp-content/uploads/2021/12/background-de-thuong.jpg');
+  background-image: url(https://thuthuatnhanh.com/wp-content/uploads/2021/12/background-de-thuong.jpg');
   background-repeat: no-repeat;
   background-size: cover;
   background-attachment: fixed;
@@ -19,6 +20,15 @@ body {
 
 .margin-header {
   margin-top: 70px
+}
+
+.eyes-password {
+  float: right;
+  position: relative;
+  top: -33px;
+  right: 10px;
+  cursor: pointer;
+  color: #dc6713;
 }
 
 @media screen and (max-width: 600px) {

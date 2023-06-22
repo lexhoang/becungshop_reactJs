@@ -119,7 +119,7 @@ export default function AuthManager() {
                                 </td>
                                 <td> {user.name} </td>
                                 <td> {user.account} </td>
-                                <td> {user.phone} </td>
+                                <td>+84 {user.phone} </td>
                                 <td>
                                     <ButtonGroup aria-label="outlined primary button group">
                                         <Button variant='outlined' color="info"

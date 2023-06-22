@@ -7,6 +7,7 @@ import * as api_product from '../../../../api/api_products';
 import * as api_types from '../../../../api/api_types';
 import * as Yup from 'yup';
 
+import Loading from '../../../Loading'
 import SelectColor from './select-color';
 import SelectSize from './select-size';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -57,13 +58,16 @@ export const FormProduct = (props) => {
     const [sizes, setSizes] = useState([]);
     ////////// START  UPLOAD IMAGE FIREBASE   ///////////
     const [imageUrls, setImageUrls] = useState("");
+    const [loading, setLoading] = useState(false);
     const uploadImage = (e) => {
         let imageUpload = e.target.files[0];
         if (imageUpload == null) return;
+        setLoading(true);
         const imageRef = ref(storage, `uploadImageProduct/${imageUpload.name}${v4()}`);
         uploadBytes(imageRef, imageUpload).then((snapshot) => {
             getDownloadURL(snapshot.ref).then((url) => {
                 setImageUrls(url);
+                setLoading(false);
             });
         });
     }
@@ -122,7 +126,6 @@ export const FormProduct = (props) => {
     }, [loadFormProduct])
 
 
-
     return (
         <>
             <Modal size='xl' centered
@@ -146,6 +149,7 @@ export const FormProduct = (props) => {
                                 <Grid item md={6} xs={12} pr={8}>
                                     <Grid container>
                                         <Grid item md={5} xs={12} px={1} sx={{ height: "150px", width: "150px" }}>
+                                            {loading ? <Loading /> : null}
                                             <img src={imageUrls} alt="img" style={{ maxWidth: "100%", maxHeight: "100%" }} />
                                         </Grid>
 

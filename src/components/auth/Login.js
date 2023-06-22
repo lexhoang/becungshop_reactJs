@@ -5,9 +5,11 @@ import * as api_auth from '../../api/api_auth';
 import { act_login, act_user } from '../../redux/actions/act_login';
 import MyField from '../MyField';
 
-import { Form, Formik } from 'formik';
+import { ErrorMessage, Field, Form, Formik } from 'formik';
 import swal from 'sweetalert';
-
+import { Button } from '@mui/material';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 const Login = () => {
     const { dataAuth } = useSelector(state => (state.authReducer));
@@ -15,9 +17,13 @@ const Login = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
+    const [typePassword, setTypePassword] = useState('password');
+    let elementEye = typePassword == "password" ?
+        <VisibilityIcon onClick={() => setTypePassword('text')} />
+        :
+        <VisibilityOffIcon onClick={() => setTypePassword('password')} />
 
     const [formLogin, setFormLogin] = useState({ account: '', password: '' });
-
     const validateForm = (values) => {
         const errors = {}
         const checkUser = dataAuth.find((item) => item.account === values.account);
@@ -33,7 +39,6 @@ const Login = () => {
         return errors
     }
 
-
     const handleSubmit = (value) => {
         navigate('/');
         dispatch(act_login([{ id: idUser, account: value.account }], value.password));
@@ -46,6 +51,7 @@ const Login = () => {
 
     return (
         <div className="form-body">
+            <Button variant="contained" onClick={() => navigate('/')}>Trang chủ</Button>
             <Formik
                 validate={validateForm}
                 initialValues={formLogin}
@@ -57,9 +63,19 @@ const Login = () => {
                         className='form-control form-control_auth input-form_auth'
                     />
 
-                    <MyField type='text' name="password" id="password" label="Mật khẩu" placeholder="password"
-                        className='form-control form-control_auth input-form_auth'
-                    />
+                    <div className="mb-3 form-group">
+                        <label htmlFor='password' style={{ letterSpacing: '2px' }} className="fw-bold">Mật khẩu</label>
+                        <div>
+                            <Field type={typePassword} name='password' id='password' placeholder="password"
+                                className='form-control form-control_auth input-form_auth'
+                            />
+                            <i className='eyes-password'>{elementEye}</i>
+                        </div>
+                        <ErrorMessage name='password' component="div" style={{ color: 'red' }} />
+                    </div>
+
+
+
 
                     <div className='mt-5'>
                         <button type='submit' style={{ letterSpacing: '2px' }}
