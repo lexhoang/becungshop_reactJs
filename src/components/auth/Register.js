@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import unorm from 'unorm';
+import swal from 'sweetalert';
+
 import * as api_auth from '../../api/api_auth';
 import Avatar from '../../assets/images/avt.jpg';
 import MyField from '../MyField';
@@ -56,10 +58,10 @@ const Register = () => {
             ),
     });
 
-    const handleSubmit = (value, { resetForm }) => {
+    const handleSubmit = (value) => {
         dispatch(api_auth.postDataAuth({ ...value, photoUrl: imageUrls }));
-        resetForm();
-        navigate('/login')
+        swal("Tạo tài khoản thành công!", "", "success");
+        navigate('/login');
     }
 
     useEffect(() => {

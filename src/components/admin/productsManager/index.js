@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { Pagination } from "@mui/material";
+import swal from 'sweetalert';
+
 
 import * as api_products from '../../../api/api_products';
 import * as api_types from '../../../api/api_types';
@@ -11,6 +12,7 @@ import { productForData } from '../../text/TextProductFor'
 
 //////////     START UI     ///////////
 import { Button, ButtonGroup, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from '@mui/material';
+import { Pagination } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
 
@@ -53,7 +55,23 @@ export const ProductsManager = () => {
     }
 
     const handleDeleteProduct = (IdProduct) => {
-        dispatch(api_products.deleteDataProduct(IdProduct, limit, currentPage));
+        swal({
+            title: "Xóa sản phẩm này?",
+            text: "Bạn chắc chắn muốn xóa sản phẩm này chứ, không thể khôi phục sau khi xóa!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    dispatch(api_products.deleteDataProduct(IdProduct, limit, currentPage));
+                    swal("Thành công! Sản phẩm đã được xóa!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Sản phẩm chưa được xóa!");
+                }
+            });
     }
 
     useEffect(() => {

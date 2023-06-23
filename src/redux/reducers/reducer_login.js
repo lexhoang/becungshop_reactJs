@@ -1,7 +1,7 @@
 import * as constants_login from '../constants/constants_login';
 
 const initialLogin = {
-    user: localStorage.getItem("user") !== null ? JSON.parse(localStorage.getItem("user")) : null,
+    user: sessionStorage.getItem("user") !== null ? JSON.parse(sessionStorage.getItem("user")) : null,
     password: null,
 }
 
@@ -13,7 +13,7 @@ export const loginReducer = (state = initialLogin, action) => {
         case constants_login.LOGIN:
             {
                 let userLogin = JSON.stringify(action.payload.user)
-                localStorage.setItem("user", userLogin)
+                sessionStorage.setItem("user", userLogin)
                 return {
                     ...state,
                     user: action.payload.user,
@@ -23,7 +23,7 @@ export const loginReducer = (state = initialLogin, action) => {
 
         case constants_login.LOGOUT:
             {
-                localStorage.removeItem("user")
+                sessionStorage.clear()
                 return {
                     ...state,
                     user: null

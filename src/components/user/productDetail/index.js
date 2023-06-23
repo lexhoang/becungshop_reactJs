@@ -76,7 +76,8 @@ export default function ProductDetail() {
                 dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
 
                 const newAmount = parseInt(filterProduct.amount - updatedCart[existProductIndex].number)
-                dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }))
+                dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+                swal("Đã thêm sản phẩm vào giỏ hàng!", "", "success");
             } else {
                 const updateProduct = {
                     ...selectedProduct,
@@ -86,7 +87,8 @@ export default function ProductDetail() {
                 dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
 
                 const newAmount = parseInt(filterProduct.amount - selectedProduct.number)
-                dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }))
+                dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+                swal("Đã thêm sản phẩm vào giỏ hàng!", "", "success");
             }
         } else {
             swal("Hãy đăng nhập !", "", "error");

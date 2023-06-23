@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import swal from 'sweetalert';
+
 import * as api_auth from '../../../api/api_auth';
+import * as act_filter from '../../../redux/actions/act_filter';
+
 import CartDetail from './CartDetail';
-
-
+import FormAuth from './FormAuth';
 
 import { Button, ButtonGroup, Grid, TextField } from '@mui/material';
-import FormAuth from './FormAuth';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CircleIcon from '@mui/icons-material/Circle';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
@@ -16,8 +18,9 @@ import { Input } from 'antd';
 const { Search } = Input
 
 export default function AuthManager() {
-    const dispatch = useDispatch();
+    const { searchAccount } = useSelector(state => state.filterReducer);
     const { dataAuth } = useSelector((state) => state.authReducer);
+    const dispatch = useDispatch();
 
     const [showForm, setShowForm] = useState(false);
     const handleCloseForm = () => {
@@ -46,16 +49,33 @@ export default function AuthManager() {
     }
 
     const handleDelete = (userID) => {
-        dispatch(api_auth.deleteDataAuth(userID))
+        swal({
+            title: "Xóa tài khoản này?",
+            text: "Bạn chắc chắn muốn xóa người dùng này chứ, không thể khôi phục sau khi xóa!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    dispatch(api_auth.deleteDataAuth(userID))
+                    swal("Thành công! Người dùng đã được xóa!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Tài khoản này chưa được xóa!");
+                }
+            });
     }
 
-    const onSearchAcount = (name) => {
-
+    const onSearchAcount = (value) => {
+        dispatch(act_filter.filter_account(value));
+        dispatch(api_auth.filterUserAccount(value))
     }
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth())
-    }, [selectedCart, dispatch]);
+    }, [selectedCart]);
 
 
 

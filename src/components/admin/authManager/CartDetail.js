@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import swal from 'sweetalert';
+
 import * as api_auth from '../../../api/api_auth';
 
 import Modal from 'react-bootstrap/Modal';
@@ -21,9 +23,24 @@ export default function CartDetail(props) {
                 product.size !== size
             );
         });
-        console.log(updatedCart);
-        dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
-        setSelectedCart({ ...selectedCart, cart: updatedCart });
+        swal({
+            title: "Xóa sản phẩm này?",
+            text: "Bạn chắc chắn muốn xóa sản phẩm này chứ, không thể khôi phục sau khi xóa!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
+                    setSelectedCart({ ...selectedCart, cart: updatedCart });
+                    swal("Thành công! Sản phẩm đã được xóa!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Sản phẩm này chưa được xóa!");
+                }
+            });
     }
 
     function numberWithCommas(x) {

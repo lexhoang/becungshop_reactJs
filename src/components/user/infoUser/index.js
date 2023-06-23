@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
 import * as Yup from 'yup';
 import unorm from 'unorm';
+import swal from 'sweetalert';
+import { storage } from "../../../firebase";
 import * as api_auth from '../../../api/api_auth';
-import Avatar from '../../../assets/images/avt.jpg';
 
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -79,6 +79,7 @@ export default function InfoUser() {
     const handleSubmit = (values, { resetForm }) => {
         dispatch(api_auth.putDataAuth({ ...values, photoUrl: imageUrls }))
         resetForm();
+        swal("Thông tin đã được cập nhật!", "", "success");
     }
 
     useEffect(() => {
@@ -86,6 +87,7 @@ export default function InfoUser() {
             setFormAuth(infoUser[0]);
             setImageUrls(infoUser[0].photoUrl)
         }
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [infoUser]);
 
     return (
