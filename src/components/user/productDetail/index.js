@@ -5,6 +5,7 @@ import instances from '../../../api';
 import '../../../styles/productDetail.css';
 import * as api_auth from '../../../api/api_auth'
 import * as api_products from '../../../api/api_products';
+import Loading from '../../Loading'
 import swal from 'sweetalert';
 
 import ImageSizeTable from '../../../assets/images/bangsize.png'
@@ -23,7 +24,7 @@ import { useDispatch, useSelector } from 'react-redux';
 export default function ProductDetail() {
     const { dataAuth } = useSelector(state => (state.authReducer));
     const { user } = useSelector(state => (state.loginReducer));
-    const { dataProducts } = useSelector((state) => state.productsReducer);
+    const { loading, dataProducts } = useSelector((state) => state.productsReducer);
     const { productId } = useParams();
     const dispatch = useDispatch();
 
@@ -119,15 +120,17 @@ export default function ProductDetail() {
 
     return (
         <div style={{ backgroundColor: '#ffffff' }}>
+            {loading ? <Loading /> : null}
+
             {
                 productInfo !== null ?
                     <Container>
                         <Grid container p={2}>
-                            <Grid item md={6} xs={12} p={1}>
+                            <Grid item md={6} xs={12} p={1} className="animate__animated  animate__slideInLeft">
                                 <img src={productInfo.photoUrl} alt="photo product" width="100%" />
                             </Grid>
 
-                            <Grid item md={6} xs={12} p={2}>
+                            <Grid item md={6} xs={12} p={2} className="animate__animated  animate__slideInRight">
                                 <Typography variant="h6" fontWeight="bold">
                                     {productInfo.name}
                                 </Typography>
@@ -277,38 +280,42 @@ export default function ProductDetail() {
                             </Grid>
                         </Grid>
 
-                        <Typography p={2} variant="subtitle1" fontWeight="bold">Thông tin sản phẩm</Typography>
-                        <ul className="ul-detail list-group">
-                            <li className="li-detail list-group-item d-flex border border-0 p-3">
-                                <div style={{ minWidth: '120px' }}>Mã SP:</div>
-                                <span>{productInfo.infoCode}</span>
-                            </li>
+                        <div className="animate__animated  animate__slideInUp">
+                            <Typography p={2} variant="subtitle1" fontWeight="bold">
+                                Thông tin sản phẩm
+                            </Typography>
+                            <ul className="ul-detail list-group">
+                                <li className="li-detail list-group-item d-flex border border-0 p-3">
+                                    <div style={{ minWidth: '120px' }}>Mã SP:</div>
+                                    <span>{productInfo.infoCode}</span>
+                                </li>
 
-                            <li className="li-detail list-group-item d-flex border border-0 p-3">
-                                <div style={{ minWidth: '120px' }}>Độ tuổi:</div>
-                                <span>{productInfo.infoMinAge} - {productInfo.infoMaxAge}tuổi</span>
-                            </li>
+                                <li className="li-detail list-group-item d-flex border border-0 p-3">
+                                    <div style={{ minWidth: '120px' }}>Độ tuổi:</div>
+                                    <span>{productInfo.infoMinAge} - {productInfo.infoMaxAge}tuổi</span>
+                                </li>
 
-                            <li className="li-detail list-group-item d-flex border border-0 p-3">
-                                <div style={{ minWidth: '120px' }}>Độ tuổi:</div>
-                                <span>{productInfo.infoMinAge} - {productInfo.infoMaxAge}tuổi</span>
-                            </li>
+                                <li className="li-detail list-group-item d-flex border border-0 p-3">
+                                    <div style={{ minWidth: '120px' }}>Độ tuổi:</div>
+                                    <span>{productInfo.infoMinAge} - {productInfo.infoMaxAge}tuổi</span>
+                                </li>
 
-                            <li className="li-detail list-group-item d-flex border border-0 p-3">
-                                <div style={{ minWidth: '120px' }}>Cân nặng:</div>
-                                <span>{productInfo.infoMinWeight}kg - {productInfo.infoMaxWeight}kg</span>
-                            </li>
+                                <li className="li-detail list-group-item d-flex border border-0 p-3">
+                                    <div style={{ minWidth: '120px' }}>Cân nặng:</div>
+                                    <span>{productInfo.infoMinWeight}kg - {productInfo.infoMaxWeight}kg</span>
+                                </li>
 
-                            <li className="li-detail list-group-item d-flex border border-0 p-3">
-                                <div style={{ minWidth: '120px' }}>Chất liệu:</div>
-                                <span>{productInfo.infoMaterial}</span>
-                            </li>
+                                <li className="li-detail list-group-item d-flex border border-0 p-3">
+                                    <div style={{ minWidth: '120px' }}>Chất liệu:</div>
+                                    <span>{productInfo.infoMaterial}</span>
+                                </li>
 
-                            <li className="li-detail list-group-item d-flex border border-0 p-3">
-                                <div style={{ minWidth: '120px' }}>Xuất sứ:</div>
-                                <span>{productInfo.infoMadeIn}</span>
-                            </li>
-                        </ul>
+                                <li className="li-detail list-group-item d-flex border border-0 p-3">
+                                    <div style={{ minWidth: '120px' }}>Xuất sứ:</div>
+                                    <span>{productInfo.infoMadeIn}</span>
+                                </li>
+                            </ul>
+                        </div>
 
 
                         <RelatedProduct productInfo={productInfo} />

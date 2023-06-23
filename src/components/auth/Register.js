@@ -77,48 +77,50 @@ const Register = () => {
                 onSubmit={handleSubmit}
             >
                 <Form className="form-css">
-                    <h3 className='text-center mb-5' style={{ letterSpacing: '3px' }}>ĐĂNG KÝ</h3>
-                    <MyField type='text' name="account" id="account" label="Tên đăng nhập" placeholder="account"
-                        className='form-control form-control_auth input-form_auth'
-                    />
+                    <div className="animate__animated animate__flipInY">
+                        <h3 className='text-center mb-5' style={{ letterSpacing: '3px' }}>ĐĂNG KÝ</h3>
+                        <MyField type='text' name="account" id="account" label="Tên đăng nhập" placeholder="account"
+                            className='form-control form-control_auth input-form_auth'
+                        />
 
-                    <div className="mb-3 form-group">
-                        <label htmlFor='password' style={{ letterSpacing: '2px' }} className="fw-bold">Mật khẩu</label>
-                        <div>
-                            <Field type={typePassword} name='password' id='password' placeholder="password"
-                                className='form-control'
-                            />
-                            <i className='eyes-password'>{elementEye}</i>
+                        <div className="mb-3 form-group">
+                            <label htmlFor='password' style={{ letterSpacing: '2px' }} className="fw-bold">Mật khẩu</label>
+                            <div>
+                                <Field type={typePassword} name='password' id='password' placeholder="password"
+                                    className='form-control'
+                                />
+                                <i className='eyes-password'>{elementEye}</i>
+                            </div>
+                            <ErrorMessage name='password' component="div" style={{ color: 'red' }} />
                         </div>
-                        <ErrorMessage name='password' component="div" style={{ color: 'red' }} />
-                    </div>
 
 
-                    <MyField type='text' name="name" id="name" label="Tên hiển thị" placeholder="name"
-                        className='form-control form-control_auth input-form_auth'
-                    />
+                        <MyField type='text' name="name" id="name" label="Tên hiển thị" placeholder="name"
+                            className='form-control form-control_auth input-form_auth'
+                        />
 
-                    <div className="mb-3 form-group">
-                        <label htmlFor='phone' style={{ letterSpacing: '2px' }} className="fw-bold">Số điện thoại</label>
-                        <div className='d-flex btn-group'>
-                            <Button variant="secondary">+84</Button>
-                            <Field type='text' name='phone' id='phone' placeholder="Số điện thoại"
-                                className='form-control'
-                            />
+                        <div className="mb-3 form-group">
+                            <label htmlFor='phone' style={{ letterSpacing: '2px' }} className="fw-bold">Số điện thoại</label>
+                            <div className='d-flex btn-group'>
+                                <Button variant="secondary">+84</Button>
+                                <Field type='text' name='phone' id='phone' placeholder="Số điện thoại"
+                                    className='form-control'
+                                />
+                            </div>
+                            <ErrorMessage name='phone' component="div" style={{ color: 'red' }} />
                         </div>
-                        <ErrorMessage name='phone' component="div" style={{ color: 'red' }} />
-                    </div>
 
-                    <div className='mt-5'>
-                        <button type='submit' style={{ letterSpacing: '2px' }}
-                            className='btn btn-outline-light text-white w-100 input-form_auth fw-bold'
-                        >
-                            ĐĂNG KÝ
-                        </button>
-                    </div>
+                        <div className='mt-5'>
+                            <button type='submit' style={{ letterSpacing: '2px' }}
+                                className='btn btn-outline-light text-white w-100 input-form_auth fw-bold'
+                            >
+                                ĐĂNG KÝ
+                            </button>
+                        </div>
 
-                    <div className='mt-5 btn btn-sm btn-info w-50'>
-                        <Link to='/login' className='text-register' >Đã có tài khoản</Link>
+                        <div className='mt-5 btn btn-sm btn-info w-50'>
+                            <Link to='/login' className='text-register' >Đã có tài khoản</Link>
+                        </div>
                     </div>
                 </Form>
             </Formik>

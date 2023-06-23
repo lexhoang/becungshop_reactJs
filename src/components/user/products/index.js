@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as api_products from '../../../api/api_products';
-
+import Loading from '../../Loading'
 ////////     START  UI      ////////
 // import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
@@ -19,7 +19,7 @@ import { Pagination } from "@mui/material";
 
 export default function ProductsPage() {
     const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
-    const { dataProducts, totalPages } = useSelector((state) => state.productsReducer);
+    const { loading, dataProducts, totalPages } = useSelector((state) => state.productsReducer);
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
@@ -50,7 +50,9 @@ export default function ProductsPage() {
     }
 
     return (
-        <div className="mx-5">
+        <div className="mx-5 animate__animated animate__zoomIn">
+            {loading ? <Loading /> : null}
+
             <Grid container justifyContent="center" mt={12}>
                 <Stack spacing={2}>
                     <Pagination

@@ -59,35 +59,37 @@ const Login = () => {
                 onSubmit={handleSubmit}
             >
                 <Form className="form-css">
-                    <h3 className='text-center mb-5' style={{ letterSpacing: '3px' }}>ĐĂNG NHẬP</h3>
-                    <MyField type='text' name="account" id="account" label="Tên đăng nhập" placeholder="account"
-                        className='form-control form-control_auth input-form_auth'
-                    />
+                    <div className="animate__animated animate__flip">
+                        <h3 className='text-center mb-5' style={{ letterSpacing: '3px' }}>ĐĂNG NHẬP</h3>
+                        <MyField type='text' name="account" id="account" label="Tên đăng nhập" placeholder="account"
+                            className='form-control form-control_auth input-form_auth'
+                        />
 
-                    <div className="mb-3 form-group">
-                        <label htmlFor='password' style={{ letterSpacing: '2px' }} className="fw-bold">Mật khẩu</label>
-                        <div>
-                            <Field type={typePassword} name='password' id='password' placeholder="password"
-                                className='form-control form-control_auth input-form_auth'
-                            />
-                            <i className='eyes-password'>{elementEye}</i>
+                        <div className="mb-3 form-group">
+                            <label htmlFor='password' style={{ letterSpacing: '2px' }} className="fw-bold">Mật khẩu</label>
+                            <div>
+                                <Field type={typePassword} name='password' id='password' placeholder="password"
+                                    className='form-control form-control_auth input-form_auth'
+                                />
+                                <i className='eyes-password'>{elementEye}</i>
+                            </div>
+                            <ErrorMessage name='password' component="div" style={{ color: 'red' }} />
                         </div>
-                        <ErrorMessage name='password' component="div" style={{ color: 'red' }} />
-                    </div>
 
 
 
 
-                    <div className='mt-5'>
-                        <button type='submit' style={{ letterSpacing: '2px' }}
-                            className='btn btn-outline-light text-white w-100 input-form_auth fw-bold'
-                        >
-                            ĐĂNG NHẬP
-                        </button>
-                    </div>
+                        <div className='mt-5'>
+                            <button type='submit' style={{ letterSpacing: '2px' }}
+                                className='btn btn-outline-light text-white w-100 input-form_auth fw-bold'
+                            >
+                                ĐĂNG NHẬP
+                            </button>
+                        </div>
 
-                    <div className='mt-5 btn btn-sm btn-info w-50'>
-                        <Link to='/register' className='text-register' >Đăng ký tài khoản</Link>
+                        <div className='mt-5 btn btn-sm btn-info w-50'>
+                            <Link to='/register' className='text-register' >Đăng ký tài khoản</Link>
+                        </div>
                     </div>
                 </Form>
             </Formik>

@@ -10,3 +10,58 @@
     background-color: #fff;
     cursor: pointer
 }
+
+.btn-login {
+    animation: button-login 5s ease-in-out infinite;
+}
+
+@keyframes button-login {
+    0% {
+        border-bottom: 2px solid rgb(255, 255, 255);
+    }
+
+    25% {
+        border-bottom: 2px solid rgb(38, 255, 0);
+    }
+
+    50% {
+        border-bottom: 2px solid rgb(0, 255, 255);
+    }
+
+    75% {
+        border-bottom: 2px solid rgb(255, 239, 9);
+    }
+
+    100% {
+        border-bottom: 2px solid rgb(255, 255, 255);
+    }
+}
+
+.text-login {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    animation: text-login 5s ease-in-out infinite;
+}
+
+@keyframes text-login {
+    0% {
+        color: rgb(255, 255, 255);
+    }
+
+    25% {
+        color: rgb(38, 255, 0);
+    }
+
+    50% {
+        color: rgb(0, 255, 255);
+    }
+
+    75% {
+        color: rgb(255, 239, 9);
+    }
+
+    100% {
+        color: rgb(255, 255, 255);
+    }
+}

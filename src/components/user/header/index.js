@@ -20,10 +20,9 @@ import ListItemIcon from '@mui/material/ListItemIcon';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
-import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
-
+import LoginIcon from '@mui/icons-material/Login';
 
 import LogoImage from '../../../assets/images/logo_becungshop.svg';
 import LogoImage_mb from '../../../assets/images/logo.png';
@@ -218,9 +217,16 @@ export default function Header() {
                             ))
                             :
                             <Grid item md={1} xs={3} textAlign="right">
-                                <Button size="small" variant="contained" color="primary"
+                                <Button
+                                    size="small"
+                                    // variant="outlined"
                                     onClick={() => navigate('/login')}
-                                >Login</Button>
+                                    className="btn-login px-3"
+                                    // style={{ borderBottom: '3px solid #fff' }}
+                                >
+                                    <div className='glowAnimation'></div>
+                                    <div className="text-login"> <LoginIcon /> <span style={{ marginLeft: '4px' }}>Login</span> </div>
+                                </Button>
                             </Grid>
 
                     }

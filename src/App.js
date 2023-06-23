@@ -1,12 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'animate.css';
 
 import './styles/form.scss';
 import './styles/carousel.css';
 import './styles/header.css';
 import './styles/card.css';
-
 import { Routes, Route, Router } from 'react-router-dom';
 
 import Login from './components/auth/Login';
