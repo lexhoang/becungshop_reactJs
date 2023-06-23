@@ -24,7 +24,7 @@ export const ProductsManager = () => {
     const { dataTypes } = useSelector(state => state.typesReducer)
     const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
 
-    const limit = 2; // Số lượng sản phẩm trên mỗi trang
+    const [limit, setLimit] = useState(2); // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
 
     const dispatch = useDispatch();
@@ -77,7 +77,7 @@ export const ProductsManager = () => {
     useEffect(() => {
         dispatch(api_types.getDataType())
         dispatch(api_products.getDataProduct(limit, currentPage));
-    }, [currentPage]);
+    }, [currentPage, limit]);
 
 
     const handlePageChange = (event, page) => {
@@ -152,8 +152,12 @@ export const ProductsManager = () => {
                 <Button variant="contained" color="success"
                     onClick={() => handleFormAddNew()}
                 >+ Thêm mới</Button>
-                <select>
-                    <option value="" key="">50</option>
+                <select className='px-2'
+                    value={limit}
+                    onChange={(e) => setLimit(e.target.value)}>
+                    <option value={5}>5</option>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
                 </select>
             </div>
 
