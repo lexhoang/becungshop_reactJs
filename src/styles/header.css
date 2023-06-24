@@ -1,3 +1,7 @@
+.bg-header {
+    background-color: #c13473;
+}
+
 .icon-content {
     display: flex;
     flex-direction: column;
@@ -12,8 +16,10 @@
 }
 
 .btn-login {
+    border: none;
     animation: button-login 5s ease-in-out infinite;
 }
+
 
 @keyframes button-login {
     0% {

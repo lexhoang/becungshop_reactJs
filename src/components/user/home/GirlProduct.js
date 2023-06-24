@@ -95,7 +95,12 @@ export default function GirlProduct(props) {
       </Grid>
 
       <div className='text-center'>
-        <Button variant='outlined' onClick={() => clickMore()}>Xem thêm <ArrowDropDownIcon /></Button>
+        <Button
+          variant='outlined' color='secondary'
+          className='btn-outline'
+          onClick={() => clickMore()}>
+          Xem thêm <ArrowDropDownIcon />
+        </Button>
       </div>
       <hr />
     </div>

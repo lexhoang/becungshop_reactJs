@@ -17,39 +17,63 @@
         border-radius: 24px;
         border: 1px solid #eeeded;
         background-color: #000000bd;
-        box-shadow: 0 0 30px rgb(251, 251, 251);
+        box-shadow: 0 0 30px #c13473;
         color: #fff;
-        border: 2px solid #4feffe;
+        border: 2px solid #c13473;
+        z-index: 2; /* Thay đổi giá trị z-index thành 2 */
 
+        .come-back {
+            position: absolute;
+            top: -1%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            background-color: #c13473;
+            transition: 0.7s;
+
+            &:hover {
+                background-color: #fff;
+                color: #c13473;
+            }
+        }
+
+        .btn-login_register {
+            background-color: #c13473;
+            transition: 0.7s;
+            &:hover {
+                background-color: #fff;
+                color: #c13473;
+            }
+        }
         input {
             background-color: transparent;
             color: #fff;
-            // border: 2px solid #ffffff;
-            border: 2px solid #4feffe;
+            border: 2px solid #c13473;
 
             &::placeholder {
                 color: #a8a6a6;
             }
+            &:focus {
+                box-shadow: 0 0 30px rgb(251, 138, 227);
+            }
         }
         button {
-            border: 2px solid #4feffe;
+            border: 2px solid #c13473;
             transition: 0.7s;
 
             &:hover {
-                background-color: rgb(38, 169, 251);
+                background-color: #c13473;
             }
         }
 
         .text-register {
             color: #fff;
             &:hover {
-                color: rgb(0, 123, 255);
+                color: #c13473;
             }
         }
     }
 }
-
-
 
 @media only screen and (max-width: 600px) {
     .form-css {

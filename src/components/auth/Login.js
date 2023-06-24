@@ -52,7 +52,6 @@ const Login = () => {
 
     return (
         <div className="form-body">
-            <Button variant="contained" onClick={() => navigate('/')}>Trang chủ</Button>
             <Formik
                 validate={validateForm}
                 initialValues={formLogin}
@@ -60,7 +59,7 @@ const Login = () => {
             >
                 <Form className="form-css">
                     <div className="animate__animated animate__flip">
-                        <h3 className='text-center mb-5' style={{ letterSpacing: '3px' }}>ĐĂNG NHẬP</h3>
+                        <h3 className='text-center mt-4 mb-5' style={{ letterSpacing: '5px' }}>ĐĂNG NHẬP</h3>
                         <MyField type='text' name="account" id="account" label="Tên đăng nhập" placeholder="account"
                             className='form-control form-control_auth input-form_auth'
                         />
@@ -76,21 +75,23 @@ const Login = () => {
                             <ErrorMessage name='password' component="div" style={{ color: 'red' }} />
                         </div>
 
-
-
-
                         <div className='mt-5'>
-                            <button type='submit' style={{ letterSpacing: '2px' }}
-                                className='btn btn-outline-light text-white w-100 input-form_auth fw-bold'
+                            <Button variant="outline" type='submit' style={{ letterSpacing: '2px' }}
+                                className='btn btn-outline text-white w-100 fw-bold'
                             >
                                 ĐĂNG NHẬP
-                            </button>
+                            </Button>
                         </div>
 
-                        <div className='mt-5 btn btn-sm btn-info w-50'>
+                        <div className='mt-5 btn btn-login_register btn-sm w-50'>
                             <Link to='/register' className='text-register' >Đăng ký tài khoản</Link>
                         </div>
                     </div>
+                    <Button variant="outline"
+                        className='come-back'
+                        onClick={() => navigate('/')}
+                    >Trang chủ
+                    </Button>
                 </Form>
             </Formik>
         </div>

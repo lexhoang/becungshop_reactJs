@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { useParams } from 'react-router-dom';
 import instances from '../../../api';
 import '../../../styles/productDetail.css';
@@ -7,19 +8,18 @@ import * as api_auth from '../../../api/api_auth'
 import * as api_products from '../../../api/api_products';
 import Loading from '../../Loading'
 import swal from 'sweetalert';
+import RelatedProduct from './RelatedProduct';
 
 import ImageSizeTable from '../../../assets/images/bangsize.png'
 
 import { Container, FormControl, Grid, InputLabel, MenuItem, Select, Typography } from '@mui/material';
-import { Box, Button, IconButton, Input } from '@mui/material';
+import { Box, IconButton, Input } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import ArrowCircleRightIcon from '@mui/icons-material/ArrowCircleRight';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import Modal from 'react-bootstrap/Modal';
-import RelatedProduct from './RelatedProduct';
-import { useDispatch, useSelector } from 'react-redux';
-
+import Button from 'react-bootstrap/Button';
 
 export default function ProductDetail() {
     const { dataAuth } = useSelector(state => (state.authReducer));
@@ -140,7 +140,9 @@ export default function ProductDetail() {
                                     <Grid item xs={7}>
                                         <Typography variant="subtitle1">
                                             Chọn kích cỡ
-                                            <Button onClick={() => setShowInstructionSize(true)} >
+                                            <Button variant="outline-light"
+                                                className='btn-sm btn-outline mx-2'
+                                                onClick={() => setShowInstructionSize(true)} >
                                                 (Cách chọn size)
                                             </Button>
                                         </Typography>
@@ -245,11 +247,11 @@ export default function ProductDetail() {
 
                                 {/* ADD TO CART */}
                                 <Grid item xs={12}>
-                                    <Button variant='contained' color='warning'
-                                        className='w-100 my-4 p-2 fw-bold'
+                                    <Button
+                                        className='w-100 my-4 fw-bold custom-btn_animate btn-animate'
                                         onClick={() => addToCart()}
                                     >
-                                        <span className='p-1 fs-5'>Mua sản phẩm với giá {numberWithCommas(productInfo.prices)}đ</span>
+                                        <span style={{ fontSize: '18px' }}>Mua với giá {numberWithCommas(productInfo.prices)}đ</span>
                                     </Button>
                                 </Grid>
 
@@ -333,7 +335,9 @@ export default function ProductDetail() {
                             </Modal.Body>
 
                             <Modal.Footer>
-                                <Button variant="contained" onClick={() => setShowInstructionSize(false)}>
+                                <Button
+                                    className='btn-contain'
+                                    onClick={() => setShowInstructionSize(false)}>
                                     Đã hiểu
                                 </Button>
                             </Modal.Footer>

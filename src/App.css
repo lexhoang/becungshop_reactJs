@@ -31,6 +31,7 @@ body {
   color: #dc6713;
 }
 
+
 @media screen and (max-width: 600px) {
   .margin-header {
     margin-top: 110px;

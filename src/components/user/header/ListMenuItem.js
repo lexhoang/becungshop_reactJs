@@ -27,11 +27,19 @@ export default function MenuItem(props) {
             {
                 productForData.map((productFor, index) => (
                     <div key={productFor.id} className='icon-content'>
-                        <div className={`icon-img bg-${(productFor.value === searchProductFor && productFor.value !== "") ? "warning" : "white"}`}
+                        <div className='icon-img'
+                            style={{
+                                border: productFor.value === searchProductFor && productFor.value !== "" ? "4px solid #ff4081" : "none"
+                            }}
                         >
                             <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor.value)} />
                         </div>
-                        <span style={{ fontSize: '11px', fontWeight: "700" }} className={`text-${productFor.value === searchProductFor ? "warning" : "white"}`}>
+                        <span
+                            style={{
+                                fontSize: '11px', fontWeight: "700",
+                                color: productFor.value === searchProductFor && productFor.value !== "" ? "#ff4081" : "white"
+                            }}
+                        >
                             {productFor.name}
                         </span>
                     </div>
@@ -50,11 +58,20 @@ export default function MenuItem(props) {
                 dataTypes.map(type => {
                     return (
                         <div key={type._id} className='icon-content'>
-                            <div className={`icon-img bg-${type._id === searchType ? "warning" : "white"}`}
+                            <div className='icon-img'
+                                style={{
+                                    border: type._id === searchType ? "4px solid #ff4081" : "none"
+                                }}
                             >
                                 <img src={type.photoUrl} alt="" width="100%" onClick={() => handleSearchType(type._id)} />
                             </div>
-                            <span style={{ fontSize: '11px', fontWeight: "700" }} className={`text-${type._id === searchType ? "warning" : "white"}`}>{type.name}</span>
+                            <span
+                                style={{
+                                    fontSize: '11px', fontWeight: "700",
+                                    color: type._id === searchType ? "#ff4081" : "white"
+                                }}
+                            >{type.name}
+                            </span>
                         </div>
                     )
                 })

@@ -80,11 +80,19 @@ export default function MenuItemResponsive(props) {
                 {
                     productForData.map((productFor, index) => (
                         <MenuItem key={productFor.id} className='icon-content' onClick={handleCloseNavMenu}>
-                            <div className={`icon-img bg-${(productFor.value === searchProductFor && productFor.value !== "") ? "warning" : "info"}`}
+                            <div className='icon-img'
+                                style={{
+                                    border: '2px solid #c13473',
+                                    backgroundColor: productFor.value === searchProductFor && productFor.value !== "" ? "#c13473" : "white"
+                                }}
                             >
                                 <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor.value)} />
                             </div>
-                            <span style={{ fontSize: '11px', fontWeight: "700" }} className={`text-${productFor.value === searchProductFor ? "warning" : "black"}`}>
+                            <span
+                                style={{
+                                    fontSize: '11px', fontWeight: "700",
+                                    color: productFor.value === searchProductFor && productFor.value !== "" ? "#000" : "#000"
+                                }}>
                                 {productFor.name}
                             </span>
                         </MenuItem>
@@ -92,7 +100,8 @@ export default function MenuItemResponsive(props) {
                 }
                 <hr />
                 <MenuItem className='icon-content' onClick={handleCloseNavMenu}>
-                    <div className='icon-img bg-info'>
+                    <div className='icon-img bg-white'
+                        style={{ border: '2px solid #c13473' }}>
                         <img src={IconAll} alt="" width="100%"
                             onClick={() => handleAllType()}
                         />
@@ -103,16 +112,25 @@ export default function MenuItemResponsive(props) {
                     dataTypes.map(type => {
                         return (
                             <MenuItem key={type._id} className='icon-content' onClick={handleCloseNavMenu}>
-                                <div className={`icon-img bg-${type._id === searchType ? "warning" : "info"}`}
+                                <div className='icon-img'
+                                    style={{
+                                        border: '2px solid #c13473',
+                                        backgroundColor: type._id === searchType ? "#c13473" : "white"
+                                    }}
                                 >
                                     <img src={type.photoUrl} alt="" width="100%" onClick={() => handleSearchType(type._id)} />
                                 </div>
-                                <span style={{ fontSize: '11px', fontWeight: "700" }} className={`text-${type._id === searchType ? "warning" : "black"}`}>{type.name}</span>
+                                <span
+                                    style={{
+                                        fontSize: '11px', fontWeight: "700",
+                                        color: type._id === searchType ? "#000" : "white"
+                                    }}
+                                >{type.name}</span>
                             </MenuItem>
                         )
                     })
                 }
             </Menu>
-        </Box>
+        </Box >
     )
 }

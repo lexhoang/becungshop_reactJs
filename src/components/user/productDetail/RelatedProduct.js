@@ -47,7 +47,7 @@ export default function RelatedProduct(props) {
             <Grid container justifyContent="center" mt={12}>
                 <Stack spacing={2}>
                     <Pagination
-                        variant="outlined" color="primary"
+                        variant="outlined" color="secondary"
                         count={totalPages}
                         page={currentPage}
                         onChange={handlePageChange}
@@ -98,7 +98,7 @@ export default function RelatedProduct(props) {
             <Grid container justifyContent="center" mt={3}>
                 <Stack spacing={2}>
                     <Pagination
-                        variant="outlined" color="primary"
+                        variant="outlined" color="secondary"
                         count={totalPages}
                         page={currentPage}
                         onChange={handlePageChange}

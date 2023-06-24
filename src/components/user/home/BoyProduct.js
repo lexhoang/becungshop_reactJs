@@ -36,7 +36,7 @@ export default function GirlProduct(props) {
 
 
   useEffect(() => {
-    dispatch(api_products.getDataProduct(limit, currentPage ))
+    dispatch(api_products.getDataProduct(limit, currentPage))
   }, []);
 
   function numberWithCommas(x) {
@@ -62,9 +62,9 @@ export default function GirlProduct(props) {
                         alt="green iguana"
                       />
                       <CardContent>
-                      <Typography variant="body1" color="error" textAlign='center' className='fw-bold'>
-                        {numberWithCommas(product.prices)}đ
-                      </Typography>
+                        <Typography variant="body1" color="error" textAlign='center' className='fw-bold'>
+                          {numberWithCommas(product.prices)}đ
+                        </Typography>
 
                         <Stack spacing={1} className="my-2"  >
                           <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />
@@ -87,7 +87,12 @@ export default function GirlProduct(props) {
       </Grid>
 
       <div className='text-center'>
-        <Button variant='outlined' onClick={() => clickMore()}>Xem thêm <ArrowDropDownIcon /></Button>
+        <Button
+          variant='outlined' color='secondary'
+          className='btn-outline'
+          onClick={() => clickMore()}>
+          Xem thêm <ArrowDropDownIcon />
+        </Button>
       </div>
       <hr />
     </div>

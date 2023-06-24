@@ -11,8 +11,8 @@ import { act_logout } from '../../../redux/actions/act_login';
 
 ////////     START  UI      ////////
 
-import { Button, Grid, Avatar, Box } from '@mui/material';
-import { Input } from 'antd';
+import { Grid, Avatar, Box } from '@mui/material';
+import { Input, Button, } from 'antd';
 
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -130,7 +130,7 @@ export default function Header() {
 
     return (
         <div className='fixed-top'>
-            <div className='bg-danger px-3'>
+            <div className='bg-header px-3'>
                 <Grid container p={1} className='align-items-center justify-content-evenly'>
                     <Grid item xl={1} md={1} xs={6}>
                         <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
@@ -141,8 +141,14 @@ export default function Header() {
                     </Grid>
 
                     <Grid item xl={4} md={3} px={2} sx={{ display: { md: 'flex', xs: 'none' } }}>
-                        <Search placeholder="input search text"
-                            onSearch={onSearchProduct} enterButton
+                        <Input.Search
+                            placeholder="input search text"
+                            onSearch={onSearchProduct}
+                            enterButton={
+                                <Button style={{ color: '#c13473' }}>
+                                    Search
+                                </Button>
+                            }
                         />
                     </Grid>
 
@@ -152,7 +158,9 @@ export default function Header() {
 
 
                     <Grid item md={1} xs={3} textAlign="right">
-                        <Button><ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} /></Button>
+                        <button className="btn">
+                            <ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} />
+                        </button>
                     </Grid>
 
                     {
@@ -217,16 +225,16 @@ export default function Header() {
                             ))
                             :
                             <Grid item md={1} xs={3} textAlign="right">
-                                <Button
+                                <button
                                     size="small"
                                     // variant="outlined"
                                     onClick={() => navigate('/login')}
-                                    className="btn-login px-3"
-                                    // style={{ borderBottom: '3px solid #fff' }}
+                                    className="btn-login px-3 btn"
+                                // style={{ borderBottom: '3px solid #fff' }}
                                 >
                                     <div className='glowAnimation'></div>
                                     <div className="text-login"> <LoginIcon /> <span style={{ marginLeft: '4px' }}>Login</span> </div>
-                                </Button>
+                                </button>
                             </Grid>
 
                     }

@@ -70,7 +70,6 @@ const Register = () => {
 
     return (
         <div className="form-body">
-            <Button variant="contained" onClick={() => navigate('/')}>Trang chủ</Button>
             <Formik
                 validationSchema={validationSchema}
                 initialValues={formAuth}
@@ -111,17 +110,24 @@ const Register = () => {
                         </div>
 
                         <div className='mt-5'>
-                            <button type='submit' style={{ letterSpacing: '2px' }}
-                                className='btn btn-outline-light text-white w-100 input-form_auth fw-bold'
+                            <Button type='submit'
+                                variant="outline"
+                                style={{ letterSpacing: '2px' }}
+                                className='btn btn-outline text-white w-100 fw-bold'
                             >
                                 ĐĂNG KÝ
-                            </button>
+                            </Button>
                         </div>
 
-                        <div className='mt-5 btn btn-sm btn-info w-50'>
+                        <div className='mt-5 btn btn-login_register btn-sm w-50'>
                             <Link to='/login' className='text-register' >Đã có tài khoản</Link>
                         </div>
                     </div>
+                    <Button variant="contained"
+                        className='come-back'
+                        onClick={() => navigate('/')}
+                    >Trang chủ
+                    </Button>
                 </Form>
             </Formik>
         </div>
