@@ -29,7 +29,7 @@ export default function MenuItem(props) {
                     <div key={productFor.id} className='icon-content'>
                         <div className='icon-img'
                             style={{
-                                border: productFor.value === searchProductFor && productFor.value !== "" ? "4px solid #ff4081" : "none"
+                                border: productFor.value === searchProductFor && productFor.value !== "" ? "4px solid #26a69a" : "none"
                             }}
                         >
                             <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor.value)} />
@@ -37,7 +37,7 @@ export default function MenuItem(props) {
                         <span
                             style={{
                                 fontSize: '11px', fontWeight: "700",
-                                color: productFor.value === searchProductFor && productFor.value !== "" ? "#ff4081" : "white"
+                                color: productFor.value === searchProductFor && productFor.value !== "" ? "#26a69a" : "white"
                             }}
                         >
                             {productFor.name}
@@ -60,7 +60,7 @@ export default function MenuItem(props) {
                         <div key={type._id} className='icon-content'>
                             <div className='icon-img'
                                 style={{
-                                    border: type._id === searchType ? "4px solid #ff4081" : "none"
+                                    border: type._id === searchType ? "4px solid #26a69a" : "none"
                                 }}
                             >
                                 <img src={type.photoUrl} alt="" width="100%" onClick={() => handleSearchType(type._id)} />
@@ -68,7 +68,7 @@ export default function MenuItem(props) {
                             <span
                                 style={{
                                     fontSize: '11px', fontWeight: "700",
-                                    color: type._id === searchType ? "#ff4081" : "white"
+                                    color: type._id === searchType ? "#26a69a" : "white"
                                 }}
                             >{type.name}
                             </span>

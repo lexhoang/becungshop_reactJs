@@ -1,5 +1,6 @@
 .bg-header {
-    background-color: #c13473;
+    background: linear-gradient(0deg, #cf3379 0%, #ff87bd 100%);
+    /* background: linear-gradient(0deg, #ff87bdc6 0%, #cf3379 100%); */
 }
 
 .icon-content {
