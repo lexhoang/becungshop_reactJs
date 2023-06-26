@@ -13,7 +13,7 @@ export const act_product_success = (product, totalPages) => {
     }
 }
 
-export const act_product_port = (product) => {
+export const act_product_post = (product) => {
     return {
         type: constants_products.POST_PRODUCT,
         payload: product

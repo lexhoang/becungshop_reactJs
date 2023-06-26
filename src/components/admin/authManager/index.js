@@ -8,19 +8,23 @@ import * as act_filter from '../../../redux/actions/act_filter';
 import CartDetail from './CartDetail';
 import FormAuth from './FormAuth';
 
-import { Button, ButtonGroup, Grid, TextField } from '@mui/material';
+import { Button, ButtonGroup, Grid, Pagination, Stack } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import CircleIcon from '@mui/icons-material/Circle';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { Input } from 'antd';
-const { Search } = Input
+import SearchAuth from './SearchAuth';
+import { logDOM } from '@testing-library/react';
 
 export default function AuthManager() {
-    const { searchAccount } = useSelector(state => state.filterReducer);
-    const { dataAuth } = useSelector((state) => state.authReducer);
+    const { dataAuth, totalPages } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
+
+
+    const [limit, setLimit] = useState(2);
+    const [currentPage, setCurrentPage] = useState(1);
+
 
     const [showForm, setShowForm] = useState(false);
     const handleCloseForm = () => {
@@ -48,7 +52,7 @@ export default function AuthManager() {
         dispatch(api_auth.putDataAuth({ ...user, active: newActive }))
     }
 
-    const handleDelete = (userID) => {
+    const handleDeleteAuth = (userID) => {
         swal({
             title: "Xóa tài khoản này?",
             text: "Bạn chắc chắn muốn xóa người dùng này chứ, không thể khôi phục sau khi xóa!",
@@ -58,7 +62,8 @@ export default function AuthManager() {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    dispatch(api_auth.deleteDataAuth(userID))
+                    dispatch(api_auth.deleteDataAuth(userID));
+                    // dispatch(api_auth.getDataAuth(limit, currentPage));
                     swal("Thành công! Người dùng đã được xóa!", {
                         icon: "success",
                     });
@@ -68,44 +73,37 @@ export default function AuthManager() {
             });
     }
 
-    const onSearchAcount = (value) => {
+    const onSearchAccount = (value) => {
         dispatch(act_filter.filter_account(value));
         dispatch(api_auth.filterUserAccount(value))
     }
 
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+    };
+
     useEffect(() => {
-        dispatch(api_auth.getDataAuth())
-    }, [selectedCart]);
-
-
-
+        dispatch(api_auth.getDataAuth(limit, currentPage));
+    }, [selectedCart, limit, currentPage]);
 
     return (
         <div>
             <h3 className="text-center">AUTH MANAGER</h3>
 
-            <Grid container mt={12} mb={5}>
-                <Grid item xs={8} className="mx-auto text-center">
-                    <Grid container>
-                        <Grid item xs={12} my={1}>
-                            <Search placeholder="input search text"
-                                onSearch={onSearchAcount}
-                                enterButton
-                            />
-                        </Grid>
-                    </Grid>
-                </Grid>
-            </Grid>
+            <SearchAuth onSearchAccount={onSearchAccount} />
 
             <div className='d-flex justify-content-around'>
                 <Grid item xs={12}>
                     <Button variant="contained" color="success"
+                        className='btn-contain'
                         onClick={() => handleFormAddNew()}
                     >+ Thêm mới
                     </Button>
                 </Grid>
-                <select>
-                    <option value="" key="">50</option>
+                <select value={limit} onChange={(e) => setLimit(e.target.value)}>
+                    <option value={2}>2</option>
+                    <option value={5}>5</option>
+                    <option value={10}>10</option>
                 </select>
             </div>
 
@@ -168,7 +166,7 @@ export default function AuthManager() {
                                 <td>
                                     <ButtonGroup aria-label="outlined primary button group">
                                         <Button variant='outlined' color="error"
-                                            onClick={() => handleDelete(user._id)}><DeleteIcon />
+                                            onClick={() => handleDeleteAuth(user._id)}><DeleteIcon />
                                         </Button>
                                     </ButtonGroup>
                                 </td>
@@ -177,6 +175,17 @@ export default function AuthManager() {
                     }
                 </tbody>
             </table>
+
+            <Grid container justifyContent="center">
+                <Stack spacing={2}>
+                    <Pagination
+                        variant="outlined" color="secondary"
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                    />
+                </Stack>
+            </Grid>
         </div>
     )
 }

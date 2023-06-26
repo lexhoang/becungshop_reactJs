@@ -15,15 +15,14 @@ import MyField from '../../../MyField';
 import { productForData } from '../../../text/TextProductFor'
 
 ////// START UI  /////
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 
 
 
 
 export const FormProduct = (props) => {
-    const { showForm, handleCloseForm, loadFormProduct, limit, currentPage } = props;
+    const { showForm, handleCloseForm, loadFormProduct } = props;
 
     const { dataTypes } = useSelector(state => state.typesReducer);
     const { dataProducts } = useSelector(state => state.productsReducer);
@@ -90,6 +89,7 @@ export const FormProduct = (props) => {
             haveError = true
         }
         setTextError(cloneError);
+
         if (haveError == true) {
             return
         } else {
@@ -97,12 +97,10 @@ export const FormProduct = (props) => {
                 // console.log(values);
                 dispatch(api_product.postDataProduct(
                     { ...values, photoUrl: imageUrls, color: colors, size: sizes },
-                    limit, currentPage
                 ));
             } else {
                 dispatch(api_product.putDataProduct(
                     { ...values, photoUrl: imageUrls, color: colors, size: sizes },
-                    limit, currentPage
                 ));
             }
         }
@@ -325,9 +323,16 @@ export const FormProduct = (props) => {
                                 </Grid>
                                 {/*END SIZE PRODUCT */}
                             </Grid>
-                            <div className="text-center mt-5">
-                                <Button className="w-100" variant="success" type='submit'>
-                                    {loadFormProduct.value == "" ? "Thêm mới" : "Cập nhật"}
+                            <div className="text-center mt-5 d-flex justify-content-between">
+                                <Button variant="contained" type='submit'
+                                    className="w-50 mx-5 btn-contain">
+                                    {loadFormProduct.value == "" ? "Xác nhận" : "Cập nhật"}
+                                </Button>
+
+                                <Button variant="contained"
+                                    className='btn-close_modal w-50 mx-5'
+                                    onClick={() => handleCloseForm()}>
+                                    Đóng
                                 </Button>
                             </div>
                         </Form>
@@ -335,9 +340,6 @@ export const FormProduct = (props) => {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={() => handleCloseForm()}>
-                        Close
-                    </Button>
                 </Modal.Footer>
             </Modal >
         </>

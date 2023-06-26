@@ -3,10 +3,9 @@ import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css';
 
-import './styles/form-auth.scss';
+// import './styles/form-auth.scss';
 import './styles/btn.css';
-import './styles/carousel.css';
-import './styles/header.css';
+// import './styles/header.css';
 import './styles/card.css';
 import { Routes, Route, Router } from 'react-router-dom';
 

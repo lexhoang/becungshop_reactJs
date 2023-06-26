@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import './form-auth.scss';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
@@ -48,6 +50,8 @@ const Login = () => {
     useEffect(() => {
         dispatch(api_auth.getDataAuth());
         dispatch(act_user());
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [])
 
     return (
@@ -59,7 +63,7 @@ const Login = () => {
             >
                 <Form className="form-css">
                     <div className="animate__animated animate__flip">
-                        <h3 className='text-center mt-4 mb-5' style={{ letterSpacing: '5px' }}>ĐĂNG NHẬP</h3>
+                        <h3 className='text-center mt-3 mb-5' style={{ letterSpacing: '5px' }}>ĐĂNG NHẬP</h3>
                         <MyField type='text' name="account" id="account" label="Tên đăng nhập" placeholder="account"
                             className='form-control form-control_auth input-form_auth'
                         />
@@ -76,18 +80,20 @@ const Login = () => {
                         </div>
 
                         <div className='mt-5'>
-                            <Button variant="outline" type='submit' style={{ letterSpacing: '2px' }}
-                                className='btn btn-outline text-white w-100 fw-bold'
+                            <Button variant="" type='submit' style={{ letterSpacing: '2px' }}
+                                className='btn btn-outline w-100 fw-bold'
                             >
                                 ĐĂNG NHẬP
                             </Button>
                         </div>
 
-                        <div className='mt-5 btn btn-login_register btn-sm w-50'>
-                            <Link to='/register' className='text-register' >Đăng ký tài khoản</Link>
-                        </div>
+                        <Button size='small' variant="contained"
+                            className='mt-5 btn-contain w-75'
+                            onClick={() => navigate('/register')}>
+                            Đăng ký tài khoản
+                        </Button>
                     </div>
-                    <Button variant="outline"
+                    <Button variant="contained"
                         className='come-back'
                         onClick={() => navigate('/')}
                     >Trang chủ

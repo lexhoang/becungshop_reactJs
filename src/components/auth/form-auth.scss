@@ -1,6 +1,6 @@
 .form-body {
     position: relative;
-    background-image: url("../assets/images/bg-login.jpg");
+    background-image: url("../../assets/images/bg-login.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -30,7 +30,7 @@
             transform: translate(-50%, -50%);
             font-weight: bold;
             // background-color: #cf3379;
-             background: linear-gradient(0deg, #cf3379 0%, #ff87bd 100%);
+            background: linear-gradient(0deg, #cf3379 0%, #ff87bd 100%);
             transition: 0.4s;
 
             &:hover {
@@ -41,7 +41,7 @@
 
         .btn-login_register {
             // background-color: #cf3379;
-             background: linear-gradient(0deg, #cf3379 0%, #ff87bd 100%);
+            background: linear-gradient(0deg, #cf3379 0%, #ff87bd 100%);
             transition: 0.4s;
             &:hover {
                 background: linear-gradient(0deg, #d9d9d9c6 0%, #ffffff 100%);

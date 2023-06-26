@@ -24,7 +24,7 @@ export const ProductsManager = () => {
     const { dataTypes } = useSelector(state => state.typesReducer)
     const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
 
-    const [limit, setLimit] = useState(2); // Số lượng sản phẩm trên mỗi trang
+    const [limit, setLimit] = useState(5); // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
 
     const dispatch = useDispatch();
@@ -64,7 +64,7 @@ export const ProductsManager = () => {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    dispatch(api_products.deleteDataProduct(IdProduct, limit, currentPage));
+                    dispatch(api_products.deleteDataProduct(IdProduct));
                     swal("Thành công! Sản phẩm đã được xóa!", {
                         icon: "success",
                     });
@@ -74,15 +74,15 @@ export const ProductsManager = () => {
             });
     }
 
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+    };
+
     useEffect(() => {
         dispatch(api_types.getDataType())
         dispatch(api_products.getDataProduct(limit, currentPage));
     }, [currentPage, limit]);
 
-
-    const handlePageChange = (event, page) => {
-        setCurrentPage(page);
-    };
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -140,7 +140,7 @@ export const ProductsManager = () => {
                         </Grid>
 
                         <Grid item xs={12} my={4}>
-                            <Button variant="contained" color="warning" className='w-50'
+                            <Button variant="contained" color="warning" className='btn-contain w-50'
                                 onClick={() => handleFilter()}
                             >Tìm kiếm</Button>
                         </Grid>
@@ -150,6 +150,7 @@ export const ProductsManager = () => {
 
             <div className='d-flex justify-content-around'>
                 <Button variant="contained" color="success"
+                    className='btn-contain'
                     onClick={() => handleFormAddNew()}
                 >+ Thêm mới</Button>
                 <select className='px-2'
@@ -162,7 +163,7 @@ export const ProductsManager = () => {
             </div>
 
             <FormProduct showForm={showForm} handleCloseForm={handleCloseForm}
-                loadFormProduct={loadFormProduct} limit={limit} currentPage={currentPage}
+                loadFormProduct={loadFormProduct}
             />
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
@@ -207,7 +208,7 @@ export const ProductsManager = () => {
             <Grid container justifyContent="center">
                 <Stack spacing={2}>
                     <Pagination
-                        variant="outlined" color="primary"
+                        variant="outlined" color="secondary"
                         count={totalPages}
                         page={currentPage}
                         onChange={handlePageChange}

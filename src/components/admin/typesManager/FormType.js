@@ -8,9 +8,8 @@ import MyField from '../../MyField';
 import * as Yup from 'yup'
 import Loading from '../../Loading'
 ////// START UI  /////
-import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 
 export const FormType = (props) => {
@@ -67,7 +66,7 @@ export const FormType = (props) => {
 
   return (
     <>
-      <Modal size='xl' centered
+      <Modal size='lg' centered
         show={showForm} onHide={handleCloseForm}>
         <Modal.Header closeButton>
           <Modal.Title>
@@ -110,9 +109,16 @@ export const FormType = (props) => {
                 </Grid>
               </Grid>
 
-              <div className="text-center mt-5">
-                <Button className="w-100" variant="success" type='submit'>
-                  {loadFormType.value == "" ? "Thêm mới" : "Cập nhật"}
+              <div className="text-center mt-5 d-flex justify-content-between">
+                <Button variant="contained" type='submit'
+                  className="w-50 mx-5 btn-contain">
+                  {loadFormType.value == "" ? "Xác nhận" : "Cập nhật"}
+                </Button>
+
+                <Button variant="contained"
+                  className='btn-close_modal w-50 mx-5'
+                  onClick={() => handleCloseForm()}>
+                  Đóng
                 </Button>
               </div>
             </Form>
@@ -120,11 +126,9 @@ export const FormType = (props) => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleCloseForm()}>
-            Close
-          </Button>
+
         </Modal.Footer>
-      </Modal>
+      </Modal >
     </>
   )
 }

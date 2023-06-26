@@ -22,13 +22,15 @@ export const productsReducer = (state = initialProducts, action) => {
             }
 
         case constants_products.POST_PRODUCT:
+            // console.log(action.payload)
             return {
                 ...state,
                 loading: false,
-                dataProducts: [action.payload, ...state.dataProducts] // Thêm auth mới vào mảng dataAuth
+                dataProducts: [...state.dataProducts, action.payload] // Thêm auth mới vào mảng dataAuth
             }
 
         case constants_products.PUT_PRODUCT:
+            // console.log(action.payload)
             return {
                 ...state,
                 loading: false,

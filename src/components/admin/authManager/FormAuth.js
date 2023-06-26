@@ -12,8 +12,7 @@ import MyField from '../../MyField';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
-import { Grid } from '@mui/material';
+import { Grid, Button } from '@mui/material';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
@@ -144,7 +143,7 @@ export default function FormAuth(props) {
                                 <div className="mb-3 form-group">
                                     <label htmlFor='phone' style={{ letterSpacing: '2px' }} className="fw-bold">Số điện thoại</label>
                                     <div className='d-flex btn-group'>
-                                        <Button variant="secondary">+84</Button>
+                                        <Button variant="contained" className="btn-contain">+84</Button>
                                         <Field type='text' name='phone' id='phone' placeholder="Số điện thoại"
                                             className='form-control'
                                         />
@@ -154,9 +153,15 @@ export default function FormAuth(props) {
                             </Grid>
                         </Grid>
 
-                        <div className="text-center mt-5">
-                            <Button className="w-100" variant="success" type='submit'>
+                        <div className="text-center mt-5 d-flex justify-content-between">
+                            <Button variant="contained" type='submit'
+                                className="w-50 mx-5 btn-contain">
                                 Xác nhận
+                            </Button>
+                            <Button variant="contained"
+                                className='btn-close_modal w-50 mx-5'
+                                onClick={() => handleCloseForm()}>
+                                Đóng
                             </Button>
                         </div>
                     </Form>
@@ -165,9 +170,7 @@ export default function FormAuth(props) {
 
 
             <Modal.Footer>
-                <Button variant="secondary" onClick={() => handleCloseForm()}>
-                    Close
-                </Button>
+
             </Modal.Footer>
         </Modal>
     )

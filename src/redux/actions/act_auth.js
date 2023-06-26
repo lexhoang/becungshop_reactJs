@@ -6,10 +6,10 @@ export const act_get_auth = () => {
     }
 }
 
-export const act_success_auth = (auth) => {
+export const act_success_auth = (auth, totalPages) => {
     return {
         type: constants_auths.SUCCESS_AUTH,
-        payload: auth
+        payload: { auth, totalPages }
     }
 }
 

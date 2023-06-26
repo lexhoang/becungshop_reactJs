@@ -1,29 +1,38 @@
 .btn-outline {
     border: 1px solid #cf3379;
     color: #cf3379;
-    transition: 0.6s
+    transition: 0.4s
 }
 
 .btn-outline:hover {
     background: linear-gradient(0deg, #cf3379 0%, #ff87bd 100%);
     color: #fff;
-    transition: 0.3s;
+    transition: 0.4s;
 }
 
 .btn-contain {
     background: linear-gradient(0deg, #cf3379 0%, #ff87bd 100%);
     border: 1px solid #cf3379;
     color: #fff;
-    transition: 0.6s
+    transition: 0.4s
 }
 
 .btn-contain:hover {
-    background: linear-gradient(0deg, #c2c1c1c6 0%, #ffffff 100%);
+    background: linear-gradient(0deg, #b9b9b9fe 0%, #ffffff 100%);
     color: #cf3379;
-    border: 1px solid #fff;
-    transition: 0.6s
+    font-weight: bold;
+    transition: 0.4s
 }
 
+.btn-close_modal {
+    background: linear-gradient(0deg, #545454fe 0%, #c5c5c5 100%);
+}
+
+.btn-close_modal:hover {
+    background: linear-gradient(0deg, #b7b7b7fe 0%, #f3f2f2 100%);
+    color: #cf3379;
+    font-weight: bold;
+}
 
 /* BUTTON ANIMATE */
 .custom-btn_animate {

@@ -28,15 +28,15 @@
     }
 
     25% {
-        border-bottom: 2px solid rgb(38, 255, 0);
+        border-bottom: 2px solid rgb(255, 123, 0);
     }
 
     50% {
-        border-bottom: 2px solid rgb(0, 255, 255);
+        border-bottom: 2px solid rgb(255, 239, 9);
     }
 
     75% {
-        border-bottom: 2px solid rgb(255, 239, 9);
+        border-bottom: 2px solid rgb(255, 0, 0);
     }
 
     100% {
@@ -57,15 +57,15 @@
     }
 
     25% {
-        color: rgb(38, 255, 0);
+        color: rgb(255, 123, 0);
     }
 
     50% {
-        color: rgb(0, 255, 255);
+        color: rgb(255, 239, 9);
     }
 
     75% {
-        color: rgb(255, 239, 9);
+        color: rgb(255, 0, 0);
     }
 
     100% {

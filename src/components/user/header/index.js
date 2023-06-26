@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import './header.css';
+
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import ListMenuItem from './ListMenuItem';
@@ -141,11 +143,11 @@ export default function Header() {
                     </Grid>
 
                     <Grid item xl={4} md={3} px={2} sx={{ display: { md: 'flex', xs: 'none' } }}>
-                        <Input.Search
+                        <Search
                             placeholder="input search text"
                             onSearch={onSearchProduct}
                             enterButton={
-                                <Button style={{ color: '#c13473' }}>
+                                <Button style={{ backgroundColor: '#cf3379', color: 'white' }}>
                                     Search
                                 </Button>
                             }
@@ -156,13 +158,13 @@ export default function Header() {
                         <ListMenuItem handleAllType={handleAllType} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
                     </Grid>
 
-
                     <Grid item md={1} xs={3} textAlign="right">
                         <button className="btn">
                             <ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} />
                         </button>
                     </Grid>
 
+                    {/* USER */}
                     {
                         user !== null ?
                             dataAuth.map((item) => (
@@ -238,6 +240,8 @@ export default function Header() {
                             </Grid>
 
                     }
+                    {/* USER */}
+
                 </Grid >
             </div >
 
@@ -254,8 +258,14 @@ export default function Header() {
                 </Grid>
 
                 <Grid item xs={8} className='mx-auto' sx={{ display: { md: 'none', xs: 'flex' } }}>
-                    <Search placeholder="input search text"
-                        onSearch={onSearchProduct} enterButton
+                    <Search
+                        placeholder="input search text"
+                        onSearch={onSearchProduct}
+                        enterButton={
+                            <Button style={{ backgroundColor: '#cf3379', color: 'white' }}>
+                                Search
+                            </Button>
+                        }
                     />
                 </Grid>
 

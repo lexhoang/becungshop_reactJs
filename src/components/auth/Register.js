@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import './form-auth.scss';
+
 import { useDispatch, useSelector } from 'react-redux';
 import * as Yup from 'yup';
 import unorm from 'unorm';
@@ -66,6 +68,8 @@ const Register = () => {
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth());
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [])
 
     return (
@@ -119,9 +123,11 @@ const Register = () => {
                             </Button>
                         </div>
 
-                        <div className='mt-5 btn btn-login_register btn-sm w-50'>
-                            <Link to='/login' className='text-register' >Đã có tài khoản</Link>
-                        </div>
+                        <Button size='small' variant="contained"
+                            className='mt-5 btn-contain w-75'
+                            onClick={() => navigate('/login')}>
+                            Đã có tài khoản
+                        </Button>
                     </div>
                     <Button variant="contained"
                         className='come-back'

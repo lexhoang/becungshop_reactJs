@@ -1,13 +1,13 @@
 import * as act_auth from '../redux/actions/act_auth';
 import instances from '.';
 
-export const getDataAuth = () => {
+export const getDataAuth = (limit, currentPage) => {
     return async (dispatch) => {
-        dispatch(act_auth.act_get_auth());
-        await instances.get(`auths`)
+        // dispatch(act_auth.act_get_auth());
+        await instances.get(`auths?limit=${limit}&skip=${(currentPage - 1) * limit}`)
             .then((response) => {
-                // console.log(response.data);
-                dispatch(act_auth.act_success_auth(response.data.data))
+                const { data, totalPages } = response.data;
+                dispatch(act_auth.act_success_auth(data, totalPages))
             })
             .catch((error) => {
                 console.log("error: ", error);
@@ -17,7 +17,7 @@ export const getDataAuth = () => {
 
 export const filterUserAccount = (account) => {
     return async (dispatch) => {
-        dispatch(act_auth.act_get_auth());
+        // dispatch(act_auth.act_get_auth());
         await instances.get(`auths?account=${account}`)
             .then((response) => {
                 // console.log(response.data);
@@ -35,20 +35,6 @@ export const postDataAuth = (auth) => {
         await instances.post(`auths/`, auth)
             .then((response) => {
                 dispatch(act_auth.act_post_auth(response.data.data));
-                dispatch(getDataAuth());
-            })
-            .catch((error) => {
-                console.log("error: ", error);
-            })
-    }
-}
-
-export const patchDataAuth = (userId, dataProduct) => {
-    return async (dispatch) => {
-        await instances.patch(`auths/${userId}`, dataProduct)
-            .then((response) => {
-                dispatch(act_auth.act_patch_auth(response.data.data));
-                dispatch(getDataAuth());
             })
             .catch((error) => {
                 console.log("error: ", error);
@@ -61,7 +47,18 @@ export const putDataAuth = (auth) => {
         await instances.put(`auths/${auth._id}`, auth)
             .then((response) => {
                 dispatch(act_auth.act_put_auth(response.data.data));
-                dispatch(getDataAuth());
+            })
+            .catch((error) => {
+                console.log("error: ", error);
+            })
+    }
+}
+
+export const patchDataAuth = (userId, dataProduct) => {
+    return async (dispatch) => {
+        await instances.patch(`auths/${userId}`, dataProduct)
+            .then((response) => {
+                dispatch(act_auth.act_patch_auth(response.data.data));
             })
             .catch((error) => {
                 console.log("error: ", error);
@@ -74,7 +71,7 @@ export const deleteDataAuth = (authID) => {
         await instances.delete(`auths/${authID}`)
             .then((response) => {
                 dispatch(act_auth.act_delete_auth(response.data.data));
-                dispatch(getDataAuth());
+                // dispatch(getDataAuth());
             })
             .catch((error) => {
                 console.log("error: ", error);

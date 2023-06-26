@@ -81,6 +81,7 @@ export const TypesManager = () => {
 
                         <Grid item md={3} xs={12} my={1}>
                             <Button variant="contained" color="success"
+                            className='btn-contain'
                                 onClick={() => handleFormAddNew()}
                             >+ Thêm mới</Button>
                         </Grid>
