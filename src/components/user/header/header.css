@@ -22,7 +22,7 @@
 }
 
 
-@keyframes button-login {
+/* @keyframes button-login {
     0% {
         border-bottom: 2px solid rgb(255, 255, 255);
     }
@@ -42,18 +42,18 @@
     100% {
         border-bottom: 2px solid rgb(255, 255, 255);
     }
-}
+} */
 
 .text-login {
     display: flex;
     align-items: center;
     justify-content: space-evenly;
-    font-size: 18px;
+    /* font-size: 18px; */
     font-weight: bold;
     /* animation: text-login 5s ease-in-out infinite; */
 }
 
-@keyframes text-login {
+/* @keyframes text-login {
     0% {
         color: rgb(255, 255, 255);
     }
@@ -73,4 +73,4 @@
     100% {
         color: rgb(255, 255, 255);
     }
-}
+} */
