@@ -27,7 +27,7 @@ import Logout from '@mui/icons-material/Logout';
 import LoginIcon from '@mui/icons-material/Login';
 
 import LogoImage from '../../../assets/images/logo_becungshop.svg';
-import LogoImage_mb from '../../../assets/images/logo.png';
+import SearchIcon from '@mui/icons-material/Search';
 
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 ////////     END  UI      ////////
@@ -124,9 +124,9 @@ export default function Header() {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
             navigate("/products")
-            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor));
+            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor, limit, currentPage));
         }
-    }, [searchProduct, searchType, searchProductFor, currentPage]);
+    }, [searchProduct, searchType, searchProductFor, limit, currentPage]);
 
 
 
@@ -148,7 +148,7 @@ export default function Header() {
                             onSearch={onSearchProduct}
                             enterButton={
                                 <Button style={{ background: "linear-gradient(0deg, #d79c5a 0%, #f7d2a5 100%)", color: 'white' }}>
-                                    Search
+                                    <SearchIcon />
                                 </Button>
                             }
                         />
@@ -262,7 +262,7 @@ export default function Header() {
                         onSearch={onSearchProduct}
                         enterButton={
                             <Button style={{ background: "linear-gradient(0deg, #d79c5a 0%, #f7d2a5 100%)", color: 'white' }}>
-                                Search
+                                <SearchIcon />
                             </Button>
                         }
                     />

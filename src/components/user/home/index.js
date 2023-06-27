@@ -6,9 +6,10 @@ import GirlProduct from './GirlProduct'
 import BoyProduct from './BoyProduct'
 import Loading from '../../loading/Loading'
 
+
 export default function HomePage() {
-    const{loading} = useSelector(state=>state.productsReducer)
-    const limit = 6; // Số lượng sản phẩm trên mỗi trang
+    const { loading } = useSelector(state => state.productsReducer)
+    const limit = 12; // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
@@ -18,9 +19,11 @@ export default function HomePage() {
         <>
             {loading ? <Loading /> : null}
             <CarouselComp />
-            <ProductNew limit={limit} currentPage={currentPage} />
-            <GirlProduct limit={limit} currentPage={currentPage} />
-            <BoyProduct limit={limit} currentPage={currentPage} />
+            <div className="product-layout">
+                <ProductNew limit={limit} currentPage={currentPage} />
+                <GirlProduct limit={limit} currentPage={currentPage} />
+                <BoyProduct limit={limit} currentPage={currentPage} />
+            </div>
         </>
     )
 }

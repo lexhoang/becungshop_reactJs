@@ -37,7 +37,7 @@ export default function GirlProduct(props) {
 
   useEffect(() => {
     dispatch(api_products.getDataProduct(limit, currentPage))
-  }, []);
+  }, [limit, currentPage]);
 
   // useEffect(() => {
   //   const filteredProductFor = dataProductFor.find((productFor) => {
@@ -52,8 +52,8 @@ export default function GirlProduct(props) {
   }
 
   return (
-    <div className="m-5">
-      <h2 className="text-center">Dành cho bé gái</h2>
+    <div style={{ marginTop: '100px' }}>
+      <h3 className="text-center">Dành cho bé gái</h3>
       <Grid container my={4}>
         {
           dataProducts.map((product) => (
@@ -95,7 +95,7 @@ export default function GirlProduct(props) {
       </Grid>
 
       <div className='text-center'>
-      <Button
+        <Button
           variant='contained'
           className='btn-contain'
           onClick={() => clickMore()}>

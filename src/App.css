@@ -10,13 +10,9 @@ body {
 
 }
 
-/* .bg-layout {
-  background-image: url(https://thuthuatnhanh.com/wp-content/uploads/2021/12/background-de-thuong.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-attachment: fixed;
-  background-color: #f5f5f5;
-} */
+.product-layout {
+  margin: 0 50px;
+}
 
 .text-color {
   border: 2px solid #cf6f33;
@@ -40,10 +36,21 @@ body {
   .margin-header {
     margin-top: 110px;
   }
+
 }
 
 @media screen and (max-width: 900px) {
   .margin-header {
     margin-top: 120px;
+  }
+
+  .product-layout {
+    margin: 0 20px;
+  }
+}
+
+@media screen and (min-width: 1800px) {
+  .product-layout {
+    margin: 0 200px;
   }
 }

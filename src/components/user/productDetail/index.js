@@ -264,7 +264,7 @@ export default function ProductDetail() {
                                         className='w-100 my-4 fw-bold custom-btn_animate btn-animate'
                                         onClick={() => addToCart()}
                                     >
-                                        <span style={{ fontSize: '18px' }}>Mua với giá {numberWithCommas(productInfo.prices)}đ</span>
+                                        <span style={{ fontSize: '18px' }}>THÊM VÀO GIỎ HÀNG</span>
                                     </button>
                                 </Grid>
 

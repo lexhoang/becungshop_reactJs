@@ -37,7 +37,7 @@ export default function GirlProduct(props) {
 
   useEffect(() => {
     dispatch(api_products.getDataProduct(limit, currentPage))
-  }, []);
+  }, [limit, currentPage]);
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -45,7 +45,7 @@ export default function GirlProduct(props) {
 
   return (
     <div className="m-5">
-      <h2 className="text-center">Dành cho bé trai</h2>
+      <h3 className="text-center">Dành cho bé trai</h3>
       <Grid container my={4}>
         {
           dataProducts.map((product) => (

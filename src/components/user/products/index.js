@@ -25,7 +25,7 @@ export default function ProductsPage() {
     const navigate = useNavigate();
 
 
-    const limit = 6; // Số lượng sản phẩm trên mỗi trang
+    const limit = 12; // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
@@ -36,11 +36,11 @@ export default function ProductsPage() {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
             navigate("/products")
-            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor));
+            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor, limit, currentPage));
         }
         // Cuộn lên đầu trang
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [searchProduct, searchType, searchProductFor, currentPage, totalPages]);
+    }, [searchProduct, searchType, searchProductFor, totalPages, limit, currentPage]);
 
 
 
@@ -50,7 +50,7 @@ export default function ProductsPage() {
     }
 
     return (
-        <div className="mx-5 animate__animated animate__zoomIn">
+        <div className="product-layout animate__animated animate__zoomIn">
             {loading ? <Loading /> : null}
 
             <Grid container justifyContent="center" mt={12}>

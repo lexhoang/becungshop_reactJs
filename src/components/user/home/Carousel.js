@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 import { ImagesBanner } from '../../../assets/Images';
 import BannerRight from '../../../assets/images/bannerRight.jpg';
+import { Grid } from '@mui/material';
 ////////     END  UI      ////////
 
 export default function CarouselComp() {
@@ -20,7 +21,7 @@ export default function CarouselComp() {
   return (
     <Container fluid >
       <Row className='justify-content-evenly align-items-center'>
-        <Col md={8} xs={7}>
+        <Col md={8} xs={12}>
           <Carousel activeIndex={index} onSelect={handleSelect}>
             {
               ImagesBanner.map((image) => (
@@ -36,20 +37,24 @@ export default function CarouselComp() {
           </Carousel>
         </Col>
 
-        <Col md={3} xs={5} className="d-flex flex-column justify-content-around">
-          <div>
-            <img
-              className="d-block"
-              src={BannerRight}
-              alt="First slide"
-              width='80%'
-            />
-          </div>
+        <Col md={3} xs={12}>
+          <Row className='justify-content-evenly align-items-center'>
+            <Col md={12} xs={6}>
+              <img
+                className="d-block"
+                src={BannerRight}
+                alt="First slide"
+                width='80%'
+              />
+            </Col>
 
-          <Button className="w-100 my-4 fw-bold custom-btn_animate btn-animate"
-            onClick={() => navigate('/products')}>
-            <span style={{ fontSize: '18px' }}>Mua sắm</span>
-          </Button>
+            <Col md={12} xs={6}>
+              <Button className="w-100 fw-bold custom-btn_animate btn-animate"
+                onClick={() => navigate('/products')}>
+                <span style={{ fontSize: '18px' }}>KHÁM PHÁ</span>
+              </Button>
+            </Col>
+          </Row>
         </Col>
       </Row >
     </Container>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Grid from '@mui/material/Grid';
-
+import SearchIcon from '@mui/icons-material/Search';
 import { Input, Button, } from 'antd';
 
 const { Search } = Input;
@@ -17,7 +17,7 @@ const SearchAuth = (props) => {
                             onSearch={onSearchAccount}
                             enterButton={
                                 <Button style={{ background: "linear-gradient(0deg, #d79c5a 0%, #f7d2a5 100%)", color: 'white' }}>
-                                    Search
+                                    <SearchIcon />
                                 </Button>
                             }
                         />

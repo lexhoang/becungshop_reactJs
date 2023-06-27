@@ -38,15 +38,15 @@ export default function ProductNew(props) {
   useEffect(() => {
     const copiedProducts = [...dataProducts];
     setReversedProducts(copiedProducts.reverse());
-  }, [dataProducts]);
+  }, [dataProducts, limit, currentPage]);
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
   }
 
   return (
-    <div className="m-5">
-      <h2 className="text-center">Sản phẩm mới</h2>
+    <div style={{ marginTop: '100px' }}>
+      <h3 className="text-center">Sản phẩm mới</h3>
       <Grid container my={4}>
         {
           reversedProducts.map((product) => (

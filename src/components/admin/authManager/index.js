@@ -75,7 +75,7 @@ export default function AuthManager() {
 
     const onSearchAccount = (value) => {
         dispatch(act_filter.filter_account(value));
-        dispatch(api_auth.filterUserAccount(value))
+        dispatch(api_auth.filterUserAccount(value, limit, currentPage))
     }
 
     const handlePageChange = (event, page) => {
@@ -84,7 +84,7 @@ export default function AuthManager() {
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth(limit, currentPage));
-    }, [limit, currentPage]);
+    }, [dataAuth, limit, currentPage]);
 
     return (
         <div>
