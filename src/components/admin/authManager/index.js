@@ -116,6 +116,7 @@ export default function AuthManager() {
             <CartDetail selectedCart={selectedCart} setSelectedCart={setSelectedCart}
                 showCartDetail={showCartDetail}
                 handleCloseCartDetail={handleCloseCartDetail}
+                limit={limit} currentPage={currentPage}
             />
 
 

@@ -87,7 +87,7 @@ export default function FormAuth(props) {
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth(limit, currentPage));
-    }, [imageUrls, limit, currentPage]);
+    }, [imageUrls]);
 
 
     return (

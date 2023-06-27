@@ -14,7 +14,7 @@ import RemoveIcon from '@mui/icons-material/Remove';
 
 
 export default function CartDetail(props) {
-    const { showCartDetail, handleCloseCartDetail, selectedCart, setSelectedCart } = props;
+    const { showCartDetail, handleCloseCartDetail, selectedCart, setSelectedCart, limit, currentPage } = props;
 
     const { loading, dataProducts } = useSelector((state) => state.productsReducer);
     const dispatch = useDispatch();
@@ -102,6 +102,7 @@ export default function CartDetail(props) {
             .then((willDelete) => {
                 if (willDelete) {
                     dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
+                    dispatch(api_products.getDataProduct(limit, currentPage));
                     setSelectedCart({ ...selectedCart, cart: updatedCart });
                     swal("Thành công! Sản phẩm đã được xóa!", {
                         icon: "success",
@@ -114,7 +115,7 @@ export default function CartDetail(props) {
 
 
     useEffect(() => {
-        dispatch(api_products.getDataProduct());
+        dispatch(api_products.getDataProduct(limit, currentPage));
 
         if (selectedCart.cart && selectedCart.cart.length > 0) {
             const { productId } = selectedCart.cart[0];

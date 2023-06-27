@@ -65,6 +65,11 @@ export default function ProductDetail() {
     }, [dataAuth, user]);
 
     const addToCart = () => {
+        if (!selectedProduct.size || !selectedProduct.color || selectedProduct.number <= 0) {
+            swal('Oops!', 'Hãy chọn đủ thông tin để mua sản phẩm.', 'error');
+            return;
+        }
+
         if (user !== null) {
             const existProductIndex = infoUser.cart.findIndex(item =>
                 item.productId === selectedProduct.productId
@@ -82,11 +87,16 @@ export default function ProductDetail() {
                 setSelectedProduct({ productId: productId, image: '', name: '', size: '', color: '', number: 0, totalPrices: 0 });
                 swal("Đã thêm sản phẩm vào giỏ hàng!", "", "success");
             } else {
-                const updateProduct = {
-                    ...selectedProduct,
-                    totalPrices: selectedProduct.number * filterProduct.prices
-                }
-                const updatedCart = [...infoUser.cart, updateProduct];
+                const newCartItem = {
+                    productId: selectedProduct.productId,
+                    image: filterProduct.photoUrl,
+                    name: filterProduct.name,
+                    size: selectedProduct.size,
+                    color: selectedProduct.color,
+                    number: selectedProduct.number,
+                    totalPrices: selectedProduct.number * filterProduct.prices,
+                };
+                const updatedCart = [...infoUser.cart, newCartItem];
                 dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
 
                 const newAmount = parseInt(filterProduct.amount - selectedProduct.number)

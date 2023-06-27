@@ -3,15 +3,16 @@ import instances from '.';
 
 export const getDataAuth = (limit, currentPage) => {
     return async (dispatch) => {
-        // dispatch(act_auth.act_get_auth());
-        await instances.get(`auths?limit=${limit}&skip=${(currentPage - 1) * limit}`)
-            .then((response) => {
-                const { data, totalPagesAuth } = response.data;
-                dispatch(act_auth.act_success_auth(data, totalPagesAuth))
-            })
-            .catch((error) => {
-                console.log("error: ", error);
-            })
+        setTimeout(() => {
+            instances.get(`auths?limit=${limit}&skip=${(currentPage - 1) * limit}`)
+                .then((response) => {
+                    const { data, totalPagesAuth } = response.data;
+                    dispatch(act_auth.act_success_auth(data, totalPagesAuth))
+                })
+                .catch((error) => {
+                    console.log("error: ", error);
+                })
+        }, 300);
     }
 }
 
@@ -58,7 +59,7 @@ export const patchDataAuth = (userId, dataProduct) => {
     return async (dispatch) => {
         await instances.patch(`auths/${userId}`, dataProduct)
             .then((response) => {
-                dispatch(act_auth.act_patch_auth(dataProduct));
+                dispatch(act_auth.act_patch_auth(response.data.data));
             })
             .catch((error) => {
                 console.log("error: ", error);
