@@ -147,7 +147,7 @@ export default function Header() {
                             placeholder="input search text"
                             onSearch={onSearchProduct}
                             enterButton={
-                                <Button style={{ backgroundColor: '#cf3379', color: 'white' }}>
+                                <Button style={{ background: "linear-gradient(0deg, #cf6f33 0%, #ffbb87 100%)", color: 'white' }}>
                                     Search
                                 </Button>
                             }
@@ -231,10 +231,9 @@ export default function Header() {
                                     size="small"
                                     // variant="outlined"
                                     onClick={() => navigate('/login')}
-                                    className="btn-login px-3 btn"
-                                // style={{ borderBottom: '3px solid #fff' }}
+                                    className="btn-contain px-3 btn"
+                                    style={{ borderBottom: '5px solid #fff', borderTop: '5px solid #fff' }}
                                 >
-                                    <div className='glowAnimation'></div>
                                     <div className="text-login"> <LoginIcon /> <span style={{ marginLeft: '4px' }}>Login</span> </div>
                                 </button>
                             </Grid>
@@ -262,7 +261,7 @@ export default function Header() {
                         placeholder="input search text"
                         onSearch={onSearchProduct}
                         enterButton={
-                            <Button style={{ backgroundColor: '#cf3379', color: 'white' }}>
+                            <Button style={{ background: "linear-gradient(0deg, #cf6f33 0%, #ffbb87 100%)", color: 'white' }}>
                                 Search
                             </Button>
                         }

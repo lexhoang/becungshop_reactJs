@@ -1,6 +1,6 @@
 .bg-header {
-    background: linear-gradient(0deg, #cf3379 0%, #ff87bd 100%);
-    /* background: linear-gradient(0deg, #ff87bdc6 0%, #cf3379 100%); */
+    /* background: linear-gradient(0deg, #cf3379 0%, #ff87bd 100%); */
+    background: linear-gradient(0deg, #cf6f33 0%, #ffbb87 100%);
 }
 
 .icon-content {
@@ -18,7 +18,7 @@
 
 .btn-login {
     border: none;
-    animation: button-login 5s ease-in-out infinite;
+    /* animation: button-login 5s ease-in-out infinite; */
 }
 
 
@@ -47,8 +47,10 @@
 .text-login {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    animation: text-login 5s ease-in-out infinite;
+    justify-content: space-evenly;
+    font-size: 18px;
+    font-weight: bold;
+    /* animation: text-login 5s ease-in-out infinite; */
 }
 
 @keyframes text-login {

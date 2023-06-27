@@ -29,15 +29,15 @@ export default function MenuItem(props) {
                     <div key={productFor.id} className='icon-content'>
                         <div className='icon-img'
                             style={{
-                                border: productFor.value === searchProductFor && productFor.value !== "" ? "4px solid #26a69a" : "none"
+                                backgroundColor: productFor.value === searchProductFor && productFor.value !== "" ? "#cf6f33" : "white"
                             }}
                         >
                             <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor.value)} />
                         </div>
                         <span
                             style={{
-                                fontSize: '11px', fontWeight: "700",
-                                color: productFor.value === searchProductFor && productFor.value !== "" ? "#26a69a" : "white"
+                                fontSize: '12px', fontWeight: "700",color: 'white',
+                                // color: productFor.value === searchProductFor && productFor.value !== "" ? "#cf6f33" : "white"
                             }}
                         >
                             {productFor.name}
@@ -52,7 +52,7 @@ export default function MenuItem(props) {
                         onClick={() => handleAllType()}
                     />
                 </div>
-                <span style={{ fontSize: '11px', fontWeight: "700" }} className='text-white'>Tất cả</span>
+                <span style={{ fontSize: '12px', fontWeight: "700",color: 'white' }} className='text-white'>Tất cả</span>
             </div>
             {
                 dataTypes.map(type => {
@@ -60,15 +60,15 @@ export default function MenuItem(props) {
                         <div key={type._id} className='icon-content'>
                             <div className='icon-img'
                                 style={{
-                                    border: type._id === searchType ? "4px solid #26a69a" : "none"
+                                    backgroundColor: type._id === searchType ? "#cf6f33" : "white"
                                 }}
                             >
                                 <img src={type.photoUrl} alt="" width="100%" onClick={() => handleSearchType(type._id)} />
                             </div>
                             <span
                                 style={{
-                                    fontSize: '11px', fontWeight: "700",
-                                    color: type._id === searchType ? "#26a69a" : "white"
+                                    fontSize: '12px', fontWeight: "700",color: 'white',
+                                    // color: type._id === searchType ? "#cf6f33" : "white"
                                 }}
                             >{type.name}
                             </span>

@@ -19,7 +19,7 @@ body {
 } */
 
 .text-color {
-  color: #cf3379
+  border: 2px solid #cf6f33;
 }
 
 .margin-header {
@@ -32,7 +32,7 @@ body {
   top: -33px;
   right: 10px;
   cursor: pointer;
-  color: #cf3379;
+  color: #cf6f33;
 }
 
 
