@@ -22,6 +22,7 @@ import HomePage from './components/user/home';
 import ProductsPage from './components/user/products';
 import ProductDetail from './components/user/productDetail';
 import InfoUser from './components/user/infoUser';
+import Cart from './components/user/cart';
 
 
 
@@ -33,6 +34,7 @@ function App() {
         <Route path='products' element={<ProductsPage />} />
         <Route path='products/:productId' element={<ProductDetail />} />
         <Route path='editInfoUser' element={<InfoUser />} />
+        <Route path='cart' element={<Cart />} />
       </Route>
 
       <Route path="/admin" element={<LayoutAdmin />}>

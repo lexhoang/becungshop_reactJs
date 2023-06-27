@@ -15,7 +15,8 @@ body {
 }
 
 .text-color {
-  border: 2px solid #cf6f33;
+  color: #cf6f33;
+  font-weight: bold;
 }
 
 .margin-header {

@@ -15,12 +15,13 @@ import { Button, ButtonGroup, Grid, TextField, FormControl, InputLabel, Select, 
 import { Pagination } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
+import Loading from '../../loading/Loading';
 
 
 
 //////////     END UI     ///////////
 export const ProductsManager = () => {
-    const { dataProducts, totalPages } = useSelector(state => state.productsReducer);
+    const { loading, dataProducts, totalPages } = useSelector(state => state.productsReducer);
     const { dataTypes } = useSelector(state => state.typesReducer)
     const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
 
@@ -90,6 +91,7 @@ export const ProductsManager = () => {
 
     return (
         <>
+            {loading ? <Loading /> : null}
             <h3 className="text-center mb-5">PRODUCT FOR MANAGER</h3>
             <Grid container mt={10} mb={5}>
                 <Grid item xs={8} className="mx-auto text-center">
@@ -153,7 +155,7 @@ export const ProductsManager = () => {
                     className='btn-contain'
                     onClick={() => handleFormAddNew()}
                 >+ Thêm mới</Button>
-                <select className='px-2'
+                <select className='px-2 form-select text-center' style={{width:'100px'}}
                     value={limit}
                     onChange={(e) => setLimit(e.target.value)}>
                     <option value={5}>5</option>
@@ -201,7 +203,6 @@ export const ProductsManager = () => {
                             )
                         })
                     }
-
                 </tbody>
             </table >
 

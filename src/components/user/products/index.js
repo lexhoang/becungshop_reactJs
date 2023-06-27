@@ -52,7 +52,6 @@ export default function ProductsPage() {
     return (
         <div className="product-layout animate__animated animate__zoomIn">
             {loading ? <Loading /> : null}
-
             <Grid container justifyContent="center" mt={12}>
                 <Stack spacing={2}>
                     <Pagination

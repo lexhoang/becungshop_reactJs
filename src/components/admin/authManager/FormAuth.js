@@ -5,6 +5,8 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
 import * as Yup from 'yup';
 import unorm from 'unorm';
+import swal from 'sweetalert';
+
 import * as api_auth from '../../../api/api_auth';
 import Avatar from '../../../assets/images/avt.jpg';
 import Loading from '../../loading/Loading'
@@ -82,6 +84,7 @@ export default function FormAuth(props) {
         dispatch(api_auth.postDataAuth({ ...values, photoUrl: imageUrls }))
         resetForm();
         setImageUrls(Avatar)
+        swal("Tài khoản đã thêm thành công!!!", "", "success");
         handleCloseForm();
     }
 

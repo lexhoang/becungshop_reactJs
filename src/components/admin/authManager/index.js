@@ -15,7 +15,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import SearchAuth from './SearchAuth';
-import { logDOM } from '@testing-library/react';
+// import { logDOM } from '@testing-library/react';
 
 export default function AuthManager() {
     const { dataAuth, totalPagesAuth } = useSelector((state) => state.authReducer);
@@ -75,7 +75,7 @@ export default function AuthManager() {
 
     const onSearchAccount = (value) => {
         dispatch(act_filter.filter_account(value));
-        dispatch(api_auth.filterUserAccount(value, limit, currentPage))
+        dispatch(api_auth.filterUserAccount(value))
     }
 
     const handlePageChange = (event, page) => {
@@ -84,7 +84,7 @@ export default function AuthManager() {
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth(limit, currentPage));
-    }, [dataAuth, limit, currentPage]);
+    }, [limit, currentPage]);
 
     return (
         <div>
@@ -100,7 +100,7 @@ export default function AuthManager() {
                     >+ Thêm mới
                     </Button>
                 </Grid>
-                <select className='px-2'
+                <select className='px-2 form-select text-center' style={{ width: '100px' }}
                     value={limit}
                     onChange={(e) => setLimit(e.target.value)}>
                     <option value={5}>5</option>

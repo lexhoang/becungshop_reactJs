@@ -3,10 +3,12 @@ import { storage } from "../../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
 import { useDispatch, useSelector } from 'react-redux';
+
+import * as Yup from 'yup';
+import swal from 'sweetalert';
+
 import * as api_product from '../../../../api/api_products';
 import * as api_types from '../../../../api/api_types';
-import * as Yup from 'yup';
-
 import Loading from '../../../loading/Loading'
 import SelectColor from './select-color';
 import SelectSize from './select-size';
@@ -17,7 +19,6 @@ import { productForData } from '../../../text/TextProductFor'
 ////// START UI  /////
 import Modal from 'react-bootstrap/Modal';
 import { Grid, Button } from '@mui/material';
-
 
 
 
@@ -94,14 +95,15 @@ export const FormProduct = (props) => {
             return
         } else {
             if (loadFormProduct.action === 'add') {
-                // console.log(values);
                 dispatch(api_product.postDataProduct(
                     { ...values, photoUrl: imageUrls, color: colors, size: sizes },
                 ));
+                swal("Sản phẩm đã thêm thành công!!!", "", "success");
             } else {
                 dispatch(api_product.putDataProduct(
                     { ...values, photoUrl: imageUrls, color: colors, size: sizes },
                 ));
+                swal("Thông tin sản phẩm đã được thay đổi!!!", "", "success");
             }
         }
         props.handleCloseForm()

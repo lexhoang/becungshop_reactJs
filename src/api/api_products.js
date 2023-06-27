@@ -4,16 +4,16 @@ import instances from '.';
 
 export const getDataProduct = (limit, currentPage) => {
     return async (dispatch) => {
-        setTimeout(() => {
-            instances.get(`products?limit=${limit}&skip=${(currentPage - 1) * limit}`)
-                .then((response) => {
-                    const { data, totalPages } = response.data;
-                    dispatch(act_products.act_product_success(data, totalPages));
-                })
-                .catch((error) => {
-                    console.log("error: ", error);
-                });
-        }, 300);
+        // setTimeout(() => {
+        await instances.get(`products?limit=${limit}&skip=${(currentPage - 1) * limit}`)
+            .then((response) => {
+                const { data, totalPages } = response.data;
+                dispatch(act_products.act_product_success(data, totalPages));
+            })
+            .catch((error) => {
+                console.log("error: ", error);
+            });
+        // }, 300);
     }
 }
 

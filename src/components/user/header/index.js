@@ -159,7 +159,7 @@ export default function Header() {
                     </Grid>
 
                     <Grid item md={1} xs={3} textAlign="right">
-                        <button className="btn">
+                        <button className="btn" onClick={() => navigate('/cart')}>
                             <ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} />
                         </button>
                     </Grid>

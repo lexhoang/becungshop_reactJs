@@ -3,16 +3,16 @@ import instances from '.';
 
 export const getDataAuth = (limit, currentPage) => {
     return async (dispatch) => {
-        setTimeout(() => {
-            instances.get(`auths?limit=${limit}&skip=${(currentPage - 1) * limit}`)
-                .then((response) => {
-                    const { data, totalPagesAuth } = response.data;
-                    dispatch(act_auth.act_success_auth(data, totalPagesAuth))
-                })
-                .catch((error) => {
-                    console.log("error: ", error);
-                })
-        }, 300);
+        // setTimeout(() => {
+        await instances.get(`auths?limit=${limit}&skip=${(currentPage - 1) * limit}`)
+            .then((response) => {
+                const { data, totalPagesAuth } = response.data;
+                dispatch(act_auth.act_success_auth(data, totalPagesAuth))
+            })
+            .catch((error) => {
+                console.log("error: ", error);
+            })
+        // }, 300);
     }
 }
 
