@@ -84,7 +84,7 @@ export default function AuthManager() {
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth(limit, currentPage));
-    }, [selectedCart, limit, currentPage]);
+    }, [limit, currentPage]);
 
     return (
         <div>
@@ -100,10 +100,12 @@ export default function AuthManager() {
                     >+ Thêm mới
                     </Button>
                 </Grid>
-                <select value={limit} onChange={(e) => setLimit(e.target.value)}>
-                    <option value={2}>2</option>
+                <select className='px-2'
+                    value={limit}
+                    onChange={(e) => setLimit(e.target.value)}>
                     <option value={5}>5</option>
-                    <option value={10}>10</option>
+                    <option value={25}>25</option>
+                    <option value={50}>50</option>
                 </select>
             </div>
 

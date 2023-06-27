@@ -13,7 +13,7 @@ export const getDataProduct = (limit, currentPage) => {
                 .catch((error) => {
                     console.log("error: ", error);
                 });
-        }, 300); // Delay of 1000 milliseconds (1 second)
+        }, 300);
     }
 }
 
