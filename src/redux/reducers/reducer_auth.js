@@ -3,7 +3,7 @@ import * as constants_auth from '../constants/constants_auth';
 const initialAuth = {
     loading: false,
     dataAuth: [],
-    totalPages: 0
+    totalPagesAuth: 0
 }
 
 export const authReducer = (state = initialAuth, action) => {
@@ -18,7 +18,7 @@ export const authReducer = (state = initialAuth, action) => {
                 ...state,
                 loading: false,
                 dataAuth: action.payload.auth,
-                totalPages: action.payload.totalPages
+                totalPagesAuth: action.payload.totalPagesAuth
             }
 
 
@@ -47,7 +47,6 @@ export const authReducer = (state = initialAuth, action) => {
                 loading: false,
                 dataAuth: state.dataAuth.map((auth) => {
                     if (auth._id === action.payload._id) {
-                        console.log('done')
                         return action.payload;
                     }
                     return auth;
@@ -55,6 +54,8 @@ export const authReducer = (state = initialAuth, action) => {
             }
 
         case constants_auth.DELETE_AUTH:
+            console.log(action.payload);
+            console.log(state.dataAuth);
             return {
                 ...state,
                 loading: false,

@@ -4,7 +4,7 @@ import CarouselComp from './Carousel'
 import ProductNew from './ProductNew'
 import GirlProduct from './GirlProduct'
 import BoyProduct from './BoyProduct'
-import Loading from '../../Loading'
+import Loading from '../../loading/Loading'
 
 export default function HomePage() {
     const{loading} = useSelector(state=>state.productsReducer)

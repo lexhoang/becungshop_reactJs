@@ -6,8 +6,8 @@ export const getDataAuth = (limit, currentPage) => {
         // dispatch(act_auth.act_get_auth());
         await instances.get(`auths?limit=${limit}&skip=${(currentPage - 1) * limit}`)
             .then((response) => {
-                const { data, totalPages } = response.data;
-                dispatch(act_auth.act_success_auth(data, totalPages))
+                const { data, totalPagesAuth } = response.data;
+                dispatch(act_auth.act_success_auth(data, totalPagesAuth))
             })
             .catch((error) => {
                 console.log("error: ", error);
@@ -58,7 +58,7 @@ export const patchDataAuth = (userId, dataProduct) => {
     return async (dispatch) => {
         await instances.patch(`auths/${userId}`, dataProduct)
             .then((response) => {
-                dispatch(act_auth.act_patch_auth(response.data.data));
+                dispatch(act_auth.act_patch_auth(dataProduct));
             })
             .catch((error) => {
                 console.log("error: ", error);
@@ -70,7 +70,7 @@ export const deleteDataAuth = (authID) => {
     return async (dispatch) => {
         await instances.delete(`auths/${authID}`)
             .then((response) => {
-                dispatch(act_auth.act_delete_auth(response.data.data));
+                dispatch(act_auth.act_delete_auth(authID));
                 // dispatch(getDataAuth());
             })
             .catch((error) => {

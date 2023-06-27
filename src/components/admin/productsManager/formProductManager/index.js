@@ -7,7 +7,7 @@ import * as api_product from '../../../../api/api_products';
 import * as api_types from '../../../../api/api_types';
 import * as Yup from 'yup';
 
-import Loading from '../../../Loading'
+import Loading from '../../../loading/Loading'
 import SelectColor from './select-color';
 import SelectSize from './select-size';
 import { Formik, Form, Field, ErrorMessage } from 'formik';

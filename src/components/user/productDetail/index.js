@@ -6,7 +6,7 @@ import instances from '../../../api';
 import './productDetail.css';
 import * as api_auth from '../../../api/api_auth'
 import * as api_products from '../../../api/api_products';
-import Loading from '../../Loading'
+import Loading from '../../loading/Loading'
 import swal from 'sweetalert';
 import RelatedProduct from './RelatedProduct';
 
@@ -48,6 +48,7 @@ export default function ProductDetail() {
         number: 0,
         totalPrices: 0
     });
+
     const filterProduct = useMemo(() => {
         if (dataProducts && dataProducts.length > 0) {
             const product = dataProducts.find(item => item._id === productId);
@@ -78,6 +79,7 @@ export default function ProductDetail() {
 
                 const newAmount = parseInt(filterProduct.amount - updatedCart[existProductIndex].number)
                 dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+                setSelectedProduct({ productId: productId, image: '', name: '', size: '', color: '', number: 0, totalPrices: 0 });
                 swal("Đã thêm sản phẩm vào giỏ hàng!", "", "success");
             } else {
                 const updateProduct = {
@@ -89,6 +91,7 @@ export default function ProductDetail() {
 
                 const newAmount = parseInt(filterProduct.amount - selectedProduct.number)
                 dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+                setSelectedProduct({ productId: productId, image: '', name: '', size: '', color: '', number: 0, totalPrices: 0 });
                 swal("Đã thêm sản phẩm vào giỏ hàng!", "", "success");
             }
         } else {
@@ -282,6 +285,7 @@ export default function ProductDetail() {
                             </Grid>
                         </Grid>
 
+                        {/* MÔ TẢ */}
                         <div className="animate__animated  animate__slideInUp">
                             <Typography p={2} variant="subtitle1" fontWeight="bold">
                                 Thông tin sản phẩm
@@ -319,9 +323,9 @@ export default function ProductDetail() {
                             </ul>
                         </div>
 
-
                         <RelatedProduct productInfo={productInfo} />
 
+                        {/* BẢNG SIZE */}
                         <Modal size="md" centered
                             show={showInstructionSize} onHide={() => setShowInstructionSize(false)}>
                             <Modal.Header closeButton>

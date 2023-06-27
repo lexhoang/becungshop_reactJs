@@ -10,12 +10,11 @@ import * as api_auth from '../../../api/api_auth';
 
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import Button from 'react-bootstrap/Button';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Button } from '@mui/material';
 import MyField from '../../MyField';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import Loading from '../../Loading';
+import Loading from '../../loading/Loading';
 
 
 export default function InfoUser() {
@@ -135,7 +134,7 @@ export default function InfoUser() {
                             <div className="mb-3 form-group">
                                 <label htmlFor='phone' style={{ letterSpacing: '2px' }} className="fw-bold">Số điện thoại</label>
                                 <div className='d-flex btn-group'>
-                                    <Button variant="secondary">+84</Button>
+                                    <Button variant="contained" className="btn-contain">+84</Button>
                                     <Field type='text' name='phone' id='phone' placeholder="Số điện thoại"
                                         className='form-control'
                                     />
@@ -146,7 +145,9 @@ export default function InfoUser() {
                     </Grid>
 
                     <div className="text-center mt-5">
-                        <Button className="w-100" variant="success" type='submit'>
+                        <Button variant="contained" type='submit'
+                            className="w-100 btn-contain"
+                        >
                             Xác nhận
                         </Button>
                     </div>

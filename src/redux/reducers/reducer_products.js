@@ -55,6 +55,7 @@ export const productsReducer = (state = initialProducts, action) => {
             };
 
         case constants_products.DELETE_PRODUCT:
+            console.log(action.payload);
             return {
                 ...state,
                 loading: false,

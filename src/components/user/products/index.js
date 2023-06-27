@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as api_products from '../../../api/api_products';
-import Loading from '../../Loading'
+import Loading from '../../loading/Loading'
 ////////     START  UI      ////////
 // import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';

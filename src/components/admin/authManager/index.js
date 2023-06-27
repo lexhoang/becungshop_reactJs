@@ -18,11 +18,11 @@ import SearchAuth from './SearchAuth';
 import { logDOM } from '@testing-library/react';
 
 export default function AuthManager() {
-    const { dataAuth, totalPages } = useSelector((state) => state.authReducer);
+    const { dataAuth, totalPagesAuth } = useSelector((state) => state.authReducer);
     const dispatch = useDispatch();
 
 
-    const [limit, setLimit] = useState(2);
+    const [limit, setLimit] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -62,8 +62,8 @@ export default function AuthManager() {
         })
             .then((willDelete) => {
                 if (willDelete) {
+                    console.log(userID);
                     dispatch(api_auth.deleteDataAuth(userID));
-                    // dispatch(api_auth.getDataAuth(limit, currentPage));
                     swal("Thành công! Người dùng đã được xóa!", {
                         icon: "success",
                     });
@@ -111,6 +111,7 @@ export default function AuthManager() {
 
             <FormAuth showForm={showForm}
                 handleCloseForm={handleCloseForm}
+                limit={limit} currentPage={currentPage}
             />
             <CartDetail selectedCart={selectedCart} setSelectedCart={setSelectedCart}
                 showCartDetail={showCartDetail}
@@ -142,7 +143,7 @@ export default function AuthManager() {
                                 <td>+84 {user.phone} </td>
                                 <td>
                                     <ButtonGroup aria-label="outlined primary button group">
-                                        <Button variant='outlined' color="info"
+                                        <Button variant='contained' className='btn-contain'
                                             onClick={() => handleDetail(user)}><ShoppingCartIcon />
                                         </Button>
                                     </ButtonGroup>
@@ -182,7 +183,7 @@ export default function AuthManager() {
                 <Stack spacing={2}>
                     <Pagination
                         variant="outlined" color="secondary"
-                        count={totalPages}
+                        count={totalPagesAuth}
                         page={currentPage}
                         onChange={handlePageChange}
                     />

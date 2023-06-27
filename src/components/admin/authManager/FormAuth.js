@@ -7,7 +7,7 @@ import * as Yup from 'yup';
 import unorm from 'unorm';
 import * as api_auth from '../../../api/api_auth';
 import Avatar from '../../../assets/images/avt.jpg';
-import Loading from '../../Loading'
+import Loading from '../../loading/Loading'
 import MyField from '../../MyField';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
@@ -20,9 +20,8 @@ import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
 export default function FormAuth(props) {
-    const { showForm, handleCloseForm } = props;
+    const { showForm, handleCloseForm, limit, currentPage } = props;
     const { dataAuth } = useSelector(state => (state.authReducer));
-
 
     const dispatch = useDispatch();
 
@@ -87,8 +86,8 @@ export default function FormAuth(props) {
     }
 
     useEffect(() => {
-        dispatch(api_auth.getDataAuth());
-    }, [imageUrls]);
+        dispatch(api_auth.getDataAuth(limit, currentPage));
+    }, [imageUrls, limit, currentPage]);
 
 
     return (

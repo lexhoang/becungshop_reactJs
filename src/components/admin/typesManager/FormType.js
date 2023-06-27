@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import * as api_types from '../../../api/api_types';
 import MyField from '../../MyField';
 import * as Yup from 'yup'
-import Loading from '../../Loading'
+import Loading from '../../loading/Loading'
 ////// START UI  /////
 import Modal from 'react-bootstrap/Modal';
 import { Grid, Button } from '@mui/material';

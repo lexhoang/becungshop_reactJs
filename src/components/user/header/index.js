@@ -119,7 +119,7 @@ export default function Header() {
 
 
     useEffect(() => {
-        dispatch(api_auth.getDataAuth());
+        dispatch(api_auth.getDataAuth(limit, currentPage));
         if (searchProduct == '' && searchType == '' && searchProductFor == '') {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
