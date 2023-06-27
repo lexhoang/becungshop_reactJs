@@ -147,7 +147,7 @@ export default function Header() {
                             placeholder="input search text"
                             onSearch={onSearchProduct}
                             enterButton={
-                                <Button style={{ background: "linear-gradient(0deg, #cf6f33 0%, #ffbb87 100%)", color: 'white' }}>
+                                <Button style={{ background: "linear-gradient(0deg, #d79c5a 0%, #f7d2a5 100%)", color: 'white' }}>
                                     Search
                                 </Button>
                             }
@@ -261,7 +261,7 @@ export default function Header() {
                         placeholder="input search text"
                         onSearch={onSearchProduct}
                         enterButton={
-                            <Button style={{ background: "linear-gradient(0deg, #cf6f33 0%, #ffbb87 100%)", color: 'white' }}>
+                            <Button style={{ background: "linear-gradient(0deg, #d79c5a 0%, #f7d2a5 100%)", color: 'white' }}>
                                 Search
                             </Button>
                         }

@@ -82,8 +82,8 @@ export default function MenuItemResponsive(props) {
                         <MenuItem key={productFor.id} className='icon-content' onClick={handleCloseNavMenu}>
                             <div className='icon-img'
                                 style={{
-                                    border: '2px solid #cf6f33',
-                                    backgroundColor: productFor.value === searchProductFor && productFor.value !== "" ? "#cf6f33" : "white"
+                                    border: '2px solid #d79c5a',
+                                    backgroundColor: productFor.value === searchProductFor && productFor.value !== "" ? "#d79c5a" : "white"
                                 }}
                             >
                                 <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor.value)} />
@@ -101,7 +101,7 @@ export default function MenuItemResponsive(props) {
                 <hr />
                 <MenuItem className='icon-content' onClick={handleCloseNavMenu}>
                     <div className='icon-img bg-white'
-                        style={{ border: '2px solid #cf6f33' }}>
+                        style={{ border: '2px solid #d79c5a' }}>
                         <img src={IconAll} alt="" width="100%"
                             onClick={() => handleAllType()}
                         />
@@ -114,8 +114,8 @@ export default function MenuItemResponsive(props) {
                             <MenuItem key={type._id} className='icon-content' onClick={handleCloseNavMenu}>
                                 <div className='icon-img'
                                     style={{
-                                        border: '2px solid #cf6f33',
-                                        backgroundColor: type._id === searchType ? "#cf6f33" : "white"
+                                        border: '2px solid #d79c5a',
+                                        backgroundColor: type._id === searchType ? "#d79c5a" : "white"
                                     }}
                                 >
                                     <img src={type.photoUrl} alt="" width="100%" onClick={() => handleSearchType(type._id)} />

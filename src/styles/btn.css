@@ -1,25 +1,25 @@
 .btn-outline {
-    border: 1px solid #cf6f33;
-    color: #cf6f33;
+    border: 1px solid #d79c5a ;
+    color: #d79c5a ;
     transition: 0.6s
 }
 
 .btn-outline:hover {
-    background: linear-gradient(0deg, #cf6f33 0%, #ffbb87 100%);
+    background: linear-gradient(0deg, #d79c5a  0%, #f7d2a5  100%);
     color: #fff;
     transition: 0.6s;
 }
 
 .btn-contain {
-    background: linear-gradient(0deg, #cf6f33 0%, #ffbb87 100%);
-    border: 1px solid #cf6f33;
+    background: linear-gradient(0deg, #d79c5a  0%, #f7d2a5  100%);
+    border: 1px solid #d79c5a ;
     color: #fff;
     transition: 0.6s;
 }
 
 .btn-contain:hover {
-    background: linear-gradient(0deg, #b9b9b9fe 0%, #ffffff 100%);
-    color: #cf6f33;
+    background: linear-gradient(0deg, #ccc9c4 0%, #ffffff 100%);
+    color: #d79c5a ;
     font-weight: bold;
     transition: 0.6s
 }
@@ -29,8 +29,8 @@
 }
 
 .btn-close_modal:hover {
-    background: linear-gradient(0deg, #b7b7b7fe 0%, #f3f2f2 100%);
-    color: #cf6f33;
+    background: linear-gradient(0deg, #ccc9c4 0%, #f3f2f2 100%);
+    color: #d79c5a ;
     font-weight: bold;
 }
 
@@ -76,7 +76,7 @@
 }
 
 .btn-animate {
-    background: linear-gradient(0deg, #cf6f33 0%, #ffbb87 100%);
+    background: linear-gradient(0deg, #d79c5a  0%, #f7d2a5  100%);
     line-height: 42px;
     padding: 0;
     border: none;
@@ -95,7 +95,7 @@
     content: "";
     right: 0;
     bottom: 0;
-    background: #cf6f33;
+    background: #d79c5a ;
     box-shadow:
         -7px -7px 20px 0px rgba(255, 255, 255, .9),
         -4px -4px 5px 0px rgba(255, 255, 255, .9),
@@ -116,7 +116,7 @@
 }
 
 .btn-animate:hover {
-    color: #cf6f33;
+    color: #d79c5a ;
     background: transparent;
     font-weight: bold;
 }
@@ -135,7 +135,7 @@
     content: "";
     left: 0;
     top: 0;
-    background: #cf6f33;
+    background: #d79c5a ;
     box-shadow:
         -7px -7px 20px 0px rgba(255, 255, 255, .9),
         -4px -4px 5px 0px rgba(255, 255, 255, .9),

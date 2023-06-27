@@ -183,7 +183,7 @@ export default function AuthManager() {
             <Grid container justifyContent="center">
                 <Stack spacing={2}>
                     <Pagination
-                        variant="outlined" color="secondary"
+                        variant="outlined" color="warning"
                         count={totalPagesAuth}
                         page={currentPage}
                         onChange={handlePageChange}

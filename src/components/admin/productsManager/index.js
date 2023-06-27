@@ -208,7 +208,7 @@ export const ProductsManager = () => {
             <Grid container justifyContent="center">
                 <Stack spacing={2}>
                     <Pagination
-                        variant="outlined" color="secondary"
+                        variant="outlined" color="warning"
                         count={totalPages}
                         page={currentPage}
                         onChange={handlePageChange}
