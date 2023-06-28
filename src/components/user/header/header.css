@@ -9,7 +9,8 @@
 }
 
 .icon-img {
-    width: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     background-color: #fff;
     cursor: pointer

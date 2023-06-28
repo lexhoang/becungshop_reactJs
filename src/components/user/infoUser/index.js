@@ -46,6 +46,7 @@ export default function InfoUser() {
         <VisibilityOffIcon onClick={() => setTypePassword('password')} />
 
     const [formAuth, setFormAuth] = useState({ account: '', password: '', name: '', phone: '' });
+    
     const validationSchema = Yup.object().shape({
         password: Yup.string()
             .required('Vui lòng điền mật khẩu')

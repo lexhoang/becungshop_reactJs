@@ -33,14 +33,11 @@ export default function ProductsPage() {
     };
 
     useEffect(() => {
-
         if (searchProduct == '' && searchType == '' && searchProductFor == '') {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
             navigate("/products")
             dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor, limit, currentPage));
-            console.log(searchProductFor);
-            console.log(searchType);
         }
 
 

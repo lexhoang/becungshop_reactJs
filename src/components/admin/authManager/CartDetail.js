@@ -8,7 +8,7 @@ import * as api_products from '../../../api/api_products';
 import Modal from 'react-bootstrap/Modal';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, IconButton } from '@mui/material';
+import { Box, Grid, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 
@@ -24,48 +24,19 @@ export default function CartDetail(props) {
 
     const filterProduct = useMemo(() => {
         if (dataProducts && dataProducts.length > 0) {
-            const product = dataProducts.find(item => item._id === productIdEdit);
-            return product ? product : null;
+            const product = dataProducts.find(product => product._id === productIdEdit);
+            return product || null;
         }
-        return '';
+        return null;
     }, [dataProducts, productIdEdit]);
 
-
-    // Tăng giảm
-    const handleIncreaseQuantity = (cartProduct) => {
-        const { productId, color, size } = cartProduct;
-        setProductIdEdit(productId);
-
-        const updatedCart = selectedCart.cart.map((product) => {
-            if (
-                product.productId === productId &&
-                product.color === color &&
-                product.size === size
-            ) {
-                const newNumber = product.number + 1;
-                const newTotalPrices = filterProduct ? newNumber * filterProduct.prices : 0;
-                return {
-                    ...product,
-                    number: newNumber,
-                    totalPrices: newTotalPrices
-                };
-            }
-            return product;
-        });
-        dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
-        setSelectedCart({ ...selectedCart, cart: updatedCart });
-    };
-
+    // GIẢM SỐ LƯỢNG
     const handleDecreaseQuantity = (cartProduct) => {
         const { productId, color, size } = cartProduct;
         setProductIdEdit(productId);
 
         const updatedCart = selectedCart.cart.map((product) => {
-            if (
-                product.productId === productId &&
-                product.color === color &&
-                product.size === size
-            ) {
+            if (product.productId === productId && product.color === color && product.size === size) {
                 if (product.number > 1) {
                     const newNumber = product.number - 1;
                     const newTotalPrices = filterProduct ? newNumber * filterProduct.prices : 0;
@@ -79,19 +50,45 @@ export default function CartDetail(props) {
             return product;
         });
         dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
+
+        const newAmount = parseInt(filterProduct.amount) + 1;
+        dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+
         setSelectedCart({ ...selectedCart, cart: updatedCart });
     };
-    //END
 
+    // TĂNG SỐ LƯỢNG
+    const handleIncreaseQuantity = (cartProduct) => {
+        const { productId, color, size } = cartProduct;
+        setProductIdEdit(productId);
+
+        const updatedCart = selectedCart.cart.map((product) => {
+            if (product.productId === productId && product.color === color && product.size === size) {
+                const newNumber = product.number + 1;
+                const newTotalPrices = filterProduct ? newNumber * filterProduct.prices : 0;
+                return {
+                    ...product,
+                    number: newNumber,
+                    totalPrices: newTotalPrices
+                };
+            }
+            return product;
+        });
+        dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
+        const newAmount = parseInt(filterProduct.amount) - 1;
+        dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+
+        setSelectedCart({ ...selectedCart, cart: updatedCart });
+    };
+
+    // XÓA SẢN PHẨM
     const handleDeleteOrder = (cartProduct) => {
         const { productId, color, size } = cartProduct;
         const updatedCart = selectedCart.cart.filter((product) => {
-            return (
-                product.productId !== productId ||
-                product.color !== color ||
-                product.size !== size
-            );
+            return (product.productId !== productId || product.color !== color || product.size !== size);
         });
+        const newAmount = parseInt(filterProduct.amount) + cartProduct.number;
+
         swal({
             title: "Xóa sản phẩm này?",
             text: "Bạn chắc chắn muốn xóa sản phẩm này chứ, không thể khôi phục sau khi xóa!",
@@ -102,6 +99,7 @@ export default function CartDetail(props) {
             .then((willDelete) => {
                 if (willDelete) {
                     dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
+                    dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
                     dispatch(api_products.getDataProduct(limit, currentPage));
                     setSelectedCart({ ...selectedCart, cart: updatedCart });
                     swal("Thành công! Sản phẩm đã được xóa!", {
@@ -141,45 +139,59 @@ export default function CartDetail(props) {
 
             <Modal.Body style={{ maxHeight: '500px', overflow: 'auto' }}>
                 {
-                    selectedCart.cart && selectedCart.cart.map((item, index) => (
-                        <div key={index}
-                            className='bg-white rounded shadow-lg p-2 my-3'
-                        >
-                            <div className='d-flex justify-content-evenly'>
-                                <img src={item.image} alt="img product" width='100px' height='100px' />
-                                <div className='mx-3'>
-                                    <p className='text-color fw-bold'>{item.name}</p>
-                                    <p>Kích cỡ: {item.size}</p>
-                                    <p>Màu sắc: {item.color}</p>
-                                    <div>
-                                        <span>
-                                            Số lượng:
-                                        </span>
-                                        <IconButton aria-label="Decrease" variant='contained'
-                                            onClick={() => handleDecreaseQuantity(item)}
-                                        >
-                                            <RemoveIcon />
-                                        </IconButton>
-                                        <span className='px-4'>
-                                            {item.number}
-                                        </span>
-                                        <IconButton aria-label="Increase"
-                                            onClick={() => handleIncreaseQuantity(item)}
-                                        >
-                                            <AddIcon />
-                                        </IconButton>
-                                    </div>
+                    selectedCart.cart && selectedCart.cart.map((cartUser, index) => (
+                        <Grid container key={index}>
+                            <div className='bg-white rounded shadow-lg p-2 my-3'>
+                                <Grid container>
+                                    <Grid item md={4} xs={12} p={1}>
+                                        <img src={cartUser.image} alt="img product" width='100%' />
+                                    </Grid>
 
-                                    <div className='d-flex justify-content-around mt-3 align-items-center'>
-                                        <h5 className="text-danger fw-bold">Giá: {numberWithCommas(item.totalPrices)}</h5>
-                                        <Button size='small' variant='outlined' color="error"
-                                            onClick={() => handleDeleteOrder(item)}>
-                                            <DeleteIcon />
-                                        </Button>
-                                    </div>
+                                    <Grid item md={8} xs={12} p={1}>
+                                        <p className='text-color fw-bold'>{cartUser.name}</p>
+                                        <div className='fw-bold'>
+                                            <span>Kích cỡ: </span>
+                                            <span className='text-color'>{cartUser.size}</span>
+                                        </div>
+                                        <div className='fw-bold'>
+                                            <span>Màu sắc: </span>
+                                            <span className='text-color'>{cartUser.color}</span>
+                                        </div>
+                                        <div className='fw-bold'>
+                                            <span>Đơn giá: </span>
+                                            <span className='text-color'>{numberWithCommas(cartUser.totalPrices / cartUser.number)}đ</span>
+                                        </div>
+                                        <div className="my-3">
+                                            <IconButton aria-label="Decrease" size='small'
+                                                className='btn-contain'
+                                                onClick={() => handleDecreaseQuantity(cartUser)}
+                                            >
+                                                <RemoveIcon />
+                                            </IconButton>
+                                            <span className='px-4 fw-bold'>
+                                                {cartUser.number}
+                                            </span>
+                                            <IconButton aria-label="Increase" size='small'
+                                                className='btn-contain'
+                                                onClick={() => handleIncreaseQuantity(cartUser)}
+                                            >
+                                                <AddIcon />
+                                            </IconButton>
+                                        </div>
+                                    </Grid>
+                                </Grid>
+                                <div className='mt-3 d-flex justify-content-around align-items-center'>
+                                    <h5 className='fw-bold'>
+                                        <span>Thành tiền: </span>
+                                        <span className='text-color'>{numberWithCommas(cartUser.totalPrices)}đ</span>
+                                    </h5>
+                                    <Button size='small' variant='outlined' color="error"
+                                        onClick={() => handleDeleteOrder(cartUser)}>
+                                        <DeleteIcon />
+                                    </Button>
                                 </div>
                             </div>
-                        </div>
+                        </Grid>
                     ))
                 }
             </Modal.Body>
