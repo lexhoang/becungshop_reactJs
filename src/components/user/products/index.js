@@ -2,14 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux'
 import * as api_products from '../../../api/api_products';
-import Loading from '../../loading/Loading'
+import Loading from '../../loading/Loading';
+import { productForData } from '../../constant_string/TextProductFor'
+
 ////////     START  UI      ////////
 // import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
 import { CardActionArea } from '@mui/material';
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Rating from '@mui/material/Rating';
 import Stack from '@mui/material/Stack';
@@ -32,12 +33,17 @@ export default function ProductsPage() {
     };
 
     useEffect(() => {
+
         if (searchProduct == '' && searchType == '' && searchProductFor == '') {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
             navigate("/products")
             dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor, limit, currentPage));
+            console.log(searchProductFor);
+            console.log(searchType);
         }
+
+
         // Cuộn lên đầu trang
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [searchProduct, searchType, searchProductFor, totalPages, limit, currentPage]);
@@ -52,7 +58,16 @@ export default function ProductsPage() {
     return (
         <div className="product-layout animate__animated animate__zoomIn">
             {loading ? <Loading /> : null}
-            <Grid container justifyContent="center" mt={12}>
+
+            <Grid item xs={12} mt={24}>
+                {
+                    productForData.map(productFor => (
+                        <h3 className='text-color' key={productFor.id}>{searchProductFor === productFor.value ? `Dành cho ${productFor.name}` : ''} </h3>
+                    ))
+                }
+            </Grid>
+
+            <Grid container justifyContent="center" mt={3}>
                 <Stack spacing={2}>
                     <Pagination
                         variant="outlined" color="warning"
@@ -115,6 +130,6 @@ export default function ProductsPage() {
                     />
                 </Stack>
             </Grid>
-        </div>
+        </div >
     )
 }

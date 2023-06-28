@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import * as api_products from '../../../api/api_products';
 import * as act_filter from '../../../redux/actions/act_filter';
 
-import { productForData } from '../../text/TextProductFor'
+import { productForData } from '../../constant_string/TextProductFor';
 
 ////////     START  UI      ////////
 import Card from '@mui/material/Card';

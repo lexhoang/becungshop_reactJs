@@ -297,9 +297,9 @@ export default function ProductDetail() {
 
                         {/* MÔ TẢ */}
                         <div className="animate__animated  animate__slideInUp">
-                            <Typography p={2} variant="subtitle1" fontWeight="bold">
-                                Thông tin sản phẩm
-                            </Typography>
+                            <Grid item xs={12} mt={5}>
+                                <h3 className='text-color'>Thông tin sản phẩm</h3>
+                            </Grid>
                             <ul className="ul-detail list-group">
                                 <li className="li-detail list-group-item d-flex border border-0 p-3">
                                     <div style={{ minWidth: '120px' }}>Mã SP:</div>

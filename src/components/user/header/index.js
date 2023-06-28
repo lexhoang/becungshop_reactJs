@@ -147,7 +147,7 @@ export default function Header() {
                             placeholder="input search text"
                             onSearch={onSearchProduct}
                             enterButton={
-                                <Button style={{ background: "linear-gradient(0deg, #d79c5a 0%, #f7d2a5 100%)", color: 'white' }}>
+                                <Button style={{ background: "linear-gradient(0deg, #ff6600 0%, #ffb366 100%)", color: 'white' }}>
                                     <SearchIcon />
                                 </Button>
                             }
@@ -160,7 +160,7 @@ export default function Header() {
 
                     <Grid item md={1} xs={3} textAlign="right">
                         <button className="btn" onClick={() => navigate('/cart')}>
-                            <ShoppingCartIcon sx={{ color: "white", fontSize: { md: '34px', sm: '34px', xs: '24px' } }} />
+                            <ShoppingCartIcon sx={{ color: "white", fontSize: '32px' }} />
                         </button>
                     </Grid>
 
@@ -228,10 +228,8 @@ export default function Header() {
                             :
                             <Grid item md={1} xs={3} textAlign="right">
                                 <button
-                                    size="small"
-                                    // variant="outlined"
                                     onClick={() => navigate('/login')}
-                                    className="btn-contain px-3 btn"
+                                    className="btn btn-sm btn-contain px-2"
                                     style={{ borderBottom: '5px solid #fff', borderTop: '5px solid #fff' }}
                                 >
                                     <div className="text-login"> <LoginIcon /> <span style={{ marginLeft: '4px' }}>Login</span> </div>
@@ -261,7 +259,7 @@ export default function Header() {
                         placeholder="input search text"
                         onSearch={onSearchProduct}
                         enterButton={
-                            <Button style={{ background: "linear-gradient(0deg, #d79c5a 0%, #f7d2a5 100%)", color: 'white' }}>
+                            <Button style={{ background: "linear-gradient(0deg, #ff6600 0%, #ffb366 100%)", color: 'white' }}>
                                 <SearchIcon />
                             </Button>
                         }

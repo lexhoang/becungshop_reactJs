@@ -24,19 +24,21 @@ export default function RelatedProduct(props) {
 
     // const [relatedProduct, setRelatedProduct] = useState([])
 
-    const limit = 6; // Số lượng sản phẩm trên mỗi trang
+    const limit = 12; // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
     const handlePageChange = (event, page) => {
         setCurrentPage(page);
     };
 
     const relatedProduct = useMemo(() => {
-        return dataProducts.filter(product => product.productFor == productInfo.productFor && product.type._id == productInfo.type)
+        return dataProducts.filter(product => product._id !== productInfo._id
+            && product.productFor == productInfo.productFor
+            && product.type._id == productInfo.type)
     }, [productInfo, dataProducts])
 
     useEffect(() => {
         dispatch(api_products.getDataProduct(limit, currentPage));
-    }, []);
+    }, [limit, currentPage]);
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -44,7 +46,10 @@ export default function RelatedProduct(props) {
 
     return (
         <Container>
-            <Grid container justifyContent="center" mt={12}>
+            <Grid item xs={12} mt={12}>
+                <h3 className='text-color'>Sản phẩm liên quan</h3>
+            </Grid>
+            <Grid container justifyContent="center" mt={4}>
                 <Stack spacing={2}>
                     <Pagination
                         variant="outlined" color="warning"

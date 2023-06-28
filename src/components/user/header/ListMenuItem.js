@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as api_types from '../../../api/api_types';
 import { productForData } from '../../text/TextProductFor'
 ////////     START  UI      ////////
+import Tooltip from '@mui/material/Tooltip';
+import Zoom from '@mui/material/Zoom';
 
 import IconAll from '../../../assets/images/icon-all.jpg';
 
@@ -27,50 +29,50 @@ export default function MenuItem(props) {
             {
                 productForData.map((productFor, index) => (
                     <div key={productFor.id} className='icon-content'>
-                        <div className='icon-img'
-                            style={{
-                                backgroundColor: productFor.value === searchProductFor && productFor.value !== "" ? "#d79c5a " : "white"
-                            }}
-                        >
-                            <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor.value)} />
-                        </div>
+                        <Tooltip TransitionComponent={Zoom} title={productFor.name}>
+                            <div className='icon-img'
+                                style={{
+                                    background: productFor.value === searchProductFor && productFor.value !== "" ?
+                                        "linear-gradient(0deg, #ff6600 0%, #ffb366 100%)"
+                                        : "white",
+                                }}
+                            >
+                                <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor.value)} />
+                            </div>
+                        </Tooltip>
                         <span
-                            style={{
-                                fontSize: '12px', fontWeight: "700",color: 'white',
-                                // color: productFor.value === searchProductFor && productFor.value !== "" ? "#d79c5a " : "white"
-                            }}
-                        >
-                            {productFor.name}
+                            style={{ fontSize: '11px', fontWeight: "700", color: 'white', }}>{productFor.name}
                         </span>
-                    </div>
+                    </div >
                 ))
             }
             <hr />
             <div className='icon-content'>
-                <div className='icon-img'>
-                    <img src={IconAll} alt="" width="100%"
-                        onClick={() => handleAllType()}
-                    />
-                </div>
-                <span style={{ fontSize: '12px', fontWeight: "700",color: 'white' }} className='text-white'>Tất cả</span>
+                <Tooltip TransitionComponent={Zoom} title="Tất cả">
+                    <div className='icon-img'>
+                        <img src={IconAll} alt="" width="100%"
+                            onClick={() => handleAllType()} />
+                    </div>
+                </Tooltip>
+                <span style={{ fontSize: '11px', fontWeight: "700", color: 'white' }} className='text-white'>Tất cả</span>
             </div>
             {
                 dataTypes.map(type => {
                     return (
                         <div key={type._id} className='icon-content'>
-                            <div className='icon-img'
-                                style={{
-                                    backgroundColor: type._id === searchType ? "#d79c5a " : "white"
-                                }}
-                            >
-                                <img src={type.photoUrl} alt="" width="100%" onClick={() => handleSearchType(type._id)} />
-                            </div>
+                            <Tooltip TransitionComponent={Zoom} title={type.name}>
+                                <div className='icon-img'
+                                    style={{
+                                        background: type._id === searchType ?
+                                            "linear-gradient(0deg, #ff6600 0%, #ffb366 100%)"
+                                            : "white",
+                                    }}
+                                >
+                                    <img src={type.photoUrl} alt="" width="100%" onClick={() => handleSearchType(type._id)} />
+                                </div>
+                            </Tooltip>
                             <span
-                                style={{
-                                    fontSize: '12px', fontWeight: "700",color: 'white',
-                                    // color: type._id === searchType ? "#d79c5a " : "white"
-                                }}
-                            >{type.name}
+                                style={{ fontSize: '11px', fontWeight: "700", color: 'white', }}>{type.name}
                             </span>
                         </div>
                     )

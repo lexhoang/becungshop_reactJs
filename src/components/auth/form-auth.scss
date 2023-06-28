@@ -18,9 +18,9 @@
         border-radius: 24px;
         border: 1px solid #eeeded;
         background-color: #000000bd;
-        box-shadow: 0 0 30px #d79c5a ;
+        box-shadow: 0 0 30px #ff6600;
         color: #fff;
-        border: 3px solid #d79c5a ;
+        border: 3px solid #ff6600;
         z-index: 2; /* Thay đổi giá trị z-index thành 2 */
 
         .come-back {
@@ -29,27 +29,27 @@
             left: 20%;
             transform: translate(-50%, -50%);
             font-weight: bold;
-            background: linear-gradient(0deg, #d79c5a  0%, #f7d2a5  100%);
+            background: linear-gradient(0deg, #ff6600 0%, #ffb366 100%);
             transition: 0.4s;
 
             &:hover {
                 background: linear-gradient(0deg, #d9d9d9c6 0%, #ffffff 100%);
-                color: #d79c5a ;
+                color: #ff6600;
             }
         }
 
         .btn-login_register {
-            background: linear-gradient(0deg, #d79c5a  0%, #f7d2a5  100%);
+            background: linear-gradient(0deg, #ff6600 0%, #ffb366 100%);
             transition: 0.4s;
             &:hover {
                 background: linear-gradient(0deg, #d9d9d9c6 0%, #ffffff 100%);
-                color: #d79c5a ;
+                color: #ff6600;
             }
         }
         input {
             background-color: transparent;
             color: #fff;
-            border: 3px solid #d79c5a ;
+            border: 3px solid #ff6600;
 
             &::placeholder {
                 color: #a8a6a6;
@@ -59,18 +59,18 @@
             }
         }
         button {
-            border: 3px solid #d79c5a ;
+            border: 3px solid #ff6600;
             transition: 0.4s;
 
             // &:hover {
-            //     background-color: #d79c5a ;
+            //     background-color: #ff6600;
             // }
         }
 
         .text-register {
             color: #fff;
             &:hover {
-                color: #d79c5a ;
+                color: #ff6600;
             }
         }
     }

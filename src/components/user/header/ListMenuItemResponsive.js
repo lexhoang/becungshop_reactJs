@@ -82,8 +82,10 @@ export default function MenuItemResponsive(props) {
                         <MenuItem key={productFor.id} className='icon-content' onClick={handleCloseNavMenu}>
                             <div className='icon-img'
                                 style={{
-                                    border: '2px solid #d79c5a',
-                                    backgroundColor: productFor.value === searchProductFor && productFor.value !== "" ? "#d79c5a" : "white"
+                                    border: '2px solid #ff6600',
+                                    background: productFor.value === searchProductFor && productFor.value !== "" ?
+                                        "linear-gradient(0deg, #ff6600 0%, #ffb366 100%)"
+                                        : "white",
                                 }}
                             >
                                 <img src={productFor.photoUrl} alt="" width="100%" onClick={() => handleSearchProductFor(productFor.value)} />
@@ -91,7 +93,6 @@ export default function MenuItemResponsive(props) {
                             <span
                                 style={{
                                     fontSize: '11px', fontWeight: "700",
-                                    color: productFor.value === searchProductFor && productFor.value !== "" ? "#000" : "#000"
                                 }}>
                                 {productFor.name}
                             </span>
@@ -101,7 +102,7 @@ export default function MenuItemResponsive(props) {
                 <hr />
                 <MenuItem className='icon-content' onClick={handleCloseNavMenu}>
                     <div className='icon-img bg-white'
-                        style={{ border: '2px solid #d79c5a' }}>
+                        style={{ border: '2px solid #ff6600' }}>
                         <img src={IconAll} alt="" width="100%"
                             onClick={() => handleAllType()}
                         />
@@ -114,8 +115,10 @@ export default function MenuItemResponsive(props) {
                             <MenuItem key={type._id} className='icon-content' onClick={handleCloseNavMenu}>
                                 <div className='icon-img'
                                     style={{
-                                        border: '2px solid #d79c5a',
-                                        backgroundColor: type._id === searchType ? "#d79c5a" : "white"
+                                        border: '2px solid #ff6600',
+                                        background: type._id === searchType ?
+                                            "linear-gradient(0deg, #ff6600 0%, #ffb366 100%)"
+                                            : "white",
                                     }}
                                 >
                                     <img src={type.photoUrl} alt="" width="100%" onClick={() => handleSearchType(type._id)} />
@@ -123,7 +126,6 @@ export default function MenuItemResponsive(props) {
                                 <span
                                     style={{
                                         fontSize: '11px', fontWeight: "700",
-                                        color: type._id === searchType ? "#000" : "white"
                                     }}
                                 >{type.name}</span>
                             </MenuItem>
