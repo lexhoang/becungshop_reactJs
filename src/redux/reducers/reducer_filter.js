@@ -4,7 +4,9 @@ const initialFilter = {
     searchProduct: '',
     searchType: '',
     searchProductFor: '',
-    searchAccount: ''
+    searchAccount: '',
+    searchUserName: '',
+    searchPhone: '',
 }
 
 export const filterReducer = (state = initialFilter, action) => {
@@ -33,6 +35,21 @@ export const filterReducer = (state = initialFilter, action) => {
                 searchAccount: action.payload,
             }
         }
+
+        case constants_filter.FILTER_USERNAME: {
+            return {
+                ...state,
+                searchUserName: action.payload,
+            }
+        }
+
+        case constants_filter.FILTER_PHONE: {
+            return {
+                ...state,
+                searchPhone: action.payload,
+            }
+        }
+
         default:
             return state;
     }

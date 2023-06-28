@@ -54,7 +54,7 @@ export default function MenuItemResponsive(props) {
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleOpenNavMenu}
-                color="inherit"
+                color="warning"
             >
                 <MenuIcon />
             </IconButton>

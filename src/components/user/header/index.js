@@ -70,10 +70,12 @@ export default function Header() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
-    const limit = 6; // Số lượng sản phẩm trên mỗi trang
+
+    const limit = 12; // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
 
 
+    // FILTER
     const onSearchProduct = (value) => {
         navigate('/products');
         dispatch(act_filter.filter_product(value));
@@ -96,9 +98,9 @@ export default function Header() {
         navigate('/products');
         dispatch(act_filter.filter_type(IdType))
     }
+    // FILTER
 
-
-    //NAVBAR
+    //USER
     const [anchorElUser, setAnchorElUser] = React.useState(null);
     const open = Boolean(anchorElUser);
     const handleOpenUser = (event) => {
@@ -116,6 +118,7 @@ export default function Header() {
         navigate('/')
         handleCloseUser()
     }
+    //USER
 
 
     useEffect(() => {
@@ -129,10 +132,35 @@ export default function Header() {
     }, [searchProduct, searchType, searchProductFor, limit, currentPage]);
 
 
+    // HEADER SCROLL
+    const [isHeaderVisible, setIsHeaderVisible] = useState(true);
+    const [prevScrollPos, setPrevScrollPos] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            const currentScrollPos = window.pageYOffset;
+
+            if (prevScrollPos > currentScrollPos) {
+                setIsHeaderVisible(true);
+            } else {
+                setIsHeaderVisible(false);
+            }
+
+            setPrevScrollPos(currentScrollPos);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, [prevScrollPos]);
+    // HEADER SCROLL
+
 
     return (
-        <div className='fixed-top'>
-            <div className='bg-header px-3'>
+        <div className={`header ${isHeaderVisible ? 'visible' : 'hidden'}`}>
+            <div className='bg-header px-2'>
                 <Grid container p={1} className='align-items-center justify-content-evenly'>
                     {/* IMAGE */}
                     <Grid item xl={1} md={1} xs={6}>
@@ -164,7 +192,7 @@ export default function Header() {
                     {/* LOGIN */}
                     <Grid item md={1} xs={3} textAlign="right">
                         <button className="btn" onClick={() => navigate('/cart')}>
-                            <ShoppingCartIcon sx={{ color: "white", fontSize: '32px' }} />
+                            <ShoppingCartIcon sx={{ color: "white", fontSize: '38px' }} />
                         </button>
                     </Grid>
 
@@ -248,7 +276,7 @@ export default function Header() {
 
             {/* RESPONSIVE */}
             <Grid container sx={{ display: { md: 'none', xs: 'flex' }, alignItems: 'center' }}
-                className='shadow bg-body-tertiary rounded'
+                className='shadow bg-white rounded'
             >
                 <Grid item xs={2}>
                     <ListMenuItemResponsive
@@ -258,7 +286,7 @@ export default function Header() {
                     />
                 </Grid>
 
-                <Grid item xs={8} className='mx-auto' sx={{ display: { md: 'none', xs: 'flex' } }}>
+                <Grid item xs={9} className='mx-auto' sx={{ display: { md: 'none', xs: 'flex' } }}>
                     <Search
                         placeholder="input search text"
                         onSearch={onSearchProduct}
@@ -269,8 +297,6 @@ export default function Header() {
                         }
                     />
                 </Grid>
-
-                <Grid item xs={2}></Grid>
             </Grid>
             {/* RESPONSIVE */}
         </div>

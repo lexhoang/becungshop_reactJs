@@ -27,3 +27,17 @@ export const filter_account = (account) => {
         payload: account
     }
 }
+
+export const filter_userName = (userName) => {
+    return {
+        type: constants_filter.FILTER_USERNAME,
+        payload: userName
+    }
+}
+
+export const filter_phone = (phone) => {
+    return {
+        type: constants_filter.FILTER_PHONE,
+        payload: phone
+    }
+}

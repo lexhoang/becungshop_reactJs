@@ -82,7 +82,7 @@ export default function ProductDetail() {
                 updatedCart[existProductIndex].totalPrices = updatedCart[existProductIndex].number * filterProduct.prices
                 dispatch(api_auth.patchDataAuth(user[0].id, { cart: updatedCart }));
 
-                const newAmount = parseInt(filterProduct.amount - updatedCart[existProductIndex].number)
+                const newAmount = parseInt(filterProduct.amount - selectedProduct.number)
                 dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
                 setSelectedProduct({ productId: productId, image: '', name: '', size: '', color: '', number: 0, totalPrices: 0 });
                 swal("Đã thêm sản phẩm vào giỏ hàng!", "", "success");

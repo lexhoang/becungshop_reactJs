@@ -16,10 +16,10 @@ export const getDataAuth = (limit, currentPage) => {
     }
 }
 
-export const filterUserAccount = (account) => {
+export const filterUser = (account, userName, phone) => {
     return async (dispatch) => {
         // dispatch(act_auth.act_get_auth());
-        await instances.get(`auths?account=${account}`)
+        await instances.get(`auths?account=${account}&name=${userName}&phone=${phone}`)
             .then((response) => {
                 // console.log(response.data);
                 dispatch(act_auth.act_success_auth(response.data.data))

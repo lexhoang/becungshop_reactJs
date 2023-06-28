@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
 
 import * as api_auth from '../../../api/api_auth';
-import * as act_filter from '../../../redux/actions/act_filter';
 
 import CartDetail from './CartDetail';
 import FormAuth from './FormAuth';
@@ -19,10 +18,11 @@ import SearchAuth from './SearchAuth';
 
 export default function AuthManager() {
     const { dataAuth, totalPagesAuth } = useSelector((state) => state.authReducer);
+    // const { searchAccount, searchUserName, searchPhone } = useSelector((state) => state.filterReducer);
     const dispatch = useDispatch();
 
 
-    const [limit, setLimit] = useState(5);
+    const [limit, setLimit] = useState(12);
     const [currentPage, setCurrentPage] = useState(1);
 
 
@@ -62,7 +62,6 @@ export default function AuthManager() {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    console.log(userID);
                     dispatch(api_auth.deleteDataAuth(userID));
                     swal("Thành công! Người dùng đã được xóa!", {
                         icon: "success",
@@ -71,11 +70,6 @@ export default function AuthManager() {
                     swal("Tài khoản này chưa được xóa!");
                 }
             });
-    }
-
-    const onSearchAccount = (value) => {
-        dispatch(act_filter.filter_account(value));
-        dispatch(api_auth.filterUserAccount(value))
     }
 
     const handlePageChange = (event, page) => {
@@ -90,7 +84,7 @@ export default function AuthManager() {
         <div>
             <h3 className="text-center text-color">AUTH MANAGER</h3>
 
-            <SearchAuth onSearchAccount={onSearchAccount} />
+            <SearchAuth limit={limit} currentPage={currentPage} />
 
             <div className='d-flex justify-content-around'>
                 <Grid item xs={12}>

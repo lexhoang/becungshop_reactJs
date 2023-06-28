@@ -41,7 +41,9 @@ export default function MenuItem(props) {
                             </div>
                         </Tooltip>
                         <span
-                            style={{ fontSize: '11px', fontWeight: "700", color: 'white', }}>{productFor.name}
+                            style={{ fontSize: '12px' }}
+                            className='text-light text-color'
+                        >{productFor.name}
                         </span>
                     </div >
                 ))
@@ -54,7 +56,7 @@ export default function MenuItem(props) {
                             onClick={() => handleAllType()} />
                     </div>
                 </Tooltip>
-                <span style={{ fontSize: '11px', fontWeight: "700", color: 'white' }} className='text-white'>Tất cả</span>
+                <span style={{ fontSize: '12px' }} className='text-light text-color'>Tất cả</span>
             </div>
             {
                 dataTypes.map(type => {
@@ -72,7 +74,9 @@ export default function MenuItem(props) {
                                 </div>
                             </Tooltip>
                             <span
-                                style={{ fontSize: '11px', fontWeight: "700", color: 'white', }}>{type.name}
+                                style={{ fontSize: '12px' }}
+                                className='text-light text-color'
+                            >{type.name}
                             </span>
                         </div>
                     )

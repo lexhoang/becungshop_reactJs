@@ -62,9 +62,9 @@ export default function GirlProduct(props) {
                         alt="green iguana"
                       />
                       <CardContent>
-                        <Typography variant="body1" color="error" textAlign='center' className='fw-bold'>
+                        <h5 className='text-color text-center'>
                           {numberWithCommas(product.prices)}đ
-                        </Typography>
+                        </h5>
 
                         <Stack spacing={1} className="my-2"  >
                           <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />

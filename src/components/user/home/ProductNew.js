@@ -62,10 +62,13 @@ export default function ProductNew(props) {
                       alt="green iguana"
                     />
                     <CardContent>
-                      <Typography variant="body1" color="error" textAlign='center' className='fw-bold'>
+                      {/* <Typography variant="h6" color="error" textAlign='center' className='fw-bold text-color'>
                         {numberWithCommas(product.prices)}đ
-                      </Typography>
+                      </Typography> */}
 
+                      <h5 className='text-color text-center'>
+                        {numberWithCommas(product.prices)}đ
+                      </h5>
                       <Stack spacing={1} className="my-2"  >
                         <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />
                       </Stack>

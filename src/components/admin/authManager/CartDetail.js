@@ -22,26 +22,17 @@ export default function CartDetail(props) {
 
     const [loading, setLoading] = useState(false);
 
-    const [productIdEdit, setProductIdEdit] = useState('')
-
-    const filterProduct = useMemo(() => {
-        if (dataProducts && dataProducts.length > 0) {
-            const product = dataProducts.find(product => product._id === productIdEdit);
-            return product || null;
-        }
-        return null;
-    }, [dataProducts, productIdEdit]);
 
     // GIẢM SỐ LƯỢNG
-    const handleDecreaseQuantity = async (cartProduct) => {
-        const { productId, color, size } = cartProduct;
-        setProductIdEdit(productId);
+    const handleDecreaseQuantity = async (productInCart) => {
+        const { productId, color, size } = productInCart;
+        const productEdit = dataProducts.find(product => product._id === productId);
 
         const updatedCart = selectedCart.cart.map((product) => {
             if (product.productId === productId && product.color === color && product.size === size) {
                 if (product.number > 1) {
                     const newNumber = product.number - 1;
-                    const newTotalPrices = filterProduct ? newNumber * filterProduct.prices : 0;
+                    const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
                     return {
                         ...product,
                         number: newNumber,
@@ -56,8 +47,8 @@ export default function CartDetail(props) {
             await dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
             setLoading(false);
 
-            const newAmount = parseInt(filterProduct.amount) + 1;
-            await dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+            const newAmount = parseInt(productEdit.amount) + 1;
+            await dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
 
             setSelectedCart({ ...selectedCart, cart: updatedCart });
         } catch (error) {
@@ -68,14 +59,14 @@ export default function CartDetail(props) {
     };
 
     // TĂNG SỐ LƯỢNG
-    const handleIncreaseQuantity = async (cartProduct) => {
-        const { productId, color, size } = cartProduct;
-        setProductIdEdit(productId);
+    const handleIncreaseQuantity = async (productInCart) => {
+        const { productId, color, size } = productInCart;
+        const productEdit = dataProducts.find(product => product._id === productId);
 
         const updatedCart = selectedCart.cart.map((product) => {
             if (product.productId === productId && product.color === color && product.size === size) {
                 const newNumber = product.number + 1;
-                const newTotalPrices = filterProduct ? newNumber * filterProduct.prices : 0;
+                const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
                 return {
                     ...product,
                     number: newNumber,
@@ -89,8 +80,8 @@ export default function CartDetail(props) {
             await dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
             setLoading(false);
 
-            const newAmount = parseInt(filterProduct.amount) - 1;
-            await dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+            const newAmount = parseInt(productEdit.amount) - 1;
+            await dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
 
             setSelectedCart({ ...selectedCart, cart: updatedCart });
         } catch (error) {
@@ -102,12 +93,14 @@ export default function CartDetail(props) {
     };
 
     // XÓA SẢN PHẨM
-    const handleDeleteOrder = (cartProduct) => {
-        const { productId, color, size } = cartProduct;
+    const handleDeleteOrder = (productInCart) => {
+        const { productId, color, size } = productInCart;
+        const productEdit = dataProducts.find(product => product._id === productId);
+
         const updatedCart = selectedCart.cart.filter((product) => {
             return (product.productId !== productId || product.color !== color || product.size !== size);
         });
-        const newAmount = parseInt(filterProduct.amount) + cartProduct.number;
+        const newAmount = parseInt(productEdit.amount) + productInCart.number;
 
         swal({
             title: "Xóa sản phẩm này?",
@@ -119,7 +112,7 @@ export default function CartDetail(props) {
             .then((willDelete) => {
                 if (willDelete) {
                     dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
-                    dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+                    dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
                     dispatch(api_products.getDataProduct(limit, currentPage));
                     setSelectedCart({ ...selectedCart, cart: updatedCart });
                     swal("Thành công! Sản phẩm đã được xóa!", {
@@ -135,10 +128,6 @@ export default function CartDetail(props) {
     useEffect(() => {
         dispatch(api_products.getDataProduct(limit, currentPage));
 
-        if (selectedCart.cart && selectedCart.cart.length > 0) {
-            const { productId } = selectedCart.cart[0];
-            setProductIdEdit(productId);
-        }
     }, [selectedCart.cart]);
 
     function numberWithCommas(x) {
@@ -160,41 +149,41 @@ export default function CartDetail(props) {
             <Modal.Body style={{ maxHeight: '500px', overflow: 'auto' }}>
                 {loading ? <Loading /> : null}
                 {
-                    selectedCart.cart && selectedCart.cart.map((cartUser, index) => (
+                    selectedCart.cart && selectedCart.cart.map((productInCart, index) => (
                         <Grid container key={index}>
                             <div className='bg-white rounded shadow-lg p-2 my-3'>
                                 <Grid container>
                                     <Grid item md={4} xs={12} p={1}>
-                                        <img src={cartUser.image} alt="img product" width='100%' />
+                                        <img src={productInCart.image} alt="img product" width='100%' />
                                     </Grid>
 
                                     <Grid item md={8} xs={12} p={1}>
-                                        <p className='text-color fw-bold'>{cartUser.name}</p>
+                                        <p className='text-color fw-bold'>{productInCart.name}</p>
                                         <div className='fw-bold'>
                                             <span>Kích cỡ: </span>
-                                            <span className='text-color'>{cartUser.size}</span>
+                                            <span className='text-color'>{productInCart.size}</span>
                                         </div>
                                         <div className='fw-bold'>
                                             <span>Màu sắc: </span>
-                                            <span className='text-color'>{cartUser.color}</span>
+                                            <span className='text-color'>{productInCart.color}</span>
                                         </div>
                                         <div className='fw-bold'>
                                             <span>Đơn giá: </span>
-                                            <span className='text-color'>{numberWithCommas(cartUser.totalPrices / cartUser.number)}đ</span>
+                                            <span className='text-color'>{numberWithCommas(productInCart.totalPrices / productInCart.number)}đ</span>
                                         </div>
                                         <div className="my-3">
                                             <IconButton aria-label="Decrease" size='small'
                                                 className='btn-contain'
-                                                onClick={() => handleDecreaseQuantity(cartUser)}
+                                                onClick={() => handleDecreaseQuantity(productInCart)}
                                             >
                                                 <RemoveIcon />
                                             </IconButton>
                                             <span className='px-4 fw-bold'>
-                                                {cartUser.number}
+                                                {productInCart.number}
                                             </span>
                                             <IconButton aria-label="Increase" size='small'
                                                 className='btn-contain'
-                                                onClick={() => handleIncreaseQuantity(cartUser)}
+                                                onClick={() => handleIncreaseQuantity(productInCart)}
                                             >
                                                 <AddIcon />
                                             </IconButton>
@@ -204,10 +193,10 @@ export default function CartDetail(props) {
                                 <div className='mt-3 d-flex justify-content-around align-items-center'>
                                     <h5 className='fw-bold'>
                                         <span>Thành tiền: </span>
-                                        <span className='text-color'>{numberWithCommas(cartUser.totalPrices)}đ</span>
+                                        <span className='text-color'>{numberWithCommas(productInCart.totalPrices)}đ</span>
                                     </h5>
                                     <Button size='small' variant='outlined' color="error"
-                                        onClick={() => handleDeleteOrder(cartUser)}>
+                                        onClick={() => handleDeleteOrder(productInCart)}>
                                         <DeleteIcon />
                                     </Button>
                                 </div>

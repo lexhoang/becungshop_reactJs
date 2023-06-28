@@ -25,7 +25,7 @@ export const ProductsManager = () => {
     const { dataTypes } = useSelector(state => state.typesReducer)
     const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
 
-    const [limit, setLimit] = useState(5); // Số lượng sản phẩm trên mỗi trang
+    const [limit, setLimit] = useState(12); // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
 
     const dispatch = useDispatch();

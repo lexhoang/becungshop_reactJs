@@ -8,7 +8,7 @@ export default function LayoutUser() {
     return (
         <div className='bg-layout'>
             <Header />
-            <div className='margin-header'>
+            <div className='contain-outlet'>
                 <Outlet />
             </div>
 
