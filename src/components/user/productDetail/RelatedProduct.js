@@ -7,7 +7,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';
-import { CardActionArea, Container } from '@mui/material';
+import { CardActionArea, Container, Tooltip } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import { Pagination } from "@mui/material";
@@ -65,35 +65,37 @@ export default function RelatedProduct(props) {
                     relatedProduct.map((product, index) => {
                         return (
                             <Grid item key={product._id} lg={2} md={3} sm={4} xs={6} p={1}>
-                                <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
-                                    <div className='card-content'>
-                                        <Card>
-                                            <CardActionArea>
-                                                <CardMedia
-                                                    component="img"
-                                                    width="100%"
-                                                    image={product.photoUrl}
-                                                    alt="green iguana"
-                                                />
-                                                <CardContent>
-                                                    <h5 className='text-color text-center'>
-                                                        {numberWithCommas(product.prices)}đ
-                                                    </h5>
+                                <Tooltip title={product.name}>
+                                    <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
+                                        <div className='card-content'>
+                                            <Card>
+                                                <CardActionArea>
+                                                    <CardMedia
+                                                        component="img"
+                                                        width="100%"
+                                                        image={product.photoUrl}
+                                                        alt="green iguana"
+                                                    />
+                                                    <CardContent>
+                                                        <h5 className='text-color text-center'>
+                                                            {numberWithCommas(product.prices)}đ
+                                                        </h5>
 
-                                                    <Stack spacing={1} className="my-2"  >
-                                                        <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />
-                                                    </Stack>
+                                                        <Stack spacing={1} className="my-2"  >
+                                                            <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />
+                                                        </Stack>
 
-                                                    <div style={{ height: '50px' }}>
-                                                        <Typography gutterBottom variant="body2" component="div" className='name-product'>
-                                                            {product.name}
-                                                        </Typography>
-                                                    </div>
-                                                </CardContent>
-                                            </CardActionArea>
-                                        </Card>
-                                    </div>
-                                </Link>
+                                                        <div style={{ height: '50px' }}>
+                                                            <Typography gutterBottom variant="body2" component="div" className='name-product'>
+                                                                {product.name}
+                                                            </Typography>
+                                                        </div>
+                                                    </CardContent>
+                                                </CardActionArea>
+                                            </Card>
+                                        </div>
+                                    </Link>
+                                </Tooltip>
                             </Grid>
                         )
                     })
