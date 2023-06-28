@@ -11,14 +11,16 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { Box, Grid, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
+import Loading from '../../loading/Loading';
 
 
 export default function CartDetail(props) {
     const { showCartDetail, handleCloseCartDetail, selectedCart, setSelectedCart, limit, currentPage } = props;
 
-    const { loading, dataProducts } = useSelector((state) => state.productsReducer);
+    const { dataProducts } = useSelector((state) => state.productsReducer);
     const dispatch = useDispatch();
 
+    const [loading, setLoading] = useState(false);
 
     const [productIdEdit, setProductIdEdit] = useState('')
 
@@ -31,7 +33,7 @@ export default function CartDetail(props) {
     }, [dataProducts, productIdEdit]);
 
     // GIẢM SỐ LƯỢNG
-    const handleDecreaseQuantity = (cartProduct) => {
+    const handleDecreaseQuantity = async (cartProduct) => {
         const { productId, color, size } = cartProduct;
         setProductIdEdit(productId);
 
@@ -49,16 +51,24 @@ export default function CartDetail(props) {
             }
             return product;
         });
-        dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
+        setLoading(true);
+        try {
+            await dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
+            setLoading(false);
 
-        const newAmount = parseInt(filterProduct.amount) + 1;
-        dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+            const newAmount = parseInt(filterProduct.amount) + 1;
+            await dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
 
-        setSelectedCart({ ...selectedCart, cart: updatedCart });
+            setSelectedCart({ ...selectedCart, cart: updatedCart });
+        } catch (error) {
+            console.log('Error occurred while updating the cart:', error);
+            setLoading(false); // Set the loading state for cart update to false in case of an error
+        }
+        setLoading(false);
     };
 
     // TĂNG SỐ LƯỢNG
-    const handleIncreaseQuantity = (cartProduct) => {
+    const handleIncreaseQuantity = async (cartProduct) => {
         const { productId, color, size } = cartProduct;
         setProductIdEdit(productId);
 
@@ -74,11 +84,21 @@ export default function CartDetail(props) {
             }
             return product;
         });
-        dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
-        const newAmount = parseInt(filterProduct.amount) - 1;
-        dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+        setLoading(true);
+        try {
+            await dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
+            setLoading(false);
 
-        setSelectedCart({ ...selectedCart, cart: updatedCart });
+            const newAmount = parseInt(filterProduct.amount) - 1;
+            await dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+
+            setSelectedCart({ ...selectedCart, cart: updatedCart });
+        } catch (error) {
+            console.log('Error occurred while updating the cart:', error);
+            setLoading(false); // Set the loading state for cart update to false in case of an error
+        }
+        setLoading(false);
+
     };
 
     // XÓA SẢN PHẨM
@@ -138,6 +158,7 @@ export default function CartDetail(props) {
 
 
             <Modal.Body style={{ maxHeight: '500px', overflow: 'auto' }}>
+                {loading ? <Loading /> : null}
                 {
                     selectedCart.cart && selectedCart.cart.map((cartUser, index) => (
                         <Grid container key={index}>

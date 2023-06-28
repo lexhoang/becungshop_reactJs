@@ -11,6 +11,7 @@ import { Container, Grid, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useNavigate } from 'react-router-dom';
+import Loading from '../../loading/Loading';
 
 const Cart = () => {
     const { dataProducts } = useSelector(state => state.productsReducer);
@@ -21,6 +22,7 @@ const Cart = () => {
 
     const [limit, setLimit] = useState(5);
     const [currentPage, setCurrentPage] = useState(1);
+    const [loading, setLoading] = useState(false);
 
     const [productIdEdit, setProductIdEdit] = useState('')
 
@@ -38,10 +40,9 @@ const Cart = () => {
     }, [dataAuth, user]);
 
     // GIẢM SỐ LƯỢNG
-    const handleDecreaseQuantity = (cartUser) => {
+    const handleDecreaseQuantity = async (cartUser) => {
         const { productId, color, size } = cartUser;
         setProductIdEdit(productId);
-        console.log(filterUser);
         const updateCart = filterUser.cart.map((cart) => {
             if (cart.productId === productId && cart.color === color && cart.size === size) {
                 if (cart.number > 1) {
@@ -52,22 +53,29 @@ const Cart = () => {
                         ...cartUser,
                         number: newNumber,
                         totalPrices: newTotalPrices
-                    }
+                    };
                 }
             }
-            return cart
-        })
-        dispatch(api_auth.patchDataAuth(filterUser._id, { cart: updateCart }));
+            return cart;
+        });
+        setLoading(true);
+        try {
+            await dispatch(api_auth.patchDataAuth(filterUser._id, { cart: updateCart }));
+            setLoading(false); // Set the loading state for cart update to false after successful update
 
-        const newAmount = parseInt(filterProduct.amount) + 1;
-        dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
-    }
+            const newAmount = parseInt(filterProduct.amount) + 1;
+            await dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+        } catch (error) {
+            console.log('Error occurred while updating the cart:', error);
+            setLoading(false); // Set the loading state for cart update to false in case of an error
+        }
+        setLoading(false);
+    };
 
     // TĂNG SỐ LƯỢNG
-    const handleIncreaseQuantity = (cartUser) => {
+    const handleIncreaseQuantity = async (cartUser) => {
         const { productId, color, size } = cartUser;
         setProductIdEdit(productId);
-
         const updateCart = filterUser.cart.map(cart => {
             if (cart.productId == productId && cart.color == color && cart.size == size) {
                 const newNumber = cart.number + 1;
@@ -81,10 +89,18 @@ const Cart = () => {
             }
             return cart
         });
-        dispatch(api_auth.patchDataAuth(filterUser._id, { cart: updateCart }));
+        setLoading(true); // Set the loading state for cart update to true
+        try {
+            await dispatch(api_auth.patchDataAuth(filterUser._id, { cart: updateCart }));
+            setLoading(false);
 
-        const newAmount = parseInt(filterProduct.amount) - 1;
-        dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+            const newAmount = parseInt(filterProduct.amount) - 1;
+            await dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
+        } catch (error) {
+            console.log('Error occurred while updating the cart:', error);
+            setLoading(false); // Set the loading state for cart update to false in case of an error
+        }
+        setLoading(false);
     }
 
     // XÓA SẢN PHẨM
@@ -136,6 +152,7 @@ const Cart = () => {
 
     return (
         <Container>
+            {loading ? <Loading /> : null}
             <h3 className='text-center text-color' style={{ margin: '100px 0' }}>THÔNG TIN GIỎ HÀNG CỦA BẠN</h3>
             <Grid container>
                 {
@@ -168,7 +185,7 @@ const Cart = () => {
                                             >
                                                 <RemoveIcon />
                                             </IconButton>
-                                            <span className='px-4 fw-bold'>
+                                            <span className='px-4 fs-5 fw-bold'>
                                                 {cartUser.number}
                                             </span>
                                             <IconButton aria-label="Increase" size='small'
