@@ -14,7 +14,7 @@ import SelectColor from './select-color';
 import SelectSize from './select-size';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import MyField from '../../../MyField';
-import { productForData } from '../../../text/TextProductFor'
+import { productForData } from '../../../constant_string/TextProductFor'
 
 ////// START UI  /////
 import Modal from 'react-bootstrap/Modal';
@@ -131,8 +131,8 @@ export const FormProduct = (props) => {
             <Modal size='xl' centered
                 show={showForm} onHide={handleCloseForm}>
                 <Modal.Header closeButton>
-                    <Modal.Title>
-                        {loadFormProduct.value !== "" ? "Sửa Loại Sản Phẩm" : "Tạo Mới Loại Sản Phẩm"}
+                    <Modal.Title className='text-color'>
+                        {loadFormProduct.value !== "" ? "SỬA SẢN PHẨM" : "TẠO MỚI SẢN PHẨM"}
                     </Modal.Title>
                 </Modal.Header>
 

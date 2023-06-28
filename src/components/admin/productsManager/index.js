@@ -7,15 +7,15 @@ import * as api_products from '../../../api/api_products';
 import * as api_types from '../../../api/api_types';
 import * as act_filter from '../../../redux/actions/act_filter';
 
+import Loading from '../../loading/Loading';
 import { FormProduct } from './formProductManager';
-import { productForData } from '../../text/TextProductFor'
+import { productForData } from '../../constant_string/TextProductFor'
 
 //////////     START UI     ///////////
 import { Button, ButtonGroup, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from '@mui/material';
 import { Pagination } from "@mui/material";
 import DeleteIcon from '@mui/icons-material/Delete';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-import Loading from '../../loading/Loading';
 
 
 
@@ -92,7 +92,7 @@ export const ProductsManager = () => {
     return (
         <>
             {loading ? <Loading /> : null}
-            <h3 className="text-center mb-5">PRODUCT FOR MANAGER</h3>
+            <h3 className="text-center mb-5 text-color">PRODUCT FOR MANAGER</h3>
             <Grid container mt={10} mb={5}>
                 <Grid item xs={8} className="mx-auto text-center">
                     <Grid container>

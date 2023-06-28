@@ -16,7 +16,7 @@ const SearchAuth = (props) => {
                             placeholder="input search text"
                             onSearch={onSearchAccount}
                             enterButton={
-                                <Button style={{ background: "linear-gradient(0deg, #d79c5a 0%, #f7d2a5 100%)", color: 'white' }}>
+                                <Button style={{ background: "linear-gradient(0deg, #ff6600 0%, #ffb366 100%)", color: 'white' }}>
                                     <SearchIcon />
                                 </Button>
                             }

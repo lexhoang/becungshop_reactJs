@@ -135,7 +135,7 @@ export default function CartDetail(props) {
         <Modal size='md' centered
             show={showCartDetail} onHide={handleCloseCartDetail}>
             <Modal.Header closeButton>
-                <Modal.Title> Giỏ hàng </Modal.Title>
+                <Modal.Title className='text-color'> Giỏ hàng </Modal.Title>
             </Modal.Header>
 
 

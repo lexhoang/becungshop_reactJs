@@ -69,8 +69,8 @@ export const FormType = (props) => {
       <Modal size='lg' centered
         show={showForm} onHide={handleCloseForm}>
         <Modal.Header closeButton>
-          <Modal.Title>
-            {loadFormType.value !== "" ? "Sửa Loại Sản Phẩm" : "Tạo Mới Loại Sản Phẩm"}
+          <Modal.Title className='text-color'>
+            {loadFormType.value !== "" ? "SỬA LOẠI SẢN PHẨM" : "TẠO MỚI LOẠI SẢN PHẨM"}
           </Modal.Title>
         </Modal.Header>
 

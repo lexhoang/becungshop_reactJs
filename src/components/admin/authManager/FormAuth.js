@@ -97,8 +97,7 @@ export default function FormAuth(props) {
         <Modal size='lg' centered
             show={showForm} onHide={handleCloseForm}>
             <Modal.Header closeButton>
-                <Modal.Title>
-                </Modal.Title>
+                <Modal.Title className='text-color'> Thêm mới </Modal.Title>
             </Modal.Header>
 
 

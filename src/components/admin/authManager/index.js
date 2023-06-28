@@ -88,7 +88,7 @@ export default function AuthManager() {
 
     return (
         <div>
-            <h3 className="text-center">AUTH MANAGER</h3>
+            <h3 className="text-center text-color">AUTH MANAGER</h3>
 
             <SearchAuth onSearchAccount={onSearchAccount} />
 

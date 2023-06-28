@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as api_types from '../../../api/api_types';
-import { productForData } from '../../text/TextProductFor'
+import { productForData } from '../../constant_string/TextProductFor'
 
 
 ////////     START  UI      ////////
