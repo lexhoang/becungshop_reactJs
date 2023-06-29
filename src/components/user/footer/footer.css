@@ -1,0 +1,21 @@
+.text-footer {
+    font-family: 'Montserrat', sans-serif;
+}
+
+.text-footer_color {
+    color: #B49C73 !important;
+}
+
+a {
+    text-decoration: none
+}
+
+.navbar-brand {
+    display: inline-block;
+    padding-top: 0.3125rem;
+    padding-bottom: 0.3125rem;
+    margin-right: 1rem;
+    font-size: 1.25rem;
+    line-height: inherit;
+    white-space: nowrap;
+}

@@ -19,7 +19,7 @@ export default function CarouselComp() {
   };
 
   return (
-    <Container fluid >
+    <Container fluid>
       <Row className='justify-content-evenly align-items-center'>
         <Col md={8} xs={12}>
           <Carousel activeIndex={index} onSelect={handleSelect}>
