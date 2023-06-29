@@ -46,9 +46,9 @@ function Footer() {
                 <div className="row pt-5">
                     <div className="col-lg-3 col-md-6 mb-5">
                         <a href="#" className="navbar-brand">
-                            <h1 className="m-0 mt-n2 display-4 text-footer_color text-uppercase fw-bold">
+                            <h2 className="m-0 mt-n2 text-footer_color text-uppercase fw-bold">
                                 Chất lượng
-                            </h1>
+                            </h2>
                         </a>
                         <p>
                             Sản phẩm cho trẻ em từ sơ sinh đến 18 tuổi, đa dạng, đặc biệt và chất lượng, giá thành rẻ.
