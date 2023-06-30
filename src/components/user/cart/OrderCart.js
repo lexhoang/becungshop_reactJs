@@ -1,18 +1,40 @@
 import React, { useState } from 'react';
-
+import * as api_orders from '../../../api/api_orders'
 
 import Modal from 'react-bootstrap/Modal';
+import swal from 'sweetalert';
+
 import { Grid, Button } from '@mui/material';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import MyField from '../../MyField';
+import { useDispatch } from 'react-redux';
 
 const OrderCart = (props) => {
-    const { showOrderForm, setShowOrderForm, handleCloseOrderForm, totalOrder, filterUser } = props;
+    const { showOrderForm, handleCloseOrderForm, totalOrder, filterUser } = props;
+    const dispatch = useDispatch();
+
     const [formOrder, setFormOrder] = useState({ name: '', phone: '', address: '', note: '' })
 
     const handleConfirmOrder = (values) => {
-        console.log(values);
-        console.log(filterUser.cart);
+        // console.log(values);
+        // console.log(filterUser);
+        swal({
+            title: "Xác nhận đơn hàng",
+            text: "Nhấn OK để xác nhận đơn hàng. Bạn sẽ nhận được đơn hàng trong vòng 1 nốt nhạc.",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    dispatch(api_orders.postDataOrder({ ...values, accountID: filterUser._id, accountName: filterUser.account, orderDetail: filterUser.cart, bill: totalOrder }));
+                    swal("Xác nhận đơn hàng thành công", "Cảm ơn bạn đã mua sản phẩm của chúng tôi!!!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Đơn hàng chưa được xác nhận");
+                }
+            });
     }
 
     function numberWithCommas(x) {

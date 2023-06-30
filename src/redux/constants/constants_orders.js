@@ -1,0 +1,6 @@
+export const GET_ORDER = "GET_ORDER"
+export const SUCCESS_ORDER = "SUCCESS_ORDER"
+export const POST_ORDER = "POST_ORDER"
+export const PATCH_ORDER = "PATCH_ORDER"
+export const PUT_ORDER = "PUT_ORDER"
+export const DELETE_ORDER = "DELETE_ORDER"
