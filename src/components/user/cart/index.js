@@ -12,6 +12,7 @@ import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../../loading/Loading';
+import OrderCart from './OrderCart';
 
 const Cart = () => {
     const { dataProducts } = useSelector(state => state.productsReducer);
@@ -23,6 +24,8 @@ const Cart = () => {
     const [limit, setLimit] = useState(12);
     const [currentPage, setCurrentPage] = useState(1);
     const [loading, setLoading] = useState(false);
+
+    const [totalOrder, setTotalOrder] = useState(0);
 
     const filterUser = useMemo(() => {
         const userLogin = dataAuth.find(auth => auth?._id === user?.[0]?.id);
@@ -126,11 +129,30 @@ const Cart = () => {
         dispatch(api_products.getDataProduct(limit, currentPage));
         if (user == null) {
             navigate('/login');
+        };
+
+        let totalPrices = 0;
+        if (filterUser && filterUser.cart) {
+            for (let i = 0; i < filterUser.cart.length; i++) {
+                totalPrices += filterUser.cart[i].totalPrices;
+            }
         }
+        console.log(totalPrices);
+        setTotalOrder(totalPrices)
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [filterUser.cart, limit, currentPage]);
 
+
+
+    const [showOrderForm, setShowOrderForm] = useState(false);
+    const handleCloseOrderForm = () => {
+        setShowOrderForm(false);
+    }
+
+    const handleOrder = () => {
+        setShowOrderForm(true);
+    }
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -143,7 +165,7 @@ const Cart = () => {
             <h3 className='text-center text-color' style={{ margin: '100px 0' }}>THÔNG TIN GIỎ HÀNG CỦA BẠN</h3>
             <Grid container>
                 {
-                    filterUser && filterUser.cart && filterUser.cart.map((productInCart, index) => (
+                    filterUser && filterUser.cart && filterUser.cart.slice().reverse().map((productInCart, index) => (
                         <Grid key={index} item md={6} xs={12} p={1}>
                             <div className='bg-white rounded shadow-lg p-2 my-3'>
                                 <Grid container>
@@ -154,15 +176,19 @@ const Cart = () => {
                                     <Grid item md={8} xs={12} p={1}>
                                         <p className='text-color fw-bold'>{productInCart.name}</p>
                                         <div className='fw-bold'>
-                                            <span>Kích cỡ: </span>
+                                            <span className='text-font'>Mã sản phẩm: </span>
+                                            <span className='text-color'>{productInCart.infoCode}</span>
+                                        </div>
+                                        <div className='fw-bold'>
+                                            <span className='text-font'>Kích cỡ: </span>
                                             <span className='text-color'>{productInCart.size}</span>
                                         </div>
                                         <div className='fw-bold'>
-                                            <span>Màu sắc: </span>
+                                            <span className='text-font'>Màu sắc: </span>
                                             <span className='text-color'>{productInCart.color}</span>
                                         </div>
                                         <div className='fw-bold'>
-                                            <span>Đơn giá: </span>
+                                            <span className='text-font'>Đơn giá: </span>
                                             <span className='text-color'>{numberWithCommas(productInCart.totalPrices / productInCart.number)}đ</span>
                                         </div>
                                         <div className="my-3">
@@ -199,6 +225,22 @@ const Cart = () => {
                     ))
                 }
             </Grid>
+            <Grid container mt={8} p={3} style={{
+                background: "linear-gradient(0deg, #ccc9c4 0%, #ffffff 100%)"
+            }}>
+                <Grid item md={6} xs={12} textAlign='center'>
+                    <h3>Tổng Giá Tiền: {numberWithCommas(totalOrder)}đ</h3>
+                </Grid>
+
+                <Grid item md={6} xs={12} textAlign='center'>
+                    <Button variant='contained' className="btn-contain"
+                        onClick={() => handleOrder()}>Thanh toán</Button>
+                </Grid>
+            </Grid>
+
+            <OrderCart showOrderForm={showOrderForm} setShowOrderForm={setShowOrderForm}
+                handleCloseOrderForm={handleCloseOrderForm}
+            />
         </Container>
     );
 }

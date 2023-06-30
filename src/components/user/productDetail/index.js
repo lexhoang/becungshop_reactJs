@@ -43,6 +43,7 @@ export default function ProductDetail() {
         productId: productId,
         image: '',
         name: '',
+        infoCode: '',
         size: '',
         color: '',
         number: 0,
@@ -91,6 +92,7 @@ export default function ProductDetail() {
                     productId: selectedProduct.productId,
                     image: filterProduct.photoUrl,
                     name: filterProduct.name,
+                    infoCode: filterProduct.infoCode,
                     size: selectedProduct.size,
                     color: selectedProduct.color,
                     number: selectedProduct.number,
@@ -101,7 +103,7 @@ export default function ProductDetail() {
 
                 const newAmount = parseInt(filterProduct.amount - selectedProduct.number)
                 dispatch(api_products.patchDataProduct(filterProduct._id, { amount: newAmount }));
-                setSelectedProduct({ productId: productId, image: '', name: '', size: '', color: '', number: 0, totalPrices: 0 });
+                setSelectedProduct({ productId: productId, image: '', name: '', infoCode: '', size: '', color: '', number: 0, totalPrices: 0 });
                 swal("Đã thêm sản phẩm vào giỏ hàng!", "", "success");
             }
         } else {
@@ -117,6 +119,7 @@ export default function ProductDetail() {
             setSelectedProduct({
                 ...selectedProduct,
                 name: filterProduct.name,
+                infoCode: filterProduct.infoCode,
                 image: filterProduct.photoUrl
             })
         }
@@ -144,14 +147,23 @@ export default function ProductDetail() {
                             </Grid>
 
                             <Grid item md={6} xs={12} p={2} className="animate__animated  animate__slideInRight">
-                                <Typography variant="h6" fontWeight="bold">
+                                <h4 className="text-color fw-bold">
                                     {productInfo.name}
-                                </Typography>
+                                </h4>
+
+                                <div className="mt-5 d-flex align-items-center">
+                                    <Typography variant="subtitle1 me-3" className="text-font">
+                                        Mã sản phẩm
+                                    </Typography>
+                                    <Typography variant="h6" fontWeight="bold" className='text-color'>
+                                        {productInfo.infoCode}
+                                    </Typography>
+                                </div>
 
                                 {/* CHỌN KÍCH CỠ */}
                                 <Grid container mt={4} className="align-items-center">
                                     <Grid item xs={7}>
-                                        <Typography variant="subtitle1">
+                                        <Typography variant="subtitle1 me-3" className="text-font">
                                             Chọn kích cỡ
                                             <Button size='small' variant="contained"
                                                 className='btn-contain mx-2'
@@ -159,8 +171,8 @@ export default function ProductDetail() {
                                                 Cách chọn size
                                             </Button>
                                         </Typography>
-
                                     </Grid>
+
                                     <Grid item xs={5}>
                                         <FormControl size='small' fullWidth>
                                             <InputLabel id="demo-simple-select-label">Chọn kích cỡ</InputLabel>
@@ -180,9 +192,9 @@ export default function ProductDetail() {
                                 </Grid>
 
                                 {/* CHỌN MÀU */}
-                                <Grid container mt={4} className="align-items-center">
+                                <Grid container my={4} className="align-items-center">
                                     <Grid item xs={7}>
-                                        <Typography variant="subtitle1">
+                                        <Typography variant="subtitle1 me-3" className="text-font">
                                             Chọn màu sắc
                                         </Typography>
                                     </Grid>
@@ -204,14 +216,14 @@ export default function ProductDetail() {
                                     </Grid>
                                 </Grid>
 
-                                <Typography variant="subtitle2" mt={2}>
+                                <Typography variant="subtitle2 me-2" className="text-font">
                                     Còn {productInfo.amount} sản phẩm
                                 </Typography>
 
                                 {/* SỐ LƯỢNG */}
                                 <Grid container my={3} className="align-items-center">
                                     <Grid item xs={7}>
-                                        <Typography variant="subtitle1">
+                                        <Typography variant="subtitle1 me-2" className="text-font">
                                             Chọn số lượng
                                         </Typography>
                                     </Grid>
@@ -270,10 +282,10 @@ export default function ProductDetail() {
 
                                 {/* BONUS */}
                                 <Grid item xs={12} className="border p-2 my-3">
-                                    <Typography variant="subtitle2" fontWeight="bold">
+                                    <Typography variant="subtitle2 me-2" fontWeight="bold" className="text-font">
                                         Chính sách vận chuyển:
-                                    </Typography>
-                                    <Typography variant="subtitle2">
+                                    </Typography><br />
+                                    <Typography variant="subtitle2 me-2" className="text-font">
                                         <ArrowCircleRightIcon color='success' fontSize="medium" /> Giao hàng tận nhà, cho kiểm tra hàng trước khi nhận. <br />
                                         <ArrowCircleRightIcon color='success' fontSize="medium" /> Cước phí vận chuyển từ 25k đến 35K tùy khu vực. <br />
                                         <ArrowCircleRightIcon color='success' fontSize="medium" /> <span className="text-danger fw-bold">FREESHIP TOÀN QUỐC </span>
@@ -283,10 +295,10 @@ export default function ProductDetail() {
                                 </Grid>
 
                                 <Grid item xs={12} className="border p-2">
-                                    <Typography variant="subtitle2" fontWeight="bold">
+                                    <Typography variant="subtitle2 me-2" fontWeight="bold" className="text-font">
                                         Bé Cưng cam kết:
-                                    </Typography>
-                                    <Typography variant="subtitle2">
+                                    </Typography><br />
+                                    <Typography variant="subtitle2 me-2" className="text-font">
                                         <CheckCircleIcon color='success' fontSize="medium" /> Sản phẩm 100% như hình. <br />
                                         <CheckCircleIcon color='success' fontSize="medium" /> Vải bền đẹp, giặt không ra màu, không bong tróc. <br />
                                         <CheckCircleIcon color='success' fontSize="medium" /> Đổi trả nhanh tận nhà nếu không vừa ý.

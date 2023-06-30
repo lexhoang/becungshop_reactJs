@@ -7,6 +7,13 @@ export const filter_product = (product) => {
     }
 }
 
+export const filter_code_product = (codeProduct) => {
+    return {
+        type: constants_filter.FILTER_CODE_PRODUCT,
+        payload: codeProduct
+    }
+}
+
 export const filter_type = (type) => {
     return {
         type: constants_filter.FILTER_TYPE,

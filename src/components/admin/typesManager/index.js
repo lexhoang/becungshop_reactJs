@@ -95,14 +95,14 @@ export const TypesManager = () => {
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
-                    <tr>
+                    <tr className="text-font">
                         <th>Ảnh</th>
                         <th>Loại sản phẩm</th>
                         <th>Mô Tả</th>
                         <th rowSpan="3">Thao Tác</th>
                     </tr>
                 </thead>
-                <tbody className='text-center'>
+                <tbody className='text-center text-font'>
                     {
                         dataTypes.map((type) => {
                             return (

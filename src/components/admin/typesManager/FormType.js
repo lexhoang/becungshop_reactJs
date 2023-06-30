@@ -69,7 +69,7 @@ export const FormType = (props) => {
       <Modal size='lg' centered
         show={showForm} onHide={handleCloseForm}>
         <Modal.Header closeButton>
-          <Modal.Title className='text-color'>
+          <Modal.Title className='text-color fw-bold'>
             {loadFormType.value !== "" ? "SỬA LOẠI SẢN PHẨM" : "TẠO MỚI LOẠI SẢN PHẨM"}
           </Modal.Title>
         </Modal.Header>
@@ -85,7 +85,7 @@ export const FormType = (props) => {
               <Grid container>
                 <Grid item md={6} xs={12} px={1}>
                   <div className="mb-3">
-                    <label>Ảnh Sản Phẩm</label>
+                    <label className='fw-bold text-color'>Ảnh Sản Phẩm</label>
                     <input type="file" onChange={uploadImage}
                       placeholder="Name Movie" name="imgUrl" className='form-control' />
                   </div>
@@ -100,7 +100,7 @@ export const FormType = (props) => {
                   />
 
                   <div className="mb-3">
-                    <label>Mô Tả</label>
+                    <label className='fw-bold text-color'>Mô Tả</label>
                     <Field as="textarea" name="description" label="Mô tả" placeholder="Description"
                       style={{ height: '100px' }} className='form-control'
                     />

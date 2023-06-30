@@ -8,7 +8,8 @@ export const getDataProduct = (limit, currentPage) => {
         await instances.get(`products?limit=${limit}&skip=${(currentPage - 1) * limit}`)
             .then((response) => {
                 const { data, totalPages } = response.data;
-                dispatch(act_products.act_product_success(data, totalPages));
+                const reversedData = [...data].reverse();
+                dispatch(act_products.act_product_success(reversedData, totalPages));
             })
             .catch((error) => {
                 console.log("error: ", error);
@@ -17,10 +18,10 @@ export const getDataProduct = (limit, currentPage) => {
     }
 }
 
-export const filterDataProduct = (name, type, productFor) => {
+export const filterDataProduct = (name, code, type, productFor, limit, currentPage) => {
     return async (dispatch) => {
         dispatch(act_products.act_product_get());
-        await instances.get(`products?name=${name}&type=${type}&productFor=${productFor}`)
+        await instances.get(`products?name=${name}&infoCode=${code}&type=${type}&productFor=${productFor}&limit=${limit}&skip=${(currentPage - 1) * limit}`)
             .then((response) => {
                 dispatch(act_products.act_product_success(response.data.data))
             })

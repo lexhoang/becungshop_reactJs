@@ -131,7 +131,7 @@ export const FormProduct = (props) => {
             <Modal size='xl' centered
                 show={showForm} onHide={handleCloseForm}>
                 <Modal.Header closeButton>
-                    <Modal.Title className='text-color'>
+                    <Modal.Title className='text-color fw-bold'>
                         {loadFormProduct.value !== "" ? "SỬA SẢN PHẨM" : "TẠO MỚI SẢN PHẨM"}
                     </Modal.Title>
                 </Modal.Header>
@@ -155,7 +155,7 @@ export const FormProduct = (props) => {
 
                                         <Grid item md={7} xs={12} px={1}>
                                             <div>
-                                                <label>Ảnh Sản Phẩm</label>
+                                                <label className='fw-bold text-color'>Ảnh Sản Phẩm</label>
                                                 <input type="file" onChange={uploadImage} name="imgUrl" className="form-control" />
                                             </div>
                                         </Grid>
@@ -167,7 +167,7 @@ export const FormProduct = (props) => {
                                 {/*START DESCRIPTION PRODUCT */}
                                 <Grid item md={6} xs={12} pl={8}>
                                     <div className="mb-3">
-                                        <label htmlFor="description">Mô Tả</label>
+                                        <label htmlFor="description" className='fw-bold text-color'>Mô Tả</label>
                                         <Field as="textarea" name="description" id="description"
                                             className="form-control"
                                             placeholder="Description"
@@ -189,7 +189,7 @@ export const FormProduct = (props) => {
                                     />
 
                                     <div className="mt-4">
-                                        <label>Sản phẩm dành cho</label>
+                                        <label className='fw-bold text-color'>Sản phẩm dành cho</label>
                                         <Field aria-label="Sản Phẩm Dành Cho" name="productFor" label="Sản Phẩm Dành Cho"
                                             component="select"
                                             className="form-select"
@@ -204,7 +204,7 @@ export const FormProduct = (props) => {
                                     </div>
 
                                     <div className="my-4">
-                                        <label>Loại sản phẩm</label>
+                                        <label className='fw-bold text-color'>Loại sản phẩm</label>
                                         <Field aria-label="Loại sản phẩm" name="type" label="Loại sản phẩm"
                                             component="select"
                                             className="form-select"
@@ -241,10 +241,10 @@ export const FormProduct = (props) => {
                                     />
 
                                     <div className="mb-4">
-                                        <label>Dành cho độ tuổi...</label>
+                                        <label className='fw-bold text-color'>Dành cho độ tuổi...</label>
                                         <div className="d-flex justify-content-evenly">
                                             <div className="d-flex align-items-center" >
-                                                <label htmlFor='infoMinAge' className="mx-2">Từ:</label>
+                                                <label htmlFor='infoMinAge' className="mx-2 fw-bold'">Từ:</label>
                                                 <Field type="number" name="infoMinAge" id="infoMinAge"
                                                     className="form-control"
                                                     placeholder="Min age"
@@ -254,7 +254,7 @@ export const FormProduct = (props) => {
                                             </div>
 
                                             <div className="d-flex align-items-center" >
-                                                <label htmlFor='infoMaxAge' className="mx-2">Đến:</label>
+                                                <label htmlFor='infoMaxAge' className="mx-2 fw-bold'">Đến:</label>
                                                 <Field type="number" name="infoMaxAge" id="infoMaxAge"
                                                     className="form-control"
                                                     placeholder="Max age"
@@ -266,10 +266,10 @@ export const FormProduct = (props) => {
                                     </div>
 
                                     <div className="mb-4">
-                                        <label>Dành cho cân nặng từ...</label>
+                                        <label className='fw-bold text-color'>Dành cho cân nặng từ...</label>
                                         <div className="d-flex justify-content-evenly">
                                             <div className="d-flex align-items-center" >
-                                                <label htmlFor="infoMinWeight" className="mx-2">Từ:</label>
+                                                <label htmlFor="infoMinWeight" className="mx-2 fw-bold'">Từ:</label>
                                                 <Field type="number" name="infoMinWeight" id="infoMinWeight"
                                                     className="form-control"
                                                     placeholder="Min Weight"
@@ -279,7 +279,7 @@ export const FormProduct = (props) => {
                                             </div>
 
                                             <div className="d-flex align-items-center" >
-                                                <label htmlFor='infoMaxWeight' className="mx-2">Đến:</label>
+                                                <label htmlFor='infoMaxWeight' className="mx-2 fw-bold'">Đến:</label>
                                                 <Field type="number" name="infoMaxWeight" id="infoMaxWeight"
                                                     className="form-control"
                                                     placeholder="Max weight"
@@ -308,7 +308,7 @@ export const FormProduct = (props) => {
                                 {/*START COLOR PRODUCT */}
                                 <Grid item md={6} xs={12} pr={8}>
                                     <div className="mb-3">
-                                        <label>Màu sắc</label>
+                                        <label className='fw-bold text-color'>Màu sắc</label>
                                         <SelectColor colors={colors} setColors={setColors} />
                                         <p className='text-danger'>{textError.color}</p>
                                     </div>
@@ -318,7 +318,7 @@ export const FormProduct = (props) => {
                                 {/*START SIZE PRODUCT */}
                                 <Grid item md={6} xs={12} pl={8}>
                                     <div className="mb-3">
-                                        <label>Kích cỡ</label>
+                                        <label className='fw-bold text-color'>Kích cỡ</label>
                                         <SelectSize sizes={sizes} setSizes={setSizes} />
                                         <p className='text-danger'>{textError.size}</p>
                                     </div>

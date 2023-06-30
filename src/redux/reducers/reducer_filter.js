@@ -2,6 +2,7 @@ import * as constants_filter from '../constants/constants_filter';
 
 const initialFilter = {
     searchProduct: '',
+    searchCodeProduct: '',
     searchType: '',
     searchProductFor: '',
     searchAccount: '',
@@ -15,6 +16,12 @@ export const filterReducer = (state = initialFilter, action) => {
             return {
                 ...state,
                 searchProduct: action.payload,
+            }
+        }
+        case constants_filter.FILTER_CODE_PRODUCT: {
+            return {
+                ...state,
+                searchCodeProduct: action.payload,
             }
         }
         case constants_filter.FILTER_TYPE: {

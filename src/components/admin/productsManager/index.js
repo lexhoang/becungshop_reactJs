@@ -23,7 +23,7 @@ import ModeEditIcon from '@mui/icons-material/ModeEdit';
 export const ProductsManager = () => {
     const { loading, dataProducts, totalPages } = useSelector(state => state.productsReducer);
     const { dataTypes } = useSelector(state => state.typesReducer)
-    const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
+    const { searchProduct, searchCodeProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
 
     const [limit, setLimit] = useState(12); // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
@@ -36,10 +36,10 @@ export const ProductsManager = () => {
     const handleCloseForm = () => setShowForm(false);
 
     const handleFilter = () => {
-        if (searchProduct == '' && searchType == '' && searchProductFor == '') {
+        if (searchProduct == '' && searchCodeProduct == '' && searchType == '' && searchProductFor == '') {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
-            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor));
+            dispatch(api_products.filterDataProduct(searchProduct, searchCodeProduct, searchType, searchProductFor));
         }
     }
 
@@ -96,13 +96,19 @@ export const ProductsManager = () => {
             <Grid container mt={10} mb={5}>
                 <Grid item xs={8} className="mx-auto text-center">
                     <Grid container>
-                        <Grid item md={4} xs={12} my={1}>
+                        <Grid item md={6} xs={12} my={1}>
                             <TextField variant="outlined" size="small" label="Search Name" sx={{ width: "90%" }}
                                 value={searchProduct} onChange={(e) => dispatch(act_filter.filter_product(e.target.value))}
                             />
                         </Grid>
 
-                        <Grid item md={4} xs={12} my={1}>
+                        <Grid item md={6} xs={12} my={1}>
+                            <TextField variant="outlined" size="small" label="Search Code" sx={{ width: "90%" }}
+                                value={searchCodeProduct} onChange={(e) => dispatch(act_filter.filter_code_product(e.target.value))}
+                            />
+                        </Grid>
+
+                        <Grid item md={6} xs={12} my={1}>
                             <FormControl sx={{ width: "90%" }}>
                                 <InputLabel size="small">Type</InputLabel>
                                 <Select
@@ -123,7 +129,7 @@ export const ProductsManager = () => {
                             </FormControl>
                         </Grid>
 
-                        <Grid item md={4} xs={12} my={1}>
+                        <Grid item md={6} xs={12} my={1}>
                             <FormControl sx={{ width: "90%" }}>
                                 <InputLabel size="small">Product for</InputLabel>
                                 <Select
@@ -155,7 +161,7 @@ export const ProductsManager = () => {
                     className='btn-contain'
                     onClick={() => handleFormAddNew()}
                 >+ Thêm mới</Button>
-                <select className='px-2 form-select text-center' style={{width:'100px'}}
+                <select className='px-2 form-select text-center' style={{ width: '100px' }}
                     value={limit}
                     onChange={(e) => setLimit(e.target.value)}>
                     <option value={5}>5</option>
@@ -170,8 +176,9 @@ export const ProductsManager = () => {
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
-                    <tr>
+                    <tr className='text-font'>
                         <th>Ảnh</th>
+                        <th>Mã sản phẩm</th>
                         <th>Tên</th>
                         <th>Dành cho</th>
                         <th>Loại</th>
@@ -180,7 +187,7 @@ export const ProductsManager = () => {
                         <th rowSpan="3">Thao Tác</th>
                     </tr>
                 </thead>
-                <tbody className='text-center'>
+                <tbody className='text-center text-font'>
                     {
                         dataProducts.map((product) => {
                             return (
@@ -188,6 +195,7 @@ export const ProductsManager = () => {
                                     <td>
                                         <img src={product.photoUrl} alt="ảnh" width="120px" height='120px' />
                                     </td>
+                                    <td> {product.infoCode} </td>
                                     <td> {product.name} </td>
                                     <td> {product.productFor == productForData[1].value ? productForData[1].name : productForData[2].name} </td>
                                     <td> {product.type.name} </td>

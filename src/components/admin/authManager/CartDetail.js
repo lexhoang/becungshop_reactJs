@@ -28,20 +28,24 @@ export default function CartDetail(props) {
         const { productId, color, size } = productInCart;
         const productEdit = dataProducts.find(product => product._id === productId);
 
-        const updatedCart = selectedCart.cart.map((product) => {
+        const updatedCart = [];
+        for (let i = selectedCart.cart.length - 1; i >= 0; i--) {
+            const product = selectedCart.cart[i];
             if (product.productId === productId && product.color === color && product.size === size) {
                 if (product.number > 1) {
                     const newNumber = product.number - 1;
                     const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
-                    return {
+                    updatedCart.unshift({
                         ...product,
                         number: newNumber,
                         totalPrices: newTotalPrices
-                    };
+                    });
                 }
+            } else {
+                updatedCart.unshift(product);
             }
-            return product;
-        });
+        }
+
         setLoading(true);
         try {
             await dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
@@ -53,7 +57,7 @@ export default function CartDetail(props) {
             setSelectedCart({ ...selectedCart, cart: updatedCart });
         } catch (error) {
             console.log('Error occurred while updating the cart:', error);
-            setLoading(false); // Set the loading state for cart update to false in case of an error
+            setLoading(false);
         }
         setLoading(false);
     };
@@ -63,18 +67,22 @@ export default function CartDetail(props) {
         const { productId, color, size } = productInCart;
         const productEdit = dataProducts.find(product => product._id === productId);
 
-        const updatedCart = selectedCart.cart.map((product) => {
+        const updatedCart = [];
+        for (let i = selectedCart.cart.length - 1; i >= 0; i--) {
+            const product = selectedCart.cart[i];
             if (product.productId === productId && product.color === color && product.size === size) {
                 const newNumber = product.number + 1;
                 const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
-                return {
+                updatedCart.unshift({
                     ...product,
                     number: newNumber,
                     totalPrices: newTotalPrices
-                };
+                });
+            } else {
+                updatedCart.unshift(product);
             }
-            return product;
-        });
+        }
+
         setLoading(true);
         try {
             await dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
@@ -142,14 +150,14 @@ export default function CartDetail(props) {
         <Modal size='md' centered
             show={showCartDetail} onHide={handleCloseCartDetail}>
             <Modal.Header closeButton>
-                <Modal.Title className='text-color'> Giỏ hàng </Modal.Title>
+                <Modal.Title className='text-color fw-bold'> Giỏ hàng </Modal.Title>
             </Modal.Header>
 
 
             <Modal.Body style={{ maxHeight: '500px', overflow: 'auto' }}>
                 {loading ? <Loading /> : null}
                 {
-                    selectedCart.cart && selectedCart.cart.map((productInCart, index) => (
+                    selectedCart.cart && selectedCart.cart.slice().reverse().map((productInCart, index) => (
                         <Grid container key={index}>
                             <div className='bg-white rounded shadow-lg p-2 my-3'>
                                 <Grid container>
@@ -159,6 +167,10 @@ export default function CartDetail(props) {
 
                                     <Grid item md={8} xs={12} p={1}>
                                         <p className='text-color fw-bold'>{productInCart.name}</p>
+                                        <div className='fw-bold'>
+                                            <span>Mã sản phẩm: </span>
+                                            <span className='text-color'>{productInCart.infoCode}</span>
+                                        </div>
                                         <div className='fw-bold'>
                                             <span>Kích cỡ: </span>
                                             <span className='text-color'>{productInCart.size}</span>

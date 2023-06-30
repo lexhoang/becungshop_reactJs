@@ -46,7 +46,7 @@ export default function InfoUser() {
         <VisibilityOffIcon onClick={() => setTypePassword('password')} />
 
     const [formAuth, setFormAuth] = useState({ account: '', password: '', name: '', phone: '' });
-    
+
     const validationSchema = Yup.object().shape({
         password: Yup.string()
             .required('Vui lòng điền mật khẩu')
@@ -92,7 +92,7 @@ export default function InfoUser() {
 
     return (
         <Container>
-            <h3 className='text-center' style={{ marginTop: '150px' }}>Hồ Sơ Của Bạn</h3>
+            <h2 className='text-center text-color' style={{ marginTop: '150px' }}>Thông Tin Của Bạn</h2>
             <Formik
                 validationSchema={validationSchema}
                 initialValues={formAuth}
@@ -112,13 +112,13 @@ export default function InfoUser() {
 
                         <Grid item md={6} xs={12} px={3}>
                             <div className="mb-3">
-                                <label className="fw-bold">Tài khoản</label>
+                                <label className="fw-bold text-color">Tài khoản</label>
                                 <input type="text" disabled={true} name="account" className='form-control'
                                     value={formAuth.account} />
                             </div>
 
                             <div className="mb-3 form-group">
-                                <label htmlFor='password' style={{ letterSpacing: '2px' }} className="fw-bold">Mật khẩu</label>
+                                <label htmlFor='password' style={{ letterSpacing: '2px' }} className="fw-bold text-color">Mật khẩu</label>
                                 <div>
                                     <Field type={typePassword} name='password' id='password' placeholder="password"
                                         className='form-control'
@@ -133,7 +133,7 @@ export default function InfoUser() {
                                 className='form-control'
                             />
                             <div className="mb-3 form-group">
-                                <label htmlFor='phone' style={{ letterSpacing: '2px' }} className="fw-bold">Số điện thoại</label>
+                                <label htmlFor='phone' style={{ letterSpacing: '2px' }} className="fw-bold text-color">Số điện thoại</label>
                                 <div className='d-flex btn-group'>
                                     <Button variant="contained" className="btn-contain">+84</Button>
                                     <Field type='text' name='phone' id='phone' placeholder="Số điện thoại"

@@ -97,7 +97,7 @@ export default function FormAuth(props) {
         <Modal size='lg' centered
             show={showForm} onHide={handleCloseForm}>
             <Modal.Header closeButton>
-                <Modal.Title className='text-color'> Thêm mới </Modal.Title>
+                <Modal.Title className='text-color fw-bold'> Thêm mới </Modal.Title>
             </Modal.Header>
 
 
@@ -112,7 +112,7 @@ export default function FormAuth(props) {
                         <Grid container>
                             <Grid item md={5} xs={12} px={4}>
                                 <div className="mb-3">
-                                    <label>Ảnh Sản Phẩm</label>
+                                    <label className='fw-bold text-color'>Ảnh Sản Phẩm</label>
                                     <input type="file" onChange={uploadImage}
                                         placeholder="Name Movie" name="imgUrl" className='form-control' />
                                 </div>
@@ -127,7 +127,7 @@ export default function FormAuth(props) {
                                 />
 
                                 <div className="mb-3 form-group">
-                                    <label htmlFor='password' style={{ letterSpacing: '2px' }} className="fw-bold">Mật khẩu</label>
+                                    <label htmlFor='password' style={{ letterSpacing: '2px' }} className="fw-bold text-color">Mật khẩu</label>
                                     <div>
                                         <Field type={typePassword} name='password' id='password' placeholder="password"
                                             className='form-control'
@@ -142,7 +142,7 @@ export default function FormAuth(props) {
                                 />
 
                                 <div className="mb-3 form-group">
-                                    <label htmlFor='phone' style={{ letterSpacing: '2px' }} className="fw-bold">Số điện thoại</label>
+                                    <label htmlFor='phone' style={{ letterSpacing: '2px' }} className="fw-bold text-color">Số điện thoại</label>
                                     <div className='d-flex btn-group'>
                                         <Button variant="contained" className="btn-contain">+84</Button>
                                         <Field type='text' name='phone' id='phone' placeholder="Số điện thoại"

@@ -80,6 +80,7 @@ export default function AuthManager() {
         dispatch(api_auth.getDataAuth(limit, currentPage));
     }, [limit, currentPage]);
 
+
     return (
         <div>
             <h3 className="text-center text-color">AUTH MANAGER</h3>
@@ -116,7 +117,7 @@ export default function AuthManager() {
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
-                    <tr>
+                    <tr className='text-font'>
                         <th></th>
                         <th>Tên</th>
                         <th>Tài khoản</th>
@@ -126,7 +127,7 @@ export default function AuthManager() {
                         <th>Thao Tác</th>
                     </tr>
                 </thead>
-                <tbody className='text-center'>
+                <tbody className='text-center text-font'>
                     {
                         dataAuth.map((user) => (
                             <tr key={user._id}>

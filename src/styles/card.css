@@ -12,6 +12,7 @@
 }
 
 .name-product {
+    font-family: 'Montserrat', sans-serif;
     color: #000000;
     display: -webkit-box;
     -webkit-box-orient: vertical;

@@ -86,9 +86,9 @@ export default function RelatedProduct(props) {
                                                         </Stack>
 
                                                         <div style={{ height: '50px' }}>
-                                                            <Typography gutterBottom variant="body2" component="div" className='name-product'>
+                                                            <p className='name-product'>
                                                                 {product.name}
-                                                            </Typography>
+                                                            </p>
                                                         </div>
                                                     </CardContent>
                                                 </CardActionArea>

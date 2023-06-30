@@ -63,7 +63,7 @@ const stylePaperProps = {
 
 
 export default function Header() {
-    const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
+    const { searchProduct, searchCodeProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
     const { dataAuth } = useSelector(state => (state.authReducer));
     const { user } = useSelector(state => (state.loginReducer));
 
@@ -127,9 +127,9 @@ export default function Header() {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
             navigate("/products")
-            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor, limit, currentPage));
+            dispatch(api_products.filterDataProduct(searchProduct, searchCodeProduct, searchType, searchProductFor, limit, currentPage));
         }
-    }, [searchProduct, searchType, searchProductFor, limit, currentPage]);
+    }, [searchProduct, searchCodeProduct, searchType, searchProductFor, limit, currentPage]);
 
 
     // HEADER SCROLL

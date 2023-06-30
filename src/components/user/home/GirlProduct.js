@@ -53,7 +53,7 @@ export default function GirlProduct(props) {
 
   return (
     <div style={{ marginTop: '100px' }}>
-      <h3 className="text-center">Dành cho bé gái</h3>
+      <h3 className="text-center text-color">Dành cho bé gái</h3>
       <Grid container my={4}>
         {
           dataProducts.map((product) => (
@@ -79,7 +79,7 @@ export default function GirlProduct(props) {
                           </Stack>
 
                           <div style={{ height: '40px' }}>
-                            <Typography gutterBottom variant="subtitle2" component="div" className='name-product'>
+                            <Typography gutterBottom variant="subtitle2 me-1" component="div" className='name-product'>
                               {product.name}
                             </Typography>
                           </div>

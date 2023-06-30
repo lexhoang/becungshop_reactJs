@@ -7,7 +7,8 @@ export const getDataAuth = (limit, currentPage) => {
         await instances.get(`auths?limit=${limit}&skip=${(currentPage - 1) * limit}`)
             .then((response) => {
                 const { data, totalPagesAuth } = response.data;
-                dispatch(act_auth.act_success_auth(data, totalPagesAuth))
+                const reversedData = [...data].reverse();
+                dispatch(act_auth.act_success_auth(reversedData, totalPagesAuth));
             })
             .catch((error) => {
                 console.log("error: ", error);

@@ -19,7 +19,7 @@ import { Pagination } from "@mui/material";
 
 
 export default function ProductsPage() {
-    const { searchProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
+    const { searchProduct, searchCodeProduct, searchType, searchProductFor } = useSelector(state => state.filterReducer);
     const { loading, dataProducts, totalPages } = useSelector((state) => state.productsReducer);
 
     const dispatch = useDispatch();
@@ -37,13 +37,13 @@ export default function ProductsPage() {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
             navigate("/products")
-            dispatch(api_products.filterDataProduct(searchProduct, searchType, searchProductFor, limit, currentPage));
+            dispatch(api_products.filterDataProduct(searchProduct, searchCodeProduct, searchType, searchProductFor, limit, currentPage));
         }
 
 
         // Cuộn lên đầu trang
         window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [searchProduct, searchType, searchProductFor, totalPages, limit, currentPage]);
+    }, [searchProduct, searchCodeProduct, searchType, searchProductFor, totalPages, limit, currentPage]);
 
 
 
@@ -100,7 +100,7 @@ export default function ProductsPage() {
                                                     </Stack>
 
                                                     <div style={{ height: '40px' }}>
-                                                        <Typography gutterBottom variant="subtitle2" component="div" className='name-product'>
+                                                        <Typography gutterBottom variant="subtitle2 me-1" component="div" className='name-product'>
                                                             {product.name}
                                                         </Typography>
                                                     </div>

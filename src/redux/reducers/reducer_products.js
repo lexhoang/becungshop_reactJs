@@ -22,15 +22,13 @@ export const productsReducer = (state = initialProducts, action) => {
             }
 
         case constants_products.POST_PRODUCT:
-            // console.log(action.payload)
             return {
                 ...state,
                 loading: false,
-                dataProducts: [...state.dataProducts, action.payload] // Thêm auth mới vào mảng dataAuth
+                dataProducts: [action.payload, ...state.dataProducts]
             }
 
         case constants_products.PUT_PRODUCT:
-            // console.log(action.payload)
             return {
                 ...state,
                 loading: false,
@@ -59,7 +57,7 @@ export const productsReducer = (state = initialProducts, action) => {
             return {
                 ...state,
                 loading: false,
-                dataProducts: state.dataProducts.filter(product => product._id !== action.payload) // Lọc ra các phần tử khác với auth bị xóa
+                dataProducts: state.dataProducts.filter(product => product._id !== action.payload)
             }
         default:
             return state;

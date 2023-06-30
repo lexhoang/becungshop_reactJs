@@ -26,7 +26,7 @@ export const authReducer = (state = initialAuth, action) => {
             return {
                 ...state,
                 loading: false,
-                dataAuth: [...state.dataAuth, action.payload] // Thêm auth mới vào mảng dataAuth
+                dataAuth: [action.payload, ...state.dataAuth] // Thêm auth mới vào mảng dataAuth
             }
 
         case constants_auth.PUT_AUTH:

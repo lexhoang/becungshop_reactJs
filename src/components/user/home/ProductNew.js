@@ -21,7 +21,6 @@ export default function ProductNew(props) {
   const { limit, currentPage } = props;
   const { dataProducts } = useSelector((state) => state.productsReducer);
 
-  const [reversedProducts, setReversedProducts] = useState([]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,12 +32,7 @@ export default function ProductNew(props) {
 
   useEffect(() => {
     dispatch(api_products.getDataProduct(limit, currentPage))
-  }, []);
-
-  useEffect(() => {
-    const copiedProducts = [...dataProducts];
-    setReversedProducts(copiedProducts.reverse());
-  }, [dataProducts, limit, currentPage]);
+  }, [limit, currentPage]);
 
   function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -46,10 +40,10 @@ export default function ProductNew(props) {
 
   return (
     <div style={{ marginTop: '100px' }}>
-      <h3 className="text-center">Sản phẩm mới</h3>
+      <h3 className="text-center text-color">Sản phẩm mới</h3>
       <Grid container my={4}>
         {
-          reversedProducts.map((product) => (
+          dataProducts.map((product) => (
             <Grid item key={product._id} xl={2} md={3} sm={4} xs={6} p={1}>
               <Tooltip title={product.name}>
                 <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
@@ -75,7 +69,7 @@ export default function ProductNew(props) {
                         </Stack>
 
                         <div style={{ height: '40px' }}>
-                          <Typography gutterBottom variant="subtitle2" component="div" className='name-product'>
+                          <Typography gutterBottom variant="subtitle2 me-1" component="div" className='name-product'>
                             {product.name}
                           </Typography>
                         </div>
