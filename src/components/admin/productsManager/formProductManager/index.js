@@ -132,7 +132,7 @@ export const FormProduct = (props) => {
                 show={showForm} onHide={handleCloseForm}>
                 <Modal.Header closeButton>
                     <Modal.Title className='text-color fw-bold'>
-                        {loadFormProduct.value !== "" ? "SỬA SẢN PHẨM" : "TẠO MỚI SẢN PHẨM"}
+                        {loadFormProduct.value !== "" ? "SỬA SẢN PHẨM" : "THÊM SẢN PHẨM"}
                     </Modal.Title>
                 </Modal.Header>
 

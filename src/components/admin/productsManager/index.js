@@ -92,7 +92,7 @@ export const ProductsManager = () => {
     return (
         <>
             {loading ? <Loading /> : null}
-            <h3 className="text-center mb-5 text-color">PRODUCT FOR MANAGER</h3>
+            <h3 className="text-center mb-5 text-color">QUẢN LÝ SẢN PHẨM</h3>
             <Grid container mt={10} mb={5}>
                 <Grid item xs={8} className="mx-auto text-center">
                     <Grid container>

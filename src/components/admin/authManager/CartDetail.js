@@ -8,7 +8,7 @@ import * as api_products from '../../../api/api_products';
 import Modal from 'react-bootstrap/Modal';
 import Button from '@mui/material/Button';
 import DeleteIcon from '@mui/icons-material/Delete';
-import { Box, Grid, IconButton } from '@mui/material';
+import { Grid, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import Loading from '../../loading/Loading';
@@ -150,7 +150,7 @@ export default function CartDetail(props) {
         <Modal size='md' centered
             show={showCartDetail} onHide={handleCloseCartDetail}>
             <Modal.Header closeButton>
-                <Modal.Title className='text-color fw-bold'> Giỏ hàng </Modal.Title>
+                <Modal.Title className='text-color fw-bold'> GIỎ HÀNG </Modal.Title>
             </Modal.Header>
 
 

@@ -23,6 +23,8 @@ import ProductsPage from './components/user/products';
 import ProductDetail from './components/user/productDetail';
 import InfoUser from './components/user/infoUser';
 import Cart from './components/user/cart';
+import OrderManager from './components/admin/orderManager';
+import Admin from './components/admin/Admin';
 
 
 
@@ -38,9 +40,11 @@ function App() {
       </Route>
 
       <Route path="/admin" element={<LayoutAdmin />}>
+        <Route index element={<Admin />} />
         <Route index path='productsmanager' element={<ProductsManager />} />
         <Route path='typesmanager' element={<TypesManager />} />
         <Route path='authManager' element={<AuthManager />} />
+        <Route path='orderManager' element={<OrderManager />} />
       </Route>
 
       <Route path='/login' element={<Login />} />

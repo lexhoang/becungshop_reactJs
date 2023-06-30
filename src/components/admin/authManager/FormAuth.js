@@ -84,7 +84,7 @@ export default function FormAuth(props) {
         dispatch(api_auth.postDataAuth({ ...values, photoUrl: imageUrls }))
         resetForm();
         setImageUrls(Avatar)
-        swal("Tài khoản đã thêm thành công!!!", "", "success");
+        swal("Thêm tài khoản thành công!!!", "", "success");
         handleCloseForm();
     }
 
@@ -97,7 +97,7 @@ export default function FormAuth(props) {
         <Modal size='lg' centered
             show={showForm} onHide={handleCloseForm}>
             <Modal.Header closeButton>
-                <Modal.Title className='text-color fw-bold'> Thêm mới </Modal.Title>
+                <Modal.Title className='text-color fw-bold'> THÊM NGƯỜI DÙNG </Modal.Title>
             </Modal.Header>
 
 

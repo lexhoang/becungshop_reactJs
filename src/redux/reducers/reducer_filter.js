@@ -8,6 +8,10 @@ const initialFilter = {
     searchAccount: '',
     searchUserName: '',
     searchPhone: '',
+    searchAccountOrder: '',
+    searchNameOrder: '',
+    searchPhoneOrder: '',
+    searchAddressOrder: '',
 }
 
 export const filterReducer = (state = initialFilter, action) => {
@@ -36,24 +40,49 @@ export const filterReducer = (state = initialFilter, action) => {
                 searchProductFor: action.payload,
             }
         }
+
+
         case constants_filter.FILTER_ACCOUNT: {
             return {
                 ...state,
                 searchAccount: action.payload,
             }
         }
-
         case constants_filter.FILTER_USERNAME: {
             return {
                 ...state,
                 searchUserName: action.payload,
             }
         }
-
         case constants_filter.FILTER_PHONE: {
             return {
                 ...state,
                 searchPhone: action.payload,
+            }
+        }
+
+        case constants_filter.FILTER_ACCOUNT_ORDER: {
+            return {
+                ...state,
+                searchAccountOrder: action.payload,
+            }
+        }
+        case constants_filter.FILTER_NAME_ORDER: {
+            return {
+                ...state,
+                searchNameOrder: action.payload,
+            }
+        }
+        case constants_filter.FILTER_PHONE_ORDER: {
+            return {
+                ...state,
+                searchPhoneOrder: action.payload,
+            }
+        }
+        case constants_filter.FILTER_ADDRESS_ORDER: {
+            return {
+                ...state,
+                searchAddressOrder: action.payload,
             }
         }
 

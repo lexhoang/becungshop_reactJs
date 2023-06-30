@@ -137,7 +137,6 @@ const Cart = () => {
                 totalPrices += filterUser.cart[i].totalPrices;
             }
         }
-        console.log(totalPrices);
         setTotalOrder(totalPrices)
 
         // window.scrollTo({ top: 0, behavior: 'smooth' });

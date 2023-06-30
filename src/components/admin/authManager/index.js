@@ -24,6 +24,9 @@ export default function AuthManager() {
 
     const [limit, setLimit] = useState(12);
     const [currentPage, setCurrentPage] = useState(1);
+    const handlePageChange = (event, page) => {
+        setCurrentPage(page);
+    };
 
 
     const [showForm, setShowForm] = useState(false);
@@ -72,9 +75,6 @@ export default function AuthManager() {
             });
     }
 
-    const handlePageChange = (event, page) => {
-        setCurrentPage(page);
-    };
 
     useEffect(() => {
         dispatch(api_auth.getDataAuth(limit, currentPage));
@@ -83,7 +83,7 @@ export default function AuthManager() {
 
     return (
         <div>
-            <h3 className="text-center text-color">AUTH MANAGER</h3>
+            <h3 className="text-center text-color">QUẢN LÝ NGƯỜI DÙNG</h3>
 
             <SearchAuth limit={limit} currentPage={currentPage} />
 

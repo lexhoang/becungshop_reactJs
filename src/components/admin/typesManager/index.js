@@ -54,7 +54,7 @@ export const TypesManager = () => {
 
     return (
         <>
-            <h3 className="text-center text-color">TYPE MANAGER</h3>
+            <h3 className="text-center text-color">QUẢN LÝ LOẠI SẢN PHẨM</h3>
             <Grid container mt={12} mb={5}>
                 <Grid item xs={8} className="mx-auto text-center">
                     <Grid container>

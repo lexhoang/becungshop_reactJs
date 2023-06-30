@@ -17,9 +17,9 @@ export const getDataOrder = (limit, currentPage) => {
     }
 }
 
-export const filterUser = (account, name, phone, address) => {
+export const filterOrder = (accountName, name, phone, address) => {
     return async (dispatch) => {
-        await instances.get(`orders?account=${account}&name=${name}&phone=${phone}&address=${address}`)
+        await instances.get(`orders?accountName=${accountName}&name=${name}&phone=${phone}&address=${address}`)
             .then((response) => {
                 // console.log(response.data);
                 dispatch(act_orders.act_success_order(response.data.data))

@@ -1,4 +1,4 @@
-import * as constants_orders from '../constants/constants_order';
+import * as constants_orders from '../constants/constants_orders';
 
 const initialOrder = {
     loading: false,
