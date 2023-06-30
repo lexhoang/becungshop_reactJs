@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import * as api_orders from '../../../api/api_orders'
+import { useDispatch } from 'react-redux';
+import MyField from '../../MyField';
 
+import * as api_orders from '../../../api/api_orders'
+import * as api_auth from '../../../api/api_auth';
+
+import { Formik, Form, Field, ErrorMessage } from 'formik';
 import Modal from 'react-bootstrap/Modal';
 import swal from 'sweetalert';
-
 import { Grid, Button } from '@mui/material';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
-import MyField from '../../MyField';
-import { useDispatch } from 'react-redux';
 
 const OrderCart = (props) => {
     const { showOrderForm, handleCloseOrderForm, totalOrder, filterUser } = props;
@@ -28,6 +29,7 @@ const OrderCart = (props) => {
             .then((willDelete) => {
                 if (willDelete) {
                     dispatch(api_orders.postDataOrder({ ...values, accountID: filterUser._id, accountName: filterUser.account, orderDetail: filterUser.cart, bill: totalOrder }));
+                    // dispatch(api_auth.patchDataAuth(filterUser._id, { cart: [] }))
                     swal("Xác nhận đơn hàng thành công", "Cảm ơn bạn đã mua sản phẩm của chúng tôi!!!", {
                         icon: "success",
                     });
