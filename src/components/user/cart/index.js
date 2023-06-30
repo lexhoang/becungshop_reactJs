@@ -140,7 +140,7 @@ const Cart = () => {
         console.log(totalPrices);
         setTotalOrder(totalPrices)
 
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        // window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [filterUser.cart, limit, currentPage]);
 
 
@@ -150,7 +150,7 @@ const Cart = () => {
         setShowOrderForm(false);
     }
 
-    const handleOrder = () => {
+    const handleOpenOrder = () => {
         setShowOrderForm(true);
     }
 
@@ -234,12 +234,13 @@ const Cart = () => {
 
                 <Grid item md={6} xs={12} textAlign='center'>
                     <Button variant='contained' className="btn-contain"
-                        onClick={() => handleOrder()}>Thanh toán</Button>
+                        onClick={() => handleOpenOrder()}>Thanh toán</Button>
                 </Grid>
             </Grid>
 
             <OrderCart showOrderForm={showOrderForm} setShowOrderForm={setShowOrderForm}
                 handleCloseOrderForm={handleCloseOrderForm}
+                filterUser={filterUser} totalOrder={totalOrder}
             />
         </Container>
     );
