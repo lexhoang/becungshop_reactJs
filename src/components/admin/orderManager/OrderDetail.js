@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MyField from '../../MyField';
 
 import * as api_orders from '../../../api/api_orders'
 import * as api_auth from '../../../api/api_auth';
+import * as api_products from '../../../api/api_products';
 
 import Modal from 'react-bootstrap/Modal';
 import swal from 'sweetalert';
@@ -15,16 +16,50 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 
 const OrderDetail = (props) => {
-    const { showOrderDetail, handleCloseOrderDetail, selectedOrder } = props;
+    const { showOrderDetail, handleCloseOrderDetail, selectedOrder, setSelectedOrder, limit, currentPage } = props;
+    const { dataProducts } = useSelector((state) => state.productsReducer);
+
     const dispatch = useDispatch();
 
+    const handleDeleteProduct = (productInCart) => {
+        // console.log(productInCart);
+        // console.log(selectedOrder);
+        const productEdit = dataProducts.find((product) => product._id === productInCart.productId);
+        // console.log(productEdit);
+        const updateOrder = selectedOrder.orderDetail.filter((orderProduct) => {
+            return (orderProduct.productId !== productInCart.productId
+                && orderProduct.color !== productInCart.color
+                && orderProduct.size !== productInCart.size)
+        });
+        const newAmount = parseInt(productEdit.amount) + productInCart.number
+
+        swal({
+            title: "Xóa sản phẩm này?",
+            text: "Bạn chắc chắn muốn xóa sản phẩm này chứ, không thể khôi phục sau khi xóa!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    dispatch(api_orders.patchDataOrder(selectedOrder._id, { orderDetail: updateOrder }));
+                    dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
+                    setSelectedOrder({ ...selectedOrder, orderDetail: updateOrder });
+                    swal("Thành công! Sản phẩm đã được xóa!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Sản phẩm này chưa được xóa!");
+                }
+            });
+    }
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     }
 
     useEffect(() => {
-
+        dispatch(api_products.getDataProduct(limit, currentPage));
     }, [selectedOrder.orderDetail])
 
     return (
@@ -87,6 +122,7 @@ const OrderDetail = (props) => {
                                         <span className='text-color'>{numberWithCommas(productInCart.totalPrices)}đ</span>
                                     </h5>
                                     <Button size='small' variant='outlined' color="error"
+                                        onClick={() => handleDeleteProduct(productInCart)}
                                     >
                                         <DeleteIcon />
                                     </Button>

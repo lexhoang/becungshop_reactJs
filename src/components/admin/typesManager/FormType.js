@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import swal from 'sweetalert';
 import { storage } from "../../../firebase";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { v4 } from 'uuid'
@@ -39,15 +40,17 @@ export const FormType = (props) => {
 
   const validationSchema = Yup.object().shape({
     name: Yup.string().required("Vui lòng điền loại sản phẩm"),
-    description: Yup.string().required("Vui lòng điền mô tả sản phẩm")
+    description: Yup.string().required("Vui lòng điền mô tả loại sản phẩm")
   })
 
   ////////           CRUD          ////////////
   const handleSubmit = (values) => {
     if (loadFormType.action === 'add') {
       dispatch(api_types.postDataType({ ...values, photoUrl: imageUrls }));
+      swal("Loại sản phẩm đã thêm thành công!!!", "", "success");
     } else {
       dispatch(api_types.putDataType({ ...values, photoUrl: imageUrls }));
+      swal("Thông tin Loại sản phẩm đã được thay đổi!!!", "", "success");
     }
     props.handleCloseForm()
   }

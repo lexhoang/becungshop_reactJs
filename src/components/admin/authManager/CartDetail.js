@@ -121,7 +121,7 @@ export default function CartDetail(props) {
                 if (willDelete) {
                     dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
                     dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
-                    dispatch(api_products.getDataProduct(limit, currentPage));
+                    // dispatch(api_products.getDataProduct(limit, currentPage));
                     setSelectedCart({ ...selectedCart, cart: updatedCart });
                     swal("Thành công! Sản phẩm đã được xóa!", {
                         icon: "success",

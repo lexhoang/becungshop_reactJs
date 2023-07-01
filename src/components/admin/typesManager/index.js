@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-
 import { useDispatch, useSelector } from 'react-redux';
+import swal from 'sweetalert';
+
 import * as api_types from '../../../api/api_types'
 
 //////////     START UI     ///////////
@@ -39,7 +40,23 @@ export const TypesManager = () => {
     }
 
     const handleDeleteProductFor = (IdType) => {
-        dispatch(api_types.deleteDataType(IdType))
+        swal({
+            title: "Xóa sản phẩm này?",
+            text: "Bạn chắc chắn muốn xóa sản phẩm này chứ, không thể khôi phục sau khi xóa!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    dispatch(api_types.deleteDataType(IdType));
+                    swal("Thành công! Sản phẩm đã được xóa!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Sản phẩm chưa được xóa!", "", "error");
+                }
+            });
     }
 
     useEffect(() => {
@@ -81,7 +98,7 @@ export const TypesManager = () => {
 
                         <Grid item md={3} xs={12} my={1}>
                             <Button variant="contained" color="success"
-                            className='btn-contain'
+                                className='btn-contain'
                                 onClick={() => handleFormAddNew()}
                             >+ Thêm mới</Button>
                         </Grid>

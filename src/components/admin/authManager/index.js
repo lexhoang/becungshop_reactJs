@@ -58,7 +58,7 @@ export default function AuthManager() {
     const handleDeleteAuth = (userID) => {
         swal({
             title: "Xóa tài khoản này?",
-            text: "Bạn chắc chắn muốn xóa người dùng này chứ, không thể khôi phục sau khi xóa!",
+            text: "Bạn chắc chắn muốn xóa tài khoản này chứ, không thể khôi phục sau khi xóa!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -66,11 +66,11 @@ export default function AuthManager() {
             .then((willDelete) => {
                 if (willDelete) {
                     dispatch(api_auth.deleteDataAuth(userID));
-                    swal("Thành công! Người dùng đã được xóa!", {
+                    swal("Thành công! Tài khoản đã được xóa!", {
                         icon: "success",
                     });
                 } else {
-                    swal("Tài khoản này chưa được xóa!");
+                    swal("Tài khoản này chưa được xóa!", "", "error");
                 }
             });
     }

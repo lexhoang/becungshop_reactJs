@@ -36,6 +36,26 @@ const OrderManager = () => {
     }
 
 
+    const handleDeleteOrder = (orderID) => {
+        swal({
+            title: "Xóa đơn hàng này?",
+            text: "Bạn chắc chắn muốn xóa đơn hàng này chứ, không thể khôi phục sau khi xóa!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    dispatch(api_orders.deleteDataOrder(orderID));
+                    swal("Thành công! Đơn hàng đã được xóa!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Đơn hàng này chưa được xóa!", "", "error");
+                }
+            });
+    }
+
     useEffect(() => {
         dispatch(api_orders.getDataOrder(limit, currentPage))
     }, [limit, currentPage]);
@@ -110,6 +130,7 @@ const OrderManager = () => {
                                 <td>
                                     <ButtonGroup aria-label="outlined primary button group">
                                         <Button variant='outlined' color="error"
+                                            onClick={() => handleDeleteOrder(order._id)}
                                         ><DeleteIcon />
                                         </Button>
                                     </ButtonGroup>
@@ -119,8 +140,10 @@ const OrderManager = () => {
                     }
                 </tbody>
             </table>
-            <OrderDetail showOrderDetail={showOrderDetail} handleCloseOrderDetail={handleCloseOrderDetail}
-                selectedOrder={selectedOrder}
+            <OrderDetail
+                showOrderDetail={showOrderDetail} handleCloseOrderDetail={handleCloseOrderDetail}
+                selectedOrder={selectedOrder} setSelectedOrder={setSelectedOrder}
+                limit={limit} currentPage={currentPage}
             />
 
             <Grid container justifyContent="center">
