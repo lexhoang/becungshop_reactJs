@@ -70,7 +70,7 @@ export default function AuthManager() {
                         icon: "success",
                     });
                 } else {
-                    swal("Tài khoản này chưa được xóa!", "", "error");
+                    swal("Tài khoản này chưa được xóa!", "", "warning");
                 }
             });
     }

@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import MyField from '../../MyField';
 
 import * as api_orders from '../../../api/api_orders'
-import * as api_auth from '../../../api/api_auth';
 import * as api_products from '../../../api/api_products';
 
 import Modal from 'react-bootstrap/Modal';
@@ -12,6 +11,7 @@ import { Grid, Button, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import RemoveIcon from '@mui/icons-material/Remove';
 import DeleteIcon from '@mui/icons-material/Delete';
+import Loading from '../../loading/Loading';
 
 
 
@@ -21,11 +21,86 @@ const OrderDetail = (props) => {
 
     const dispatch = useDispatch();
 
+    const [loading, setLoading] = useState(false);
+
+    // GIẢM SỐ LƯỢNG
+    const handleDecreaseQuantity = async (productInCart) => {
+        const { productId, color, size } = productInCart;
+        const productEdit = dataProducts.find((product) => product._id === productId);
+
+        const updatedOrder = selectedOrder.orderDetail.reduce((acc, cartProduct) => {
+            if (cartProduct.productId === productId && cartProduct.color === color && cartProduct.size === size) {
+                if (cartProduct.number > 1) {
+                    const newNumber = cartProduct.number - 1;
+                    const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
+                    const newAmount = parseInt(productEdit.amount) + 1;
+
+                    dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
+                    acc.push({
+                        ...cartProduct,
+                        number: newNumber,
+                        totalPrices: newTotalPrices,
+                    });
+                } else {
+                    const newAmount = parseInt(productEdit.amount) + 1;
+                    dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
+                }
+            } else {
+                acc.push(cartProduct);
+            }
+            return acc;
+        }, []);
+        setLoading(true);
+
+        try {
+            await dispatch(api_orders.patchDataOrder(selectedOrder._id, { orderDetail: updatedOrder }));
+            setLoading(false);
+            setSelectedOrder({ ...selectedOrder, orderDetail: updatedOrder });
+        } catch (error) {
+            console.log('Error occurred while updating the cart:', error);
+            setLoading(false);
+        }
+        setLoading(false);
+    };
+
+    // TĂNG SỐ LƯỢNG
+    const handleIncreaseQuantity = async (productInCart) => {
+        const { productId, color, size } = productInCart;
+        const productEdit = dataProducts.find((product) => product._id === productId);
+
+        const updatedOrder = selectedOrder.orderDetail.reduce((acc, cartProduct) => {
+            if (cartProduct.productId === productId && cartProduct.color === color && cartProduct.size === size) {
+                const newNumber = cartProduct.number + 1;
+                const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
+                acc.push({
+                    ...cartProduct,
+                    number: newNumber,
+                    totalPrices: newTotalPrices,
+                });
+            } else {
+                acc.push(cartProduct);
+            }
+            return acc;
+        }, []);
+        setLoading(true);
+
+        try {
+            await dispatch(api_orders.patchDataOrder(selectedOrder._id, { orderDetail: updatedOrder }));
+            setLoading(false);
+
+            const newAmount = parseInt(productEdit.amount) - 1;
+            await dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
+
+            setSelectedOrder({ ...selectedOrder, orderDetail: updatedOrder });
+        } catch (error) {
+            console.log('Error occurred while updating the cart:', error);
+            setLoading(false);
+        }
+        setLoading(false);
+    };
+
     const handleDeleteProduct = (productInCart) => {
-        // console.log(productInCart);
-        // console.log(selectedOrder);
         const productEdit = dataProducts.find((product) => product._id === productInCart.productId);
-        // console.log(productEdit);
         const updateOrder = selectedOrder.orderDetail.filter((orderProduct) => {
             return (orderProduct.productId !== productInCart.productId
                 && orderProduct.color !== productInCart.color
@@ -34,8 +109,8 @@ const OrderDetail = (props) => {
         const newAmount = parseInt(productEdit.amount) + productInCart.number
 
         swal({
-            title: "Xóa sản phẩm này?",
-            text: "Bạn chắc chắn muốn xóa sản phẩm này chứ, không thể khôi phục sau khi xóa!",
+            title: "Xóa đơn hàng này?",
+            text: "Bạn chắc chắn muốn xóa đơn hàng này chứ, không thể khôi phục sau khi xóa!",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -45,11 +120,11 @@ const OrderDetail = (props) => {
                     dispatch(api_orders.patchDataOrder(selectedOrder._id, { orderDetail: updateOrder }));
                     dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
                     setSelectedOrder({ ...selectedOrder, orderDetail: updateOrder });
-                    swal("Thành công! Sản phẩm đã được xóa!", {
+                    swal("Thành công! Đơn hàng đã được xóa!", {
                         icon: "success",
                     });
                 } else {
-                    swal("Sản phẩm này chưa được xóa!");
+                    swal("Đơn hàng này chưa được xóa!", "", "warning");
                 }
             });
     }
@@ -72,6 +147,7 @@ const OrderDetail = (props) => {
             </Modal.Header>
 
             <Modal.Body style={{ maxHeight: '500px', overflow: 'auto' }}>
+                {loading ? <Loading /> : null}
                 {
                     selectedOrder.orderDetail && selectedOrder.orderDetail.map((productInCart, index) => (
                         <Grid container key={index}>
@@ -102,6 +178,7 @@ const OrderDetail = (props) => {
                                         <div className="my-3">
                                             <IconButton aria-label="Decrease" size='small'
                                                 className='btn-contain'
+                                                onClick={() => handleDecreaseQuantity(productInCart)}
                                             >
                                                 <RemoveIcon />
                                             </IconButton>
@@ -110,6 +187,7 @@ const OrderDetail = (props) => {
                                             </span>
                                             <IconButton aria-label="Increase" size='small'
                                                 className='btn-contain'
+                                                onClick={() => handleIncreaseQuantity(productInCart)}
                                             >
                                                 <AddIcon />
                                             </IconButton>

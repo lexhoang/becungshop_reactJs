@@ -54,7 +54,7 @@ export const TypesManager = () => {
                         icon: "success",
                     });
                 } else {
-                    swal("Sản phẩm chưa được xóa!", "", "error");
+                    swal("Sản phẩm chưa được xóa!", "", "warning");
                 }
             });
     }

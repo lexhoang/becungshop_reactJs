@@ -26,34 +26,39 @@ export default function CartDetail(props) {
     // GIẢM SỐ LƯỢNG
     const handleDecreaseQuantity = async (productInCart) => {
         const { productId, color, size } = productInCart;
-        const productEdit = dataProducts.find(product => product._id === productId);
+        const productEdit = dataProducts.find((product) => product._id === productId);
 
-        const updatedCart = [];
-        for (let i = selectedCart.cart.length - 1; i >= 0; i--) {
-            const product = selectedCart.cart[i];
-            if (product.productId === productId && product.color === color && product.size === size) {
-                if (product.number > 1) {
-                    const newNumber = product.number - 1;
+        const updatedCart = selectedCart.cart.reduce((acc, cartProduct) => {
+            if (
+                cartProduct.productId === productId &&
+                cartProduct.color === color &&
+                cartProduct.size === size
+            ) {
+                if (cartProduct.number > 1) {
+                    const newNumber = cartProduct.number - 1;
                     const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
-                    updatedCart.unshift({
-                        ...product,
+                    const newAmount = parseInt(productEdit.amount) + 1;
+
+                    dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
+                    acc.push({
+                        ...cartProduct,
                         number: newNumber,
-                        totalPrices: newTotalPrices
+                        totalPrices: newTotalPrices,
                     });
+                } else {
+                    const newAmount = parseInt(productEdit.amount) + 1;
+                    dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
                 }
             } else {
-                updatedCart.unshift(product);
+                acc.push(cartProduct);
             }
-        }
+            return acc;
+        }, []);
 
         setLoading(true);
         try {
             await dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
             setLoading(false);
-
-            const newAmount = parseInt(productEdit.amount) + 1;
-            await dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
-
             setSelectedCart({ ...selectedCart, cart: updatedCart });
         } catch (error) {
             console.log('Error occurred while updating the cart:', error);
@@ -62,26 +67,31 @@ export default function CartDetail(props) {
         setLoading(false);
     };
 
+
+
     // TĂNG SỐ LƯỢNG
     const handleIncreaseQuantity = async (productInCart) => {
         const { productId, color, size } = productInCart;
-        const productEdit = dataProducts.find(product => product._id === productId);
+        const productEdit = dataProducts.find((product) => product._id === productId);
 
-        const updatedCart = [];
-        for (let i = selectedCart.cart.length - 1; i >= 0; i--) {
-            const product = selectedCart.cart[i];
-            if (product.productId === productId && product.color === color && product.size === size) {
-                const newNumber = product.number + 1;
+        const updatedCart = selectedCart.cart.reduce((acc, cartProduct) => {
+            if (
+                cartProduct.productId === productId &&
+                cartProduct.color === color &&
+                cartProduct.size === size
+            ) {
+                const newNumber = cartProduct.number + 1;
                 const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
-                updatedCart.unshift({
-                    ...product,
+                acc.push({
+                    ...cartProduct,
                     number: newNumber,
-                    totalPrices: newTotalPrices
+                    totalPrices: newTotalPrices,
                 });
             } else {
-                updatedCart.unshift(product);
+                acc.push(cartProduct);
             }
-        }
+            return acc;
+        }, []);
 
         setLoading(true);
         try {
@@ -94,17 +104,15 @@ export default function CartDetail(props) {
             setSelectedCart({ ...selectedCart, cart: updatedCart });
         } catch (error) {
             console.log('Error occurred while updating the cart:', error);
-            setLoading(false); // Set the loading state for cart update to false in case of an error
+            setLoading(false);
         }
         setLoading(false);
-
     };
 
     // XÓA SẢN PHẨM
     const handleDeleteOrder = (productInCart) => {
         const { productId, color, size } = productInCart;
         const productEdit = dataProducts.find(product => product._id === productId);
-
         const updatedCart = selectedCart.cart.filter((product) => {
             return (product.productId !== productId || product.color !== color || product.size !== size);
         });
@@ -121,13 +129,12 @@ export default function CartDetail(props) {
                 if (willDelete) {
                     dispatch(api_auth.patchDataAuth(selectedCart._id, { cart: updatedCart }));
                     dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
-                    // dispatch(api_products.getDataProduct(limit, currentPage));
                     setSelectedCart({ ...selectedCart, cart: updatedCart });
                     swal("Thành công! Sản phẩm đã được xóa!", {
                         icon: "success",
                     });
                 } else {
-                    swal("Sản phẩm này chưa được xóa!");
+                    swal("Sản phẩm này chưa được xóa!", "", "warning");
                 }
             });
     }
@@ -135,7 +142,7 @@ export default function CartDetail(props) {
 
     useEffect(() => {
         dispatch(api_products.getDataProduct(limit, currentPage));
-
+        dispatch(api_auth.getDataAuth(limit, currentPage));
     }, [selectedCart.cart]);
 
     function numberWithCommas(x) {

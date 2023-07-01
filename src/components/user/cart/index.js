@@ -32,35 +32,35 @@ const Cart = () => {
         return userLogin || {};
     }, [dataAuth, user]);
 
+
     // GIẢM SỐ LƯỢNG
     const handleDecreaseQuantity = async (productInCart) => {
         const { productId, color, size } = productInCart;
         const productEdit = dataProducts.find(product => product._id === productId);
 
-        const updateCart = filterUser.cart.map((cart) => {
-            if (cart.productId === productId && cart.color === color && cart.size === size) {
-                if (cart.number > 1) {
-                    const newNumber = cart.number - 1;
+        const updateCart = filterUser.cart.map((cartProduct) => {
+            if (cartProduct.productId === productId && cartProduct.color === color && cartProduct.size === size) {
+                if (cartProduct.number > 1) {
+                    const newNumber = cartProduct.number - 1;
                     const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
 
+                    const newAmount = parseInt(productEdit.amount) + 1;
+                    dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
                     return {
-                        ...cart,
+                        ...cartProduct,
                         number: newNumber,
                         totalPrices: newTotalPrices
                     };
                 } else {
-                    return {};
+                    handleDeleteOrder(productInCart);
                 }
             }
-            return cart;
+            return cartProduct;
         });
         setLoading(true);
         try {
             await dispatch(api_auth.patchDataAuth(filterUser._id, { cart: updateCart }));
             setLoading(false);
-
-            const newAmount = parseInt(productEdit.amount) + 1;
-            await dispatch(api_products.patchDataProduct(productEdit._id, { amount: newAmount }));
         } catch (error) {
             console.log('Error occurred while updating the cart:', error);
         }
@@ -72,18 +72,17 @@ const Cart = () => {
         const { productId, color, size } = productInCart;
         const productEdit = dataProducts.find(product => product._id === productId);
 
-        const updateCart = filterUser.cart.map((cart) => {
-            if (cart.productId === productId && cart.color === color && cart.size === size) {
-                const newNumber = cart.number + 1;
+        const updateCart = filterUser.cart.map((cartProduct) => {
+            if (cartProduct.productId === productId && cartProduct.color === color && cartProduct.size === size) {
+                const newNumber = cartProduct.number + 1;
                 const newTotalPrices = productEdit ? newNumber * productEdit.prices : 0;
-
                 return {
-                    ...cart,
+                    ...cartProduct,
                     number: newNumber,
                     totalPrices: newTotalPrices
                 };
             }
-            return cart;
+            return cartProduct;
         });
         setLoading(true);
         try {
@@ -98,12 +97,13 @@ const Cart = () => {
         setLoading(false);
     };
 
+
     // XÓA SẢN PHẨM
     const handleDeleteOrder = (productInCart) => {
         const { productId, color, size } = productInCart;
         const productEdit = dataProducts.find(product => product._id === productId);
-        const updateCart = filterUser.cart.filter((cart) => {
-            return cart.productId !== productId || cart.color !== color || cart.size !== size;
+        const updateCart = filterUser.cart.filter((cartProduct) => {
+            return cartProduct.productId !== productId || cartProduct.color !== color || cartProduct.size !== size;
         });
         const newAmount = parseInt(productEdit.amount) + productInCart.number;
         swal({
@@ -127,6 +127,11 @@ const Cart = () => {
 
     useEffect(() => {
         dispatch(api_products.getDataProduct(limit, currentPage));
+        dispatch(api_auth.getDataAuth(limit, currentPage));
+    }, [limit, currentPage]);
+
+
+    useEffect(() => {
         if (user == null) {
             navigate('/login');
         };
@@ -140,7 +145,7 @@ const Cart = () => {
         setTotalOrder(totalPrices)
 
         // window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [filterUser.cart, limit, currentPage]);
+    }, [filterUser.cart]);
 
 
 
