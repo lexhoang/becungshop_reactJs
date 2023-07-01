@@ -3,6 +3,15 @@
     background: linear-gradient(0deg, #ff6600 0%, #ffb366 100%)
 }
 
+.length-cart {
+    background-color: red;
+    color: #fff;
+    width: 24px;
+    height: 24px;
+    float: right;
+    border-radius: 50%;
+}
+
 .header {
     position: fixed;
     top: 0;

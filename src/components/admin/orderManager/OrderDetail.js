@@ -22,6 +22,8 @@ const OrderDetail = (props) => {
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
+    const [totalOrder, setTotalOrder] = useState(0);
+
 
     // GIẢM SỐ LƯỢNG
     const handleDecreaseQuantity = async (productInCart) => {
@@ -135,14 +137,21 @@ const OrderDetail = (props) => {
 
     useEffect(() => {
         dispatch(api_products.getDataProduct(limit, currentPage));
-    }, [selectedOrder.orderDetail])
+        let totalPrices = 0;
+        if (selectedOrder && selectedOrder.orderDetail) {
+            for (let i = 0; i < selectedOrder.orderDetail.length; i++) {
+                totalPrices += selectedOrder.orderDetail[i].totalPrices;
+            }
+        }
+        setTotalOrder(totalPrices);
+    }, [selectedOrder.orderDetail]);
 
     return (
         <Modal size='lg' centered
             show={showOrderDetail} onHide={handleCloseOrderDetail}>
             <Modal.Header closeButton>
                 <Modal.Title className='text-color fw-bold w-100'>
-                    <p>TỔNG ĐƠN HÀNG: &nbsp; {selectedOrder.bill ? numberWithCommas(selectedOrder.bill) : '0'}</p>
+                    <p>TỔNG ĐƠN HÀNG: &nbsp;{numberWithCommas(totalOrder)}</p>
                 </Modal.Title>
             </Modal.Header>
 

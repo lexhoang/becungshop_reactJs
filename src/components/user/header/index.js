@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './header.css';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -74,6 +74,11 @@ export default function Header() {
     const limit = 12; // Số lượng sản phẩm trên mỗi trang
     const [currentPage, setCurrentPage] = useState(1);
 
+    const filterUser = useMemo(() => {
+        const userLogin = dataAuth.find(auth => auth?._id === user?.[0]?.id);
+        return userLogin || {};
+    }, [dataAuth, user]);
+
 
     // FILTER
     const onSearchProduct = (value) => {
@@ -145,12 +150,9 @@ export default function Header() {
             } else {
                 setIsHeaderVisible(false);
             }
-
             setPrevScrollPos(currentScrollPos);
         };
-
         window.addEventListener('scroll', handleScroll);
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -163,7 +165,7 @@ export default function Header() {
             <div className='bg-header px-2'>
                 <Grid container p={1} className='align-items-center justify-content-evenly'>
                     {/* IMAGE */}
-                    <Grid item xl={1} md={1} xs={6}>
+                    <Grid item xl={1} md={1} xs={5}>
                         <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
                             <Grid item sx={{ width: { lg: '120px', md: '100px', xs: '100px' } }}>
                                 <img src={LogoImage} alt="" width='100%' />
@@ -189,13 +191,21 @@ export default function Header() {
                         <ListMenuItem handleAllType={handleAllType} handleSearchType={handleSearchType} handleSearchProductFor={handleSearchProductFor} />
                     </Grid>
 
-                    {/* LOGIN */}
-                    <Grid item md={1} xs={3} textAlign="right">
+                    {/* CART */}
+                    <Grid item md={1} xs={4} textAlign="right">
                         <button className="btn" onClick={() => navigate('/cart')}>
                             <ShoppingCartIcon sx={{ color: "white", fontSize: '38px' }} />
+                            {
+                                filterUser && filterUser.cart && filterUser.cart.length > 0
+                                    ? <div className='length-cart'>
+                                        <span>{filterUser.cart.length}</span>
+                                    </div>
+                                    : null
+                            }
                         </button>
                     </Grid>
 
+                    {/* LOGIN */}
                     {/* USER */}
                     {
                         user !== null ?
@@ -299,6 +309,6 @@ export default function Header() {
                 </Grid>
             </Grid>
             {/* RESPONSIVE */}
-        </div>
+        </div >
     )
 }
