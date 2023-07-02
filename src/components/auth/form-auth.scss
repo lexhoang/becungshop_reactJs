@@ -73,12 +73,10 @@
                 color: #ff6600;
             }
         }
-    }
-}
 
-@media only screen and (max-width: 600px) {
-    .form-css {
-        width: 270px;
-        padding: 50px 15px;
+        @media only screen and (max-width: 600px) {
+            width: 350px;
+            padding: 50px 15px;
+        }
     }
 }

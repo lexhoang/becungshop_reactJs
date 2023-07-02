@@ -167,7 +167,7 @@ export default function Header() {
                     {/* IMAGE */}
                     <Grid item xl={1} md={1} xs={5}>
                         <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
-                            <Grid item sx={{ width: { xl: '150px', md: '100px', xs: '150px' } }}>
+                            <Grid item sx={{ width: { xl: '140px', md: '100px', xs: '140px' } }}>
                                 <img src={LogoImage} alt="" width='100%' />
                             </Grid>
                         </Link>

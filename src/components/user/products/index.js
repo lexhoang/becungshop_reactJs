@@ -79,7 +79,7 @@ export default function ProductsPage() {
                 {
                     dataProducts.map((product, index) => {
                         return (
-                            <Grid item key={product._id} xl={2} md={3} sm={4} xs={6} p={1}>
+                            <Grid item key={product._id} xl={2} md={3} sm={4} xs={6} p={1} my={3}>
                                 <Tooltip title={product.name}>
                                     <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>
                                         <div className='card-content'>
@@ -92,9 +92,9 @@ export default function ProductsPage() {
                                                     alt="green iguana"
                                                 />
                                                 <CardContent>
-                                                    <h5 className='text-color text-center'>
+                                                    <h6 className='text-color text-center'>
                                                         {numberWithCommas(product.prices)}đ
-                                                    </h5>
+                                                    </h6>
                                                     <Stack spacing={1} className="my-2"  >
                                                         <Rating name="half-rating-read" defaultValue={5} precision={0.5} size='small' readOnly />
                                                     </Stack>
