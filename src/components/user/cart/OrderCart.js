@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import MyField from '../../MyField';
 
 import * as api_orders from '../../../api/api_orders'
@@ -14,7 +14,7 @@ import Modal from 'react-bootstrap/Modal';
 import { Grid, Button } from '@mui/material';
 
 const OrderCart = (props) => {
-    const { showOrderForm, handleCloseOrderForm, totalOrder, filterUser } = props;
+    const { showOrderForm, handleCloseOrderForm, totalOrder, filterUser, paymentMethod, setPaymentMethod } = props;
     const dispatch = useDispatch();
 
     const [formOrder, setFormOrder] = useState({ name: '', phone: '', address: '', note: '' })
@@ -45,6 +45,8 @@ const OrderCart = (props) => {
 
 
     const handleConfirmOrder = (values, { resetForm }) => {
+        console.log(paymentMethod);
+
         swal({
             title: "Xác nhận đơn hàng",
             text: "Nhấn OK để xác nhận đơn hàng. Bạn sẽ nhận được đơn hàng trong vòng 1 nốt nhạc.",
@@ -54,8 +56,17 @@ const OrderCart = (props) => {
         })
             .then((willDelete) => {
                 if (willDelete) {
-                    dispatch(api_orders.postDataOrder({ ...values, accountID: filterUser._id, accountName: filterUser.account, orderDetail: filterUser.cart, bill: totalOrder }));
-                    dispatch(api_auth.patchDataAuth(filterUser._id, { cart: [] }))
+                    if (paymentMethod !== null) {
+                        const updateCart = filterUser.cart.filter((cartProduct) => {
+                            return cartProduct.productId !== paymentMethod.productId || cartProduct.color !== paymentMethod.color || cartProduct.size !== paymentMethod.size;
+                        });
+
+                        dispatch(api_orders.postDataOrder({ ...values, accountID: filterUser._id, accountName: filterUser.account, orderDetail: paymentMethod, bill: totalOrder }));
+                        dispatch(api_auth.patchDataAuth(filterUser._id, { cart: updateCart }));
+                    } else {
+                        dispatch(api_orders.postDataOrder({ ...values, accountID: filterUser._id, accountName: filterUser.account, orderDetail: filterUser.cart, bill: totalOrder }));
+                        dispatch(api_auth.patchDataAuth(filterUser._id, { cart: [] }));
+                    }
                     swal("Xác nhận đơn hàng thành công", "Cảm ơn bạn đã mua sản phẩm của chúng tôi!!!", {
                         icon: "success",
                     });
@@ -65,11 +76,17 @@ const OrderCart = (props) => {
             });
         resetForm();
         handleCloseOrderForm();
+        setPaymentMethod(null)
     }
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     }
+
+    useEffect(() => {
+
+    }, [paymentMethod]);
+
 
     return (
         <Modal size='lg' centered

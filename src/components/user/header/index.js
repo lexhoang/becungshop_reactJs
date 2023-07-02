@@ -162,12 +162,12 @@ export default function Header() {
 
     return (
         <div className={`header ${isHeaderVisible ? 'visible' : 'hidden'}`}>
-            <div className='bg-header px-2'>
-                <Grid container p={1} className='align-items-center justify-content-evenly'>
+            <div className='bg-header'>
+                <Grid container className='align-items-center justify-content-evenly'>
                     {/* IMAGE */}
                     <Grid item xl={1} md={1} xs={5}>
                         <Link to="/" onClick={() => { handleAllProductFor(); handleAllType() }}>
-                            <Grid item sx={{ width: { lg: '120px', md: '100px', xs: '100px' } }}>
+                            <Grid item sx={{ width: { xl: '150px', md: '100px', xs: '150px' } }}>
                                 <img src={LogoImage} alt="" width='100%' />
                             </Grid>
                         </Link>

@@ -12,6 +12,7 @@ const optionSizes = [
   , "freeSize"
   , "Size_S (41kg - 47kg)"
   , "Size_M (48kg - 55kg)"
+  , "Size_L (56kg - 65kg)"
   , "Size_1 (5kg - 7kg)"
   , "Size_2 (	7kg - 8kg)"
   , "Size_3 (8kg - 10kg)"

@@ -236,7 +236,7 @@ export const FormProduct = (props) => {
                                 {/*START MORE INFO PRODUCT */}
                                 <Grid item md={6} xs={12} pl={8}>
                                     <MyField type="text" name="infoCode" id="infoCode" label="Mã sản phẩm"
-                                        placeholder="Name Product"
+                                        placeholder="Info Code"
                                         className="form-control"
                                     />
 

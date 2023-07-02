@@ -38,12 +38,14 @@ export default function ProductNew(props) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
   }
 
+  const relatedProduct = [...dataProducts].reverse()
+
   return (
     <div style={{ marginTop: '100px' }}>
-      <h3 className="text-center text-color">Sản phẩm mới</h3>
+      <h3 className="text-center text-color">Sản phẩm HOT</h3>
       <Grid container my={4}>
         {
-          dataProducts.map((product) => (
+          relatedProduct.map((product) => (
             <Grid item key={product._id} xl={2} md={3} sm={4} xs={6} p={1}>
               <Tooltip title={product.name}>
                 <Link to={`/products/${product._id}`} style={{ textDecoration: "none" }}>

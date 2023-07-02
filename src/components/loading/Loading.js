@@ -1,41 +1,13 @@
-import { useState } from "react"
-import { useEffect } from "react"
+import React from 'react';
+import './loading.css'
 
-const styleDiv = {
-    width: "100%",
-    height: "100%",
-    backgroundColor: "white",
-    opacity: 0.5,
-    position: "absolute",
-    left: "0",
-    top: "0",
-    zIndex: "1000",
-}
-
-const styleStr = {
-    fontSize: "50px",
-    fontWeight: "bold",
-    display: "block",
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%,-50%)"
-}
-
-function Loading(props) {
-    const [str, setStr] = useState("")
-    useEffect(() => {
-        setTimeout(() => {
-            if (str.length > 2) {
-                setStr("")
-            } else {
-                setStr(str + ".")
-            }
-        }, 500)
-    }, [str])
-    return <div style={styleDiv}>
-        <span style={styleStr}>{str}</span>
-    </div>
+function Loading() {
+    return (
+        <div className="container-loading">
+            <div className="bubble-loading"></div>
+            <div className="shadow-loading"></div>
+        </div>
+    )
 }
 
 export default Loading

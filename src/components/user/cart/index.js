@@ -131,6 +131,26 @@ const Cart = () => {
     }, [limit, currentPage]);
 
 
+    const [paymentMethod, setPaymentMethod] = useState(null)
+    const [showOrderForm, setShowOrderForm] = useState(false);
+    const handleCloseOrderForm = () => {
+        setShowOrderForm(false);
+    }
+
+    const handleOrderOne = (productInCart) => {
+        setShowOrderForm(true);
+        setPaymentMethod(productInCart)
+    }
+
+    const handleOpenOrder = () => {
+        setShowOrderForm(true);
+    }
+
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
+    }
+
+
     useEffect(() => {
         if (user == null) {
             navigate('/login');
@@ -145,22 +165,7 @@ const Cart = () => {
         setTotalOrder(totalPrices)
 
         // window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, [filterUser.cart]);
-
-
-
-    const [showOrderForm, setShowOrderForm] = useState(false);
-    const handleCloseOrderForm = () => {
-        setShowOrderForm(false);
-    }
-
-    const handleOpenOrder = () => {
-        setShowOrderForm(true);
-    }
-
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
-    }
+    }, [filterUser.cart, paymentMethod]);
 
 
     return (
@@ -219,6 +224,14 @@ const Cart = () => {
                                         <span>Thành tiền: </span>
                                         <span className='text-color'>{numberWithCommas(productInCart.totalPrices)}đ</span>
                                     </h5>
+                                    <Button size='small' variant='contained' color="warning"
+                                        className='contain'
+                                        onClick={() => handleOrderOne(productInCart)}>
+                                        Mua sản phẩm
+                                    </Button>
+                                </div>
+
+                                <div className="mt-3 text-center">
                                     <Button size='small' variant='outlined' color="error"
                                         onClick={() => handleDeleteOrder(productInCart)}>
                                         <DeleteIcon />
@@ -245,6 +258,7 @@ const Cart = () => {
             <OrderCart showOrderForm={showOrderForm} setShowOrderForm={setShowOrderForm}
                 handleCloseOrderForm={handleCloseOrderForm}
                 filterUser={filterUser} totalOrder={totalOrder}
+                paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod}
             />
         </Container>
     );

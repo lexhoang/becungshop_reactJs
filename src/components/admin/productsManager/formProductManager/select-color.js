@@ -8,7 +8,7 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;;
 
-const optionColors = ["Màu đen", "Màu trắng", "Màu xanh lam", "Màu xanh lá", "Màu hồng", "Màu vàng", "Màu đỏ", "Màu tím", "Màu nâu"];
+const optionColors = ["Màu đen", "Màu trắng","Màu be","Màu xám", "Màu xanh lam", "Màu xanh lá", "Màu hồng", "Màu vàng", "Màu đỏ", "Màu tím", "Màu nâu"];
 
 
 export default function SelectColor(props) {
