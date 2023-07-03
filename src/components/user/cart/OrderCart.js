@@ -45,8 +45,7 @@ const OrderCart = (props) => {
 
 
     const handleConfirmOrder = (values, { resetForm }) => {
-        console.log(paymentMethod);
-
+        // console.log(paymentMethod);
         swal({
             title: "Xác nhận đơn hàng",
             text: "Nhấn OK để xác nhận đơn hàng. Bạn sẽ nhận được đơn hàng trong vòng 1 nốt nhạc.",
