@@ -9,6 +9,7 @@ import * as api_products from '../../../api/api_products';
 import Loading from '../../loading/Loading'
 import swal from 'sweetalert';
 import RelatedProduct from './RelatedProduct';
+import BackOnePage from '../BackOnePage';
 
 import ImageSizeTable from '../../../assets/images/bangsize.png'
 
@@ -137,10 +138,10 @@ export default function ProductDetail() {
     return (
         <div style={{ backgroundColor: '#ffffff' }}>
             {loading ? <Loading /> : null}
-
             {
                 productInfo !== null ?
                     <Container>
+                        <BackOnePage />
                         <Grid container p={2}>
                             <Grid item md={6} xs={12} p={1} className="animate__animated  animate__slideInLeft">
                                 <img src={productInfo.photoUrl} alt="photo product" width="100%" />

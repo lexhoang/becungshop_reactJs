@@ -142,9 +142,8 @@ const OrderCart = (props) => {
                         </Grid>
 
                         <Grid item md={12} xs={12} textAlign='center' mt={5}>
-                            <h4 className='text-color'>Thanh Toán: {numberWithCommas(totalOrder)}đ</h4>
+                            <h4 className='text-color'>HÓA ĐƠN: &nbsp; {numberWithCommas(totalOrder)}đ</h4>
                         </Grid>
-
 
                         <div className="text-center mt-5 d-flex justify-content-between">
                             <Button variant="contained" type='submit'

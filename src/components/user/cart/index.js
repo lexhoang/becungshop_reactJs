@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
+import BackOnePage from '../BackOnePage';
 
 import * as api_auth from '../../../api/api_auth';
 import * as api_products from '../../../api/api_products';
@@ -171,7 +172,8 @@ const Cart = () => {
     return (
         <Container>
             {loading ? <Loading /> : null}
-            <h3 className='text-center text-color' style={{ margin: '100px 0' }}>THÔNG TIN GIỎ HÀNG CỦA BẠN</h3>
+            <BackOnePage />
+            <h3 className='text-center text-color' style={{ margin: '50px 0' }}>GIỎ HÀNG CỦA BẠN</h3>
             <Grid container>
                 {
                     filterUser && filterUser.cart && filterUser.cart.slice().reverse().map((productInCart, index) => (
@@ -242,7 +244,7 @@ const Cart = () => {
                     ))
                 }
             </Grid>
-            <Grid container mt={8} p={3} style={{
+            <Grid className='fixed-bottom' container mt={8} p={3} style={{
                 background: "linear-gradient(0deg, #ccc9c4 0%, #ffffff 100%)"
             }}>
                 <Grid item md={6} xs={12} textAlign='center'>

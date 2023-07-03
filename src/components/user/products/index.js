@@ -39,14 +39,9 @@ export default function ProductsPage() {
             navigate("/products")
             dispatch(api_products.filterDataProduct(searchProduct, searchCodeProduct, searchType, searchProductFor, limit, currentPage));
         }
-
-
         // Cuộn lên đầu trang
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }, [searchProduct, searchCodeProduct, searchType, searchProductFor, totalPages, limit, currentPage]);
-
-
-
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -56,7 +51,7 @@ export default function ProductsPage() {
         <div className="product-layout animate__animated animate__zoomIn">
             {loading ? <Loading /> : null}
 
-            <Grid item xs={12} mt={24}>
+            <Grid item xs={12} mt={16}>
                 {
                     productForData.map(productFor => (
                         <h3 className='text-color' key={productFor.id}>{searchProductFor === productFor.value ? `Dành cho ${productFor.name}` : ''} </h3>
