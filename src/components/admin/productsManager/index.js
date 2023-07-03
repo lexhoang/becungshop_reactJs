@@ -14,9 +14,9 @@ import { productForData } from '../../constant_string/TextProductFor'
 //////////     START UI     ///////////
 import { Button, ButtonGroup, Grid, TextField, FormControl, InputLabel, Select, MenuItem, Stack } from '@mui/material';
 import { Pagination } from "@mui/material";
-import DeleteIcon from '@mui/icons-material/Delete';
+import InfoIcon from '@mui/icons-material/Info';
 import ModeEditIcon from '@mui/icons-material/ModeEdit';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 //////////     END UI     ///////////
@@ -39,15 +39,20 @@ export const ProductsManager = () => {
         if (searchProduct == '' && searchCodeProduct == '' && searchType == '' && searchProductFor == '') {
             dispatch(api_products.getDataProduct(limit, currentPage));
         } else {
-            dispatch(api_products.filterDataProduct(searchProduct, searchCodeProduct, searchType, searchProductFor));
+            dispatch(api_products.filterDataProduct(searchProduct, searchCodeProduct, searchType, searchProductFor, limit, currentPage));
         }
     }
 
 
     ////////       CRUD       ////////
+    const handleDetailProduct = (product) => {
+        setShowForm(true);
+        setLoadFormProduct({ action: 'detail', value: product });
+    }
+
     const handleFormAddNew = () => {
         setShowForm(true);
-        setLoadFormProduct({ action: 'add', value: '' })
+        setLoadFormProduct({ action: 'add', value: '' });
     }
 
     const handleEditProduct = (product) => {
@@ -93,6 +98,7 @@ export const ProductsManager = () => {
         <>
             {loading ? <Loading /> : null}
             <h3 className="text-center mb-5 text-color">QUẢN LÝ SẢN PHẨM</h3>
+            {/* FILTER */}
             <Grid container mt={10} mb={5}>
                 <Grid item xs={8} className="mx-auto text-center">
                     <Grid container>
@@ -174,6 +180,17 @@ export const ProductsManager = () => {
                 loadFormProduct={loadFormProduct}
             />
 
+            <Grid container justifyContent="center">
+                <Stack spacing={2}>
+                    <Pagination
+                        variant="outlined" color="warning"
+                        count={totalPages}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                    />
+                </Stack>
+            </Grid>
+
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
                     <tr className='text-font'>
@@ -184,6 +201,7 @@ export const ProductsManager = () => {
                         <th>Loại</th>
                         <th>Số lượng</th>
                         <th>Giá</th>
+                        <th>Chi tiết</th>
                         <th rowSpan="3">Thao Tác</th>
                     </tr>
                 </thead>
@@ -201,6 +219,9 @@ export const ProductsManager = () => {
                                     <td> {product.type.name} </td>
                                     <td> {product.amount} </td>
                                     <td> {numberWithCommas(product.prices)} </td>
+                                    <td>
+                                        <Button variant='outlined' color="info" onClick={() => handleDetailProduct(product)}><InfoIcon /></Button>
+                                    </td>
                                     <td>
                                         <ButtonGroup aria-label="outlined primary button group">
                                             <Button variant='outlined' color="warning" onClick={() => handleEditProduct(product)}><ModeEditIcon /></Button>

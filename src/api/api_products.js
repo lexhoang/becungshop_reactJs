@@ -23,7 +23,8 @@ export const filterDataProduct = (name, code, type, productFor, limit, currentPa
         dispatch(act_products.act_product_get());
         await instances.get(`products?name=${name}&infoCode=${code}&type=${type}&productFor=${productFor}&limit=${limit}&skip=${(currentPage - 1) * limit}`)
             .then((response) => {
-                dispatch(act_products.act_product_success(response.data.data))
+                const { data, totalPages } = response.data;
+                dispatch(act_products.act_product_success(data, totalPages));
             })
             .catch((error) => {
                 console.log("error: ", error);

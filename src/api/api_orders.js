@@ -17,12 +17,13 @@ export const getDataOrder = (limit, currentPage) => {
     }
 }
 
-export const filterOrder = (accountName, name, phone, address) => {
+export const filterOrder = (accountName, name, phone, address, limit, currentPage) => {
     return async (dispatch) => {
-        await instances.get(`orders?accountName=${accountName}&name=${name}&phone=${phone}&address=${address}`)
+        await instances.get(`orders?accountName=${accountName}&name=${name}&phone=${phone}&address=${address}&limit=${limit}&skip=${(currentPage - 1) * limit}`)
             .then((response) => {
-                // console.log(response.data);
-                dispatch(act_orders.act_success_order(response.data.data))
+                const { data, totalPagesAuth } = response.data;
+                const reversedData = [...data].reverse();
+                dispatch(act_orders.act_success_order(reversedData, totalPagesAuth));
             })
             .catch((error) => {
                 console.log("error: ", error);

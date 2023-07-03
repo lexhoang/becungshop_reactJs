@@ -114,6 +114,16 @@ export default function AuthManager() {
                 limit={limit} currentPage={currentPage}
             />
 
+            <Grid container justifyContent="center">
+                <Stack spacing={2}>
+                    <Pagination
+                        variant="outlined" color="warning"
+                        count={totalPagesAuth}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                    />
+                </Stack>
+            </Grid>
 
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>

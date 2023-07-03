@@ -130,6 +130,7 @@ export default function ProductDetail() {
 
 
     const [showInstructionSize, setShowInstructionSize] = useState(false);
+
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
     }
@@ -152,12 +153,21 @@ export default function ProductDetail() {
                                     {productInfo.name}
                                 </h4>
 
-                                <div className="mt-5 d-flex align-items-center">
+                                <div className="my-4 d-flex align-items-center">
                                     <Typography variant="subtitle1 me-3" className="text-font">
                                         Mã sản phẩm
                                     </Typography>
                                     <Typography variant="h6" fontWeight="bold" className='text-color'>
                                         {productInfo.infoCode}
+                                    </Typography>
+                                </div>
+
+                                <div className="d-flex align-items-center">
+                                    <Typography variant="subtitle1 me-3" className="text-font">
+                                        Đơn giá
+                                    </Typography>
+                                    <Typography variant="h6" fontWeight="bold" className='text-color'>
+                                        {numberWithCommas(productInfo.prices)}
                                     </Typography>
                                 </div>
 
@@ -270,6 +280,8 @@ export default function ProductDetail() {
                                         </Box>
                                     </Grid>
                                 </Grid>
+
+
 
                                 {/* ADD TO CART */}
                                 <Grid item xs={12}>

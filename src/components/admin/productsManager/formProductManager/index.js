@@ -325,12 +325,16 @@ export const FormProduct = (props) => {
                                 </Grid>
                                 {/*END SIZE PRODUCT */}
                             </Grid>
-                            
+
                             <div className="text-center mt-5 d-flex justify-content-between">
-                                <Button variant="contained" type='submit'
-                                    className="w-50 mx-5 btn-contain">
-                                    {loadFormProduct.value == "" ? "Xác nhận" : "Cập nhật"}
-                                </Button>
+                                {
+                                    loadFormProduct.action == "add" || loadFormProduct.action == "edit" ?
+                                        <Button Button variant="contained" type='submit'
+                                            className="w-50 mx-5 btn-contain">
+                                            {loadFormProduct.value == "" ? "Xác nhận" : "Cập nhật"}
+                                        </Button>
+                                        : null
+                                }
 
                                 <Button variant="contained"
                                     className='btn-close_modal w-50 mx-5'

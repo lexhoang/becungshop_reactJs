@@ -21,7 +21,7 @@ const SearchAuth = (props) => {
         if (searchAccount === '' && searchUserName === '' && searchPhone === '') {
             dispatch(api_auth.getDataAuth(limit, currentPage));
         } else {
-            dispatch(api_auth.filterUser(searchAccount, searchUserName, searchPhone))
+            dispatch(api_auth.filterUser(searchAccount, searchUserName, searchPhone, limit, currentPage))
         }
     }
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import swal from 'sweetalert';
+import swal from 'sweetalert';
 
 import * as api_orders from '../../../api/api_orders';
 import SearchOrder from './SearchOrder';
@@ -8,7 +8,7 @@ import SearchOrder from './SearchOrder';
 import { Button, ButtonGroup, Grid, Pagination, Stack } from '@mui/material';
 // import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-// import DeleteIcon from '@mui/icons-material/Delete';
+import DeleteIcon from '@mui/icons-material/Delete';
 import OrderDetail from './OrderDetail';
 import Loading from '../../loading/Loading';
 
@@ -36,25 +36,25 @@ const OrderManager = () => {
     }
 
 
-    // const handleDeleteOrder = (orderID) => {
-    //     swal({
-    //         title: "Xóa đơn hàng này?",
-    //         text: "Bạn chắc chắn muốn xóa đơn hàng này chứ, không thể khôi phục sau khi xóa!",
-    //         icon: "warning",
-    //         buttons: true,
-    //         dangerMode: true,
-    //     })
-    //         .then((willDelete) => {
-    //             if (willDelete) {
-    //                 dispatch(api_orders.deleteDataOrder(orderID));
-    //                 swal("Thành công! Đơn hàng đã được xóa!", {
-    //                     icon: "success",
-    //                 });
-    //             } else {
-    //                 swal("Đơn hàng này chưa được xóa!", "", "error");
-    //             }
-    //         });
-    // }
+    const handleDeleteOrder = (orderID) => {
+        swal({
+            title: "Xóa đơn hàng này?",
+            text: "Bạn chắc chắn muốn xóa đơn hàng này chứ, không thể khôi phục sau khi xóa!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    dispatch(api_orders.deleteDataOrder(orderID));
+                    swal("Thành công! Đơn hàng đã được xóa!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("Đơn hàng này chưa được xóa!", "", "error");
+                }
+            });
+    }
 
     useEffect(() => {
         dispatch(api_orders.getDataOrder(limit, currentPage))
@@ -95,6 +95,17 @@ const OrderManager = () => {
                 </select>
             </div>
 
+            <Grid container justifyContent="center">
+                <Stack spacing={2}>
+                    <Pagination
+                        variant="outlined" color="warning"
+                        count={totalPagesOrder}
+                        page={currentPage}
+                        onChange={handlePageChange}
+                    />
+                </Stack>
+            </Grid>
+
             <table className="mt-2 table table-striped table-inverse table-responsive">
                 <thead className="thead-inverse text-center bg-info text-light" style={{ fontSize: "18px" }}>
                     <tr className='text-font'>
@@ -127,14 +138,14 @@ const OrderManager = () => {
                                     </ButtonGroup>
                                 </td>
 
-                                {/* <td>
+                                <td>
                                     <ButtonGroup aria-label="outlined primary button group">
                                         <Button variant='outlined' color="error"
                                             onClick={() => handleDeleteOrder(order._id)}
                                         ><DeleteIcon />
                                         </Button>
                                     </ButtonGroup>
-                                </td> */}
+                                </td>
                             </tr>
                         ))
                     }

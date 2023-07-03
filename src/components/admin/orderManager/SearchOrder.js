@@ -21,7 +21,7 @@ const SearchAuth = (props) => {
         if (searchAccountOrder === '' && searchNameOrder === '' && searchPhoneOrder === '' && searchAddressOrder === '') {
             dispatch(api_order.getDataOrder(limit, currentPage));
         } else {
-            dispatch(api_order.filterOrder(searchAccountOrder, searchNameOrder, searchPhoneOrder, searchAddressOrder))
+            dispatch(api_order.filterOrder(searchAccountOrder, searchNameOrder, searchPhoneOrder, searchAddressOrder, limit, currentPage))
         }
     }
 

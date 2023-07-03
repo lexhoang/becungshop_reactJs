@@ -17,13 +17,14 @@ export const getDataAuth = (limit, currentPage) => {
     }
 }
 
-export const filterUser = (account, userName, phone) => {
+export const filterUser = (account, userName, phone, limit, currentPage) => {
     return async (dispatch) => {
         // dispatch(act_auth.act_get_auth());
-        await instances.get(`auths?account=${account}&name=${userName}&phone=${phone}`)
+        await instances.get(`auths?account=${account}&name=${userName}&phone=${phone}&limit=${limit}&skip=${(currentPage - 1) * limit}`)
             .then((response) => {
-                // console.log(response.data);
-                dispatch(act_auth.act_success_auth(response.data.data))
+                const { data, totalPagesAuth } = response.data;
+                const reversedData = [...data].reverse();
+                dispatch(act_auth.act_success_auth(reversedData, totalPagesAuth));
             })
             .catch((error) => {
                 console.log("error: ", error);
