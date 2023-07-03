@@ -81,10 +81,10 @@ const OrderManager = () => {
 
             <div className='d-flex justify-content-around'>
                 <Grid item xs={12}>
-                    <Button variant="contained" color="success"
+                    {/* <Button variant="contained" color="success"
                         className='btn-contain'
                     >+ Thêm mới
-                    </Button>
+                    </Button> */}
                 </Grid>
                 <select className='px-2 form-select text-center' style={{ width: '100px' }}
                     value={limit}
@@ -113,7 +113,7 @@ const OrderManager = () => {
                         <th>Tên người dùng</th>
                         <th>Số điện thoại</th>
                         <th>Địa chỉ</th>
-                        <th>Thành tiền</th>
+                        <th>Hóa đơn</th>
                         <th>Ngày tạo</th>
                         <th>Đơn hàng</th>
                         {/* <th>Thao Tác</th> */}
@@ -129,6 +129,7 @@ const OrderManager = () => {
                                 <td> {order.address} </td>
                                 <td> {numberWithCommas(order.bill)}đ </td>
                                 <td> {formatDateTime(order.timeCreated)}</td>
+                                {/* <td> {formatDateTime(order.timeUpdated)}</td> */}
                                 <td>
                                     <ButtonGroup aria-label="outlined primary button group">
                                         <Button variant='contained' className='btn-contain'
@@ -138,14 +139,14 @@ const OrderManager = () => {
                                     </ButtonGroup>
                                 </td>
 
-                                <td>
+                                {/* <td>
                                     <ButtonGroup aria-label="outlined primary button group">
                                         <Button variant='outlined' color="error"
                                             onClick={() => handleDeleteOrder(order._id)}
                                         ><DeleteIcon />
                                         </Button>
                                     </ButtonGroup>
-                                </td>
+                                </td> */}
                             </tr>
                         ))
                     }

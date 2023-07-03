@@ -151,7 +151,7 @@ const OrderDetail = (props) => {
             show={showOrderDetail} onHide={handleCloseOrderDetail}>
             <Modal.Header closeButton>
                 <Modal.Title className='text-color fw-bold w-100'>
-                    <p>TỔNG ĐƠN HÀNG: &nbsp;{numberWithCommas(totalOrder)}</p>
+                    <p>HÓA ĐƠN: &nbsp;{numberWithCommas(totalOrder)}</p>
                 </Modal.Title>
             </Modal.Header>
 
