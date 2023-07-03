@@ -43,7 +43,7 @@ const Login = () => {
     }
 
     const handleSubmit = (value) => {
-        navigate(-1);
+        navigate('/');
         dispatch(act_login([{ id: idUser, account: value.account }], value.password));
     }
 
