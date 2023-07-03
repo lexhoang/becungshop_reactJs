@@ -85,12 +85,12 @@
 
     .bubble-loading {
         position: relative;
-        top: 0;
+        top: 5%;
         left: 15%;
     }
 
     .shadow-loading {
-        top: 200px;
+        top: 350px;
         left: -33%;
     }
 }

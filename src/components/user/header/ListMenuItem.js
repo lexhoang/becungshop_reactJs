@@ -50,7 +50,7 @@ export default function MenuItem(props) {
             }
             <hr />
             <div className='icon-content'>
-                <Tooltip TransitionComponent={Zoom} title="Tất cả">
+                <Tooltip TransitionComponent={Zoom} title="Tất cả loại">
                     <div className='icon-img'>
                         <img src={IconAll} alt="" width="100%"
                             onClick={() => handleAllType()} />

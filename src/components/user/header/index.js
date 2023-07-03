@@ -205,8 +205,8 @@ export default function Header() {
                         </button>
                     </Grid>
 
-                    {/* LOGIN */}
-                    {/* USER */}
+
+                    {/* USER */} {/* LOGIN */}
                     {
                         user !== null ?
                             dataAuth.map((item) => (
