@@ -19,8 +19,6 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 
 
-
-
 export default function FormAuth(props) {
     const { showForm, handleCloseForm, limit, currentPage } = props;
     const { dataAuth } = useSelector(state => (state.authReducer));

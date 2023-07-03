@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './form-auth.scss';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import swal from 'sweetalert';
 
 import * as api_auth from '../../api/api_auth';

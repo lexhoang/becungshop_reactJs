@@ -7,7 +7,7 @@ import * as act_filter from '../../../redux/actions/act_filter';
 import { productForData } from '../../constant_string/TextProductFor';
 
 ////////     START  UI      ////////
-import Card from '@mui/material/Card';
+// import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Typography from '@mui/material/Typography';

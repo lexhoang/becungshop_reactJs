@@ -6,7 +6,6 @@ import * as api_products from '../../../api/api_products';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import Typography from '@mui/material/Typography';
 import { CardActionArea, Container, Tooltip } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';

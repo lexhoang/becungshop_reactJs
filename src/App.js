@@ -1,13 +1,11 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'animate.css';
 
-// import './styles/form-auth.scss';
 import './styles/btn.css';
-// import './styles/header.css';
 import './styles/card.css';
-import { Routes, Route, Router } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';

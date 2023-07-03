@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import swal from 'sweetalert';
 
@@ -66,8 +66,6 @@ export default function CartDetail(props) {
         }
         setLoading(false);
     };
-
-
 
     // TĂNG SỐ LƯỢNG
     const handleIncreaseQuantity = async (productInCart) => {

@@ -325,6 +325,7 @@ export const FormProduct = (props) => {
                                 </Grid>
                                 {/*END SIZE PRODUCT */}
                             </Grid>
+                            
                             <div className="text-center mt-5 d-flex justify-content-between">
                                 <Button variant="contained" type='submit'
                                     className="w-50 mx-5 btn-contain">

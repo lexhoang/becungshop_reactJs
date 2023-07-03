@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 import { ImagesBanner } from '../../../assets/Images';
 import BannerRight from '../../../assets/images/bannerRight.jpg';
-import { Grid } from '@mui/material';
+// import { Grid } from '@mui/material';
 ////////     END  UI      ////////
 
 export default function CarouselComp() {
