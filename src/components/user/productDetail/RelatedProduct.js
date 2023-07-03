@@ -23,11 +23,11 @@ export default function RelatedProduct(props) {
 
     // const [relatedProduct, setRelatedProduct] = useState([])
 
-    const limit = 12; // Số lượng sản phẩm trên mỗi trang
-    const [currentPage, setCurrentPage] = useState(1);
-    const handlePageChange = (event, page) => {
-        setCurrentPage(page);
-    };
+    // const limit = 12; // Số lượng sản phẩm trên mỗi trang
+    // const [currentPage, setCurrentPage] = useState(1);
+    // const handlePageChange = (event, page) => {
+    //     setCurrentPage(page);
+    // };
 
     const relatedProduct = useMemo(() => {
         return dataProducts.filter(product => product._id !== productInfo._id
@@ -36,8 +36,9 @@ export default function RelatedProduct(props) {
     }, [productInfo, dataProducts])
 
     useEffect(() => {
-        dispatch(api_products.getDataProduct(limit, currentPage));
-    }, [limit, currentPage]);
+        dispatch(api_products.getDataProduct());
+        // dispatch(api_products.getDataProduct(limit, currentPage));
+    }, []);
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.')
@@ -48,7 +49,7 @@ export default function RelatedProduct(props) {
             <Grid item xs={12} mt={12}>
                 <h3 className='text-color'>Sản phẩm liên quan</h3>
             </Grid>
-            <Grid container justifyContent="center" mt={4}>
+            {/* <Grid container justifyContent="center" mt={4}>
                 <Stack spacing={2}>
                     <Pagination
                         variant="outlined" color="warning"
@@ -57,7 +58,7 @@ export default function RelatedProduct(props) {
                         onChange={handlePageChange}
                     />
                 </Stack>
-            </Grid>
+            </Grid> */}
 
             <Grid container my={3}>
                 {
@@ -101,7 +102,7 @@ export default function RelatedProduct(props) {
                 }
             </Grid>
 
-            <Grid container justifyContent="center" mt={3}>
+            {/* <Grid container justifyContent="center" mt={3}>
                 <Stack spacing={2}>
                     <Pagination
                         variant="outlined" color="warning"
@@ -110,7 +111,7 @@ export default function RelatedProduct(props) {
                         onChange={handlePageChange}
                     />
                 </Stack>
-            </Grid>
+            </Grid> */}
         </Container>
     )
 }
