@@ -18,7 +18,10 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 ////////     END  UI      ////////
 
 export default function ProductNew(props) {
-  const { limit, currentPage } = props;
+  const currentPage = 1
+  const limit = 24; // Số lượng sản phẩm trên mỗi trang
+
+
   const { dataProducts } = useSelector((state) => state.productsReducer);
 
 

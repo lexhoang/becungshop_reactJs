@@ -84,10 +84,17 @@ export const ProductsManager = () => {
         setCurrentPage(page);
     };
 
+
     useEffect(() => {
-        dispatch(api_types.getDataType())
-        dispatch(api_products.getDataProduct(limit, currentPage));
-    }, [currentPage, limit]);
+        if (searchCodeProduct == '', searchProduct == '' && searchType == '' && searchProductFor == '') {
+            dispatch(api_types.getDataType())
+            dispatch(api_products.getDataProduct(limit, currentPage));
+        } else {
+            dispatch(api_products.filterDataProduct(searchProduct, searchCodeProduct, searchType, searchProductFor, limit, currentPage));
+        }
+        // Cuộn lên đầu trang
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [searchProduct, searchCodeProduct, searchType, searchProductFor, totalPages, limit, currentPage]);
 
 
     function numberWithCommas(x) {

@@ -9,8 +9,6 @@ import Loading from '../../loading/Loading'
 
 export default function HomePage() {
     const { loading } = useSelector(state => state.productsReducer)
-    const limit = 12; // Số lượng sản phẩm trên mỗi trang
-    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -20,9 +18,9 @@ export default function HomePage() {
             {loading ? <Loading /> : null}
             <CarouselComp />
             <div className="product-layout">
-                <ProductNew limit={limit} currentPage={currentPage} />
-                <GirlProduct limit={limit} currentPage={currentPage} />
-                <BoyProduct limit={limit} currentPage={currentPage} />
+                <ProductNew />
+                <GirlProduct />
+                <BoyProduct />
             </div>
         </>
     )
